@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 void main() => runApp(MyApp());
@@ -12,23 +13,52 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
      
       debugShowCheckedModeBanner: false,
-      home: _MyHomePage()
+      home: homepage()
        );
   }
 }
+class homepage extends StatefulWidget{
+  @override 
+  _MyHomePage createState() => _MyHomePage();
+}
 
-class _MyHomePage extends StatelessWidget {
+class _MyHomePage extends State<homepage> {
+  var primary=0xff00171f;
+  var secondary= 0xff003459;
+  var primary1= 0xff007ea7;
+  var secondary1= 0xff00a8e8;
   
+  var clickcolor=[0xff00a8e8,0xff007ea7,0xff007ea7,0xff007ea7];
+  var list = ["WEB", "APP", "ALGO", "TRONIX"];
+  var task="WEB";
+  
+  void changecolor(int prof){
+    
+    setState(() {
+      for(int i=0; i<list.length; i++){
+      
+      if(i==prof)
+       clickcolor[i]= secondary1;
+      else
+       clickcolor[i]= primary1;
+      }
+    task=list[prof];
 
-  @override
+
+    });
+     
+  }
+  
+@override 
+  
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color(0xff000000),
+      backgroundColor:  Color(primary),
       appBar: AppBar(
         leading: Icon(Icons.arrow_back_ios),
         title: Text("Profile"),
         elevation: 0,
-        backgroundColor: Color(0xff007ea7),
+        backgroundColor: Color(0xff000000) ,
         actions: <Widget>[
           Padding(padding: const EdgeInsets.all(8.0),
                   child: Icon(Icons.more_vert, color: Colors.white),
@@ -123,74 +153,64 @@ class _MyHomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),),
-                        SizedBox(height: 20,),
+                        SizedBox(height: 50,),
                       Container(
                     height: 70, 
                     width: 370, 
                       
-                    color:Color(0xff003459),
+                    color:Color(primary),
                     child: ListView(
                       scrollDirection: Axis.horizontal ,
                       children: <Widget>[
+                                           
+                      for(int i=0; i<list.length; i++)
                         
-                        Card(
-                          elevation: 20,
+                        GestureDetector(
+                        
+                         onTap:(){ changecolor(i);},
+                          
                           child: Container(
                             padding: EdgeInsets.all(20),
-                            color: Color(0xff007ea7),
-                            width:80,
-                            child: Text('WEB',
+                            margin: EdgeInsets.all(3),
+                            
+                            color: Color(clickcolor[i]),
+                            width:95,
+                            child: Text(list[i],
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white
                                       ), ),
-                          ),),               Card(
-                          elevation: 20,
-                          child: Container(
-                            padding: EdgeInsets.all(20),
-                            color: Color(0xff007ea7),
-                            width:80,
-                            child: Text('APP',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                      ), ),
-                          ),),               Card(
-                          elevation: 20,
-                          child: Container(
-                            padding: EdgeInsets.all(20),
-                            color: Color(0xff007ea7),
-                            width:80,
-                            child: Text('ALGO',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                      ), ),
-                          ),),               Card(
-                          elevation: 20,
+                          ),),               
+                         
+             ], 
+           ),
+         
+         ),         
+         new Divider(
+            color: Colors.black,
+            height: 50,
+            thickness: 6,
+          ),
+              for(int i=0; i<4; i++)
+               GestureDetector(
                           child: Container(
                             
                             padding: EdgeInsets.all(20),
-                            color: Color(0xff007ea7),
+                            margin: EdgeInsets.all(3),
                             
-                            width:100,
-                            child: Text('TRONIX',
+                            decoration: BoxDecoration(
+                              color: Color(secondary),
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Text('${task} TASK ${i}',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white
                                         
+                                        
                                       ), ) ,
-                    
-                 ),),
-             ], 
-           ),
-         
-         )
-                     
-                     
-                     
-                     
-                     
+                      ),),
+              
                       ],
                     ),
                 );
