@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
-
+import 'package:http/http.dart' as http;
+import 'task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -23,6 +25,9 @@ class homepage extends StatefulWidget{
 }
 
 class _MyHomePage extends State<homepage> {
+
+
+  var username="VishalS99";
   var primary=0xff00171f;
   var secondary= 0xff003459;
   var primary1= 0xff007ea7;
@@ -31,7 +36,27 @@ class _MyHomePage extends State<homepage> {
   var clickcolor=[0xff00a8e8,0xff007ea7,0xff007ea7,0xff007ea7];
   var list = ["WEB", "APP", "ALGO", "TRONIX"];
   var task="WEB";
+  var user;
+ void initState() {
+    super.initState();
+    this.user={
+     "name": "username",
+     "avatar_url":" ",
+     "login":" "
+    };
+    makeRequest();
+}
+String url='https://api.github.com/users/';
+Future<String> makeRequest() async{
+  http.Response response =await http.get(Uri.encodeFull(url+username), 
+  headers: {"Accept":"application/json"});
   
+  var user1= await json.decode(response.body);
+  setState(() {
+    this.user= user1;
+  });
+}
+
   void changecolor(int prof){
     
     setState(() {
@@ -43,8 +68,6 @@ class _MyHomePage extends State<homepage> {
        clickcolor[i]= primary1;
       }
     task=list[prof];
-
-
     });
      
   }
@@ -77,7 +100,7 @@ class _MyHomePage extends State<homepage> {
                  padding: const EdgeInsets.only(top:15),
                  child: Column(
                    children:<Widget>[
-                    Text('MENTEE name',
+                    Text('${this.user["name"]}',
                              style: TextStyle(
                                fontSize: 30,
                                fontWeight: FontWeight.bold,
@@ -92,24 +115,33 @@ class _MyHomePage extends State<homepage> {
                
                children: <Widget>[
                  Padding(
-                 padding: const EdgeInsets.only(top:25),
+                 padding: const EdgeInsets.only(top:45),
                  child:CircleAvatar(
-                   backgroundImage: AssetImage('assets/profile.png'),
+                   backgroundImage: NetworkImage('${this.user["avatar_url"]}'),
                    radius:  90,
                  ))
                ],
            ),
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-               crossAxisAlignment: CrossAxisAlignment.start,
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+               crossAxisAlignment: CrossAxisAlignment.center,
                children: <Widget>[
                  Padding(
-                 padding: const EdgeInsets.only(left:50,top:45),
-                 child: Column(
+                 padding: const EdgeInsets.only(top:65),
+                 child: Row(
                    children:<Widget>[
-                    Text('GitHub :   ',
+                    Text('GitHub:  ',
                              style: TextStyle(
+                            
                                fontSize: 24,
                                color: Colors.white,
+                                fontWeight: FontWeight.bold
+                             ),
+                    ),
+                    Text('${this.user["login"]}',
+                             style: TextStyle(
+                            
+                               fontSize: 24,
+                               color: Color(secondary1),
                                 fontWeight: FontWeight.bold
                              ),
                     )
@@ -130,15 +162,15 @@ class _MyHomePage extends State<homepage> {
 
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.black,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0)
                     ),
                     boxShadow: [
                      BoxShadow(
-                     color: Colors.grey,
-                     blurRadius: 20.0
+                     color: Colors.white,
+                     blurRadius: 2.0
                      
                      )
                     ]),
@@ -187,12 +219,36 @@ class _MyHomePage extends State<homepage> {
          
          ),         
          new Divider(
-            color: Colors.black,
+            color: Colors.white,
             height: 50,
-            thickness: 6,
+            thickness: 3,
           ),
               for(int i=0; i<4; i++)
                GestureDetector(
+                          onTap:(){
+                            List a=[task,i,this.user];
+                            Navigator.push(context, 
+                            PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASK(task: a),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child){
+                              return SlideTransition(
+                              position: Tween<Offset>(
+                                begin: const Offset(1.0, 0.0),
+                                end: Offset.zero,
+
+                              
+                                ).animate(animation),
+                                child: SlideTransition(
+                                     position: Tween<Offset>(
+                                     end: const Offset(1.0, 0.0),
+                                     begin: Offset.zero,
+                                     ).animate(secondaryAnimation),
+                                     child: child,
+                                ),
+                              );
+                            }
+                            )
+                            );
+                          },
                           child: Container(
                             
                             padding: EdgeInsets.all(20),
