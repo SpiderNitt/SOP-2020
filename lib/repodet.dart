@@ -3,15 +3,30 @@ import 'config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
+class Data {
+
+List<String> repos;
+
+Data(List<String> repoList): this.repos = repoList;
+
+factory Data.getdata(List json){
+    List<String> repoDetList = [];
+    json.forEach((element){
+      repoDetList.add(element['name']);
+    });
+    print(repoDetList);
+    return Data(repoDetList); 
+ }
+
+}
+
+
 class RepoDet extends StatefulWidget {
  
   String gitacc;
   String menteename;
   
-  RepoDet(String gitacc, String menteename){
-  this.gitacc = gitacc;
-  this.menteename = menteename;
-  }
+  RepoDet(this.gitacc, this.menteename);
 
   @override
   _RepoDetState createState() => _RepoDetState(this.gitacc, this.menteename);
@@ -23,33 +38,44 @@ class _RepoDetState extends State<RepoDet> {
   String menteename;
   dynamic res;
 
-  _RepoDetState(String gitacc, String menteename){
-  this.gitacc = gitacc;
-  this.menteename = menteename;
-  }
+  _RepoDetState(this.gitacc, this.menteename);
 
-  Future<String> getdata() async{
+  Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
-  setState(() {
-  this.res = jsonDecode(resp.body);
-  });
-  return 'success';
+  // print('//////////////////////////////');
+  //  print('//////////////////////////////');
+  // print(Data.getdata(jsonDecode(resp.body)).repos);
+  //  print('//////////////////////////////');
+  //   print('//////////////////////////////');
+  return Data.getdata(jsonDecode(resp.body));
   }
   
 
   @override
   void initState(){
   super.initState();
-  getdata();
+  this.res = getdata();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+    FutureBuilder(
+      future: this.res, 
+      builder: (context, snapshot){
+
+      if(snapshot.hasData){
+      
+
+      // print('/////////////////////');
+      // print(snapshot.data.repos);
+      // print('/////////////////////');
+
+      return Container(
       height: 400,
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
-      itemCount: this.res.length,
+      itemCount: snapshot.data.repos.length,
       itemBuilder: (context, index){
         return  Card(
         elevation: 0.0,
@@ -67,17 +93,30 @@ class _RepoDetState extends State<RepoDet> {
           contentPadding: EdgeInsets.all(3),
           onTap: (){
             Navigator.pushNamed(context, '/commits', arguments: {
-              'repo_det': this.res[index]['name'],
-              'git_acc': this.gitacc,
-              'menteename': this.menteename
+              'repo_det': snapshot.data.repos[index],
+              // 'git_acc': this.gitacc,
+              // 'menteename': this.menteename
             });
           },
-          title: Text('${res[index]['name']}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text(snapshot.data.repos[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         ),
         ),
         );
       }
     ),
-    );
+    );  
+    }
+        
+      else if (snapshot.hasError){
+
+      print('/////////////////////');
+      print('error');
+      print('/////////////////////');
+      return Text("${snapshot.error}");
+      }
+        
+      else return CircularProgressIndicator();
+
+    });
   }
 }

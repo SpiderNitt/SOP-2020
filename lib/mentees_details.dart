@@ -15,7 +15,10 @@ MenteeDet(String name, String gitacc){
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 380,
+      constraints: BoxConstraints(
+      minHeight: 5.0,
+      maxHeight: 390.0,
+      ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
       itemCount: name.length,

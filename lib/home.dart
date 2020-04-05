@@ -3,7 +3,6 @@ import 'config.dart';
 import 'mentees_details.dart';
 import 'navigationbar.dart';
 import 'mentor_details.dart';
-import 'package:http/http.dart';
 
 class Home extends StatefulWidget {
 
@@ -33,6 +32,7 @@ String gitacc;
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         elevation: 0,
@@ -42,9 +42,6 @@ String gitacc;
       ),
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-            color:  Color.fromRGBO(0, 23, 31, 1),
-          ),
           child : Column(
       children: <Widget>[
         MenDet(this.name, this.gitacc),
