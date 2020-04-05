@@ -197,7 +197,7 @@ Future<String> makeRequest() async{
                                            
                       for(int i=0; i<list.length; i++)
                         
-                        GestureDetector(
+                        InkWell(
                         
                          onTap:(){ changecolor(i);},
                           
@@ -224,7 +224,7 @@ Future<String> makeRequest() async{
             thickness: 3,
           ),
               for(int i=0; i<4; i++)
-               GestureDetector(
+               InkWell(
                           onTap:(){
                             List a=[task,i,this.user];
                             Navigator.push(context, 

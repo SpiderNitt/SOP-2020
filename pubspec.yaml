@@ -29,6 +29,7 @@ dependencies:
   provider: ^3.1.0
   auto_size_text: 2.1.0
   like_button: 0.2.0
+  url_launcher: 5.4.2
   shared_preferences: 
 dev_dependencies:
   flutter_test:
