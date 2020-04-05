@@ -7,19 +7,17 @@ class Data {
 
 List<String> repos;
 
-Data(List<String> repoList): this.repos = repoList;
+Data(this.repos);
 
 factory Data.getdata(List json){
     List<String> repoDetList = [];
     json.forEach((element){
       repoDetList.add(element['name']);
     });
-    print(repoDetList);
     return Data(repoDetList); 
  }
 
 }
-
 
 class RepoDet extends StatefulWidget {
  
@@ -42,11 +40,6 @@ class _RepoDetState extends State<RepoDet> {
 
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
-  // print('//////////////////////////////');
-  //  print('//////////////////////////////');
-  // print(Data.getdata(jsonDecode(resp.body)).repos);
-  //  print('//////////////////////////////');
-  //   print('//////////////////////////////');
   return Data.getdata(jsonDecode(resp.body));
   }
   
@@ -64,15 +57,13 @@ class _RepoDetState extends State<RepoDet> {
       future: this.res, 
       builder: (context, snapshot){
 
-      if(snapshot.hasData){
-      
-
-      // print('/////////////////////');
-      // print(snapshot.data.repos);
-      // print('/////////////////////');
+      if(snapshot.hasData)
 
       return Container(
-      height: 400,
+      constraints: BoxConstraints(
+      minHeight: 5.0,
+      maxHeight: 400.0,
+      ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
       itemCount: snapshot.data.repos.length,
@@ -94,8 +85,8 @@ class _RepoDetState extends State<RepoDet> {
           onTap: (){
             Navigator.pushNamed(context, '/commits', arguments: {
               'repo_det': snapshot.data.repos[index],
-              // 'git_acc': this.gitacc,
-              // 'menteename': this.menteename
+              'git_acc': this.gitacc,
+              'menteename': this.menteename
             });
           },
           title: Text(snapshot.data.repos[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
@@ -105,16 +96,10 @@ class _RepoDetState extends State<RepoDet> {
       }
     ),
     );  
-    }
-        
-      else if (snapshot.hasError){
 
-      print('/////////////////////');
-      print('error');
-      print('/////////////////////');
-      return Text("${snapshot.error}");
-      }
-        
+      else if (snapshot.hasError)
+      return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),);
+         
       else return CircularProgressIndicator();
 
     });
