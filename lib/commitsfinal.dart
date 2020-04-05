@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'commits.dart';
 import 'mentor_details.dart';
 import 'navigationbar.dart';
-import 'repodet.dart';
 import 'config.dart';
 
 class CommitsFinal extends StatefulWidget {
@@ -20,6 +19,8 @@ class _CommitsFinal extends State<CommitsFinal> {
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: config.bgColor,
         title: Text('Mentee task'),
         centerTitle: true,
       ),

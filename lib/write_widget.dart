@@ -30,6 +30,7 @@ class Review extends StatelessWidget {
           child:  Form(
           key: _formkey,
           child:  TextFormField(
+          cursorColor: config.fontColor,
           style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
           maxLines: null,
           decoration: InputDecoration(
@@ -45,7 +46,7 @@ class Review extends StatelessWidget {
           ),
           validator: (String value){
             if(value.isEmpty)
-            return 'Please enter your review';
+            return 'Please write your review';
             else
             return null;
           },

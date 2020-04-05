@@ -24,6 +24,8 @@ MenteeDet(String name, String gitacc){
       itemCount: name.length,
       itemBuilder: (context, index){
         return  Card(
+          shape: RoundedRectangleBorder(
+       borderRadius: BorderRadius.circular(config.borRadi)),
         elevation: 0.0,
         child: Container(
         decoration: BoxDecoration(
@@ -35,6 +37,9 @@ MenteeDet(String name, String gitacc){
           color: config.conColor,
         ),
         child: ListTile(
+          trailing: Icon(
+            Icons.keyboard_arrow_right,
+            color: config.fontColor, ),
           contentPadding: EdgeInsets.all(3),
           onTap: (){
             Navigator.pushNamed(context, '/menteetask', arguments: {

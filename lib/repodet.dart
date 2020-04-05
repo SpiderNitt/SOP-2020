@@ -14,9 +14,8 @@ factory Data.getdata(List json){
     json.forEach((element){
       repoDetList.add(element['name']);
     });
-    return Data(repoDetList); 
- }
-
+    return Data(repoDetList);
+  }
 }
 
 class RepoDet extends StatefulWidget {
@@ -69,6 +68,8 @@ class _RepoDetState extends State<RepoDet> {
       itemCount: snapshot.data.repos.length,
       itemBuilder: (context, index){
         return  Card(
+       shape: RoundedRectangleBorder(
+       borderRadius: BorderRadius.circular(config.borRadi)),
         elevation: 0.0,
         child: Container(
           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -81,6 +82,9 @@ class _RepoDetState extends State<RepoDet> {
           color: config.conColor,
         ),
           child: ListTile(
+            trailing: Icon(
+            Icons.keyboard_arrow_right,
+            color: config.fontColor, ),
           contentPadding: EdgeInsets.all(3),
           onTap: (){
             Navigator.pushNamed(context, '/commits', arguments: {

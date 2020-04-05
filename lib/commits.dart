@@ -64,13 +64,15 @@ class _CommitsState extends State<Commits> {
        return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
-      maxHeight: 400.0,
+      maxHeight: 280.0,
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
       itemCount: snapshot.data.commits.length,
       itemBuilder: (context, index){
         return  Card(
+        shape: RoundedRectangleBorder(
+       borderRadius: BorderRadius.circular(config.borRadi)),
         elevation: 0.0,
         child: Container(
           padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
