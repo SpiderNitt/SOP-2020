@@ -59,6 +59,7 @@ class _RepoDetState extends State<RepoDet> {
       if(snapshot.hasData)
 
       return Container(
+      
       constraints: BoxConstraints(
       minHeight: 5.0,
       maxHeight: 400.0,

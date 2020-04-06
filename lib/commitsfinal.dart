@@ -33,15 +33,7 @@ class _CommitsFinal extends State<CommitsFinal> {
         SizedBox(height: 20),
         Commits(data['repo_det']),
         SizedBox(height: 20),
-        FlatButton(
-          onPressed: (){
-            Navigator.pushNamed(context, '/writereview', arguments: {
-              'repo_det': data['repo_det']
-            });
-          }, 
-         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor))),
-          SizedBox(height: 20),
-       ]
+        ]
       ),
       ),
       bottomNavigationBar: NavigationBar(0),

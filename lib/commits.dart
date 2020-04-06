@@ -64,13 +64,25 @@ class _CommitsState extends State<Commits> {
        return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
-      maxHeight: 280.0,
+      maxHeight: 360.0,
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
-      itemCount: snapshot.data.commits.length,
+      itemCount: (snapshot.data.commits.length + 1),
       itemBuilder: (context, index){
-        return  Card(
+        print(index);
+        if( index == snapshot.data.commits.length)
+         
+        return  FlatButton(
+          
+          onPressed: (){
+            Navigator.pushNamed(context, '/writereview', arguments: {
+              'repo_det': this.repo_det,
+            });
+          }, 
+         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)));
+         
+         else return  Card(
         shape: RoundedRectangleBorder(
        borderRadius: BorderRadius.circular(config.borRadi)),
         elevation: 0.0,

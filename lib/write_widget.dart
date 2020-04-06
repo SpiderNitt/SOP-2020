@@ -29,7 +29,10 @@ class Review extends StatelessWidget {
           padding: EdgeInsets.all(30),
           child:  Form(
           key: _formkey,
-          child:  TextFormField(
+          child:  Column(
+            children: <Widget>[
+
+            TextFormField(
           cursorColor: config.fontColor,
           style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
           maxLines: null,
@@ -50,8 +53,63 @@ class Review extends StatelessWidget {
             else
             return null;
           },
+          ),
+  SizedBox(height: 10),
+ TextFormField(
+    keyboardType: TextInputType.number,
+          cursorColor: config.fontColor,
+          style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
+          maxLines: null,
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+                   borderSide: BorderSide(
+                     width: config.bordWid,
+                     color: config.fontColor,
+                   ), 
+                 ),
+             labelText: 'Basic Task completion percentage',
+             labelStyle: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
+             hintText: '',
+          ),
+          validator: (String value){
+            if(value.isEmpty)
+            return 'Please enter a pecentage';
+            if(int.tryParse(value)> 100)
+            return 'Please enter a valid percentage';
+            else
+            return null;
+          },
+          ),   
+          SizedBox(height: 10),
+          TextFormField(
+          keyboardType: TextInputType.number,
+          cursorColor: config.fontColor,
+          style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
+          maxLines: null,
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+                   borderSide: BorderSide(
+                     width: config.bordWid,
+                     color: config.fontColor,
+                   ), 
+                 ),
+             labelText: 'Advanced Task completion percentage',
+             labelStyle: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
+             hintText: '',
+          ),
+          validator: (String value){
+            if(value.isEmpty)
+            return 'Please enter a pecentage';
+            if(int.tryParse(value)> 100)
+            return 'Please enter a valid percentage';
+            else
+            return null;
+          },
+          ),        
+
+          ],
           )
-          )
+          ),
          ),
          SizedBox(height: 10),
          FlatButton(
