@@ -56,12 +56,19 @@ class LoginScreen extends StatelessWidget {
                       Icons.email,
                       "Webmail",
                       (value) {
+                        String p =
+                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                        RegExp regExp = new RegExp(p);
+
                         if (value.isEmpty) {
                           return 'Enter Webmail';
+                        } else if (!regExp.hasMatch(value)) {
+                          return 'Enter a valid email';
                         }
                         return null;
                       },
                       false,
+                      TextInputType.emailAddress,
                     ),
                     CustomInput(
                       Icons.lock,
@@ -73,6 +80,7 @@ class LoginScreen extends StatelessWidget {
                         return null;
                       },
                       true,
+                      TextInputType.text,
                     ),
                     CustomButton(
                       'Sign In',
@@ -98,14 +106,17 @@ class CustomInput extends StatelessWidget {
   String hintText;
   Function validator;
   bool obscureText;
+  TextInputType type;
 
-  CustomInput(this.icon, this.hintText, this.validator, this.obscureText);
+  CustomInput(
+      this.icon, this.hintText, this.validator, this.obscureText, this.type);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
       child: TextFormField(
+        keyboardType: type,
         obscureText: obscureText,
         style: TextStyle(
           color: Color(0xFFFFFFFF),
