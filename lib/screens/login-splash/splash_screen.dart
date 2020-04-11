@@ -10,8 +10,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  // todo: implement initState
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 3), () {
       _navigateToLogin();
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Center(
               child: Image(
                 image: AssetImage(
-                  'images/SpiderLogo.webp',
+                  'assets/images/spiderIcon.webp',
                 ),
                 height: 200,
                 width: 200,
