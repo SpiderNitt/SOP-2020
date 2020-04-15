@@ -6,20 +6,22 @@ class CustomInput extends StatelessWidget {
   final Function _validator;
   final bool _obscureText;
   final TextInputType _type;
+  final double _width;
+  final double _fontsize;
 
   CustomInput(this._icon, this._hintText, this._validator, this._obscureText,
-      this._type);
+      this._type, this._width, this._fontsize);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+    return Container(
+      width: _width,
       child: TextFormField(
         keyboardType: _type,
         obscureText: _obscureText,
         style: TextStyle(
           color: Color(0xFFFFFFFF),
-          fontSize: 20,
+          fontSize: _fontsize,
         ),
         decoration: InputDecoration(
           prefixIcon: Icon(
@@ -29,13 +31,13 @@ class CustomInput extends StatelessWidget {
           hintText: _hintText,
           hintStyle: TextStyle(
             color: Color(0xFFFFFFFF),
-            fontSize: 20,
+            fontSize: _fontsize,
           ),
           errorStyle: TextStyle(
             color: Color(0xFFFFFFFF),
-            fontSize: 16,
+            fontSize: _fontsize - 5,
           ),
-          fillColor: Color(0xFF00A8E8).withOpacity(0.1),
+          fillColor: Color(0xFF00A8E8).withOpacity(0.2),
           filled: true,
           focusedErrorBorder: UnderlineInputBorder(
             borderSide: BorderSide(
