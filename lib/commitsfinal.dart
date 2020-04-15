@@ -28,9 +28,12 @@ class _CommitsFinal extends State<CommitsFinal> {
         child: Column(
         children: <Widget>[
         MenDet(data['menteename'], data['git_acc']),
-        SizedBox(height: 20),
-        Text('Commit History for ${data['repo_det']}',  style: TextStyle( fontSize: 17, fontFamily: config.fontFamily, color: config.bordColor)),
-        SizedBox(height: 20),
+        Container(
+          padding: EdgeInsets.all(20),
+         child: Center(
+           child: Text('Commit History for ${data['repo_det']}',  style: TextStyle( fontSize: 17, fontFamily: config.fontFamily, color: config.bordColor)),
+         ),
+        ),
         Commits(data['repo_det']),
         SizedBox(height: 20),
         ]

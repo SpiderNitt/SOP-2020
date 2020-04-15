@@ -22,9 +22,12 @@ class Review extends StatelessWidget {
     body: SingleChildScrollView(
      child: Column(
       children: <Widget>[
-        SizedBox(height: 10),
-        Text('Review for ${data['repo_det']}', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.all(20),
+         child: Center(
+           child: Text('Review for ${data['repo_det']}', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+         ),
+        ),
           Container(
           padding: EdgeInsets.all(30),
           child:  Form(
