@@ -209,10 +209,11 @@ class LogintabletState extends State<Logintablet> {
 
                                     _localStorage['jwt'] = parsedJson["token"];
 
-                                    await Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                RegisterView()));
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => RegisterView()),
+                                    );
                                     print(parsedJson.message);
                                   } else {
                                     AlertDialog alert = AlertDialog(

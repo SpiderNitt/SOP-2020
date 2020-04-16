@@ -211,10 +211,11 @@ class LoginState extends State<Loginview> {
 
                                     _localStorage['jwt'] = parsedJson["token"];
 
-                                    await Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                RegisterView()));
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => RegisterView()),
+                                    );
                                     print(parsedJson.message);
                                   } else {
                                     AlertDialog alert = AlertDialog(
