@@ -66,9 +66,16 @@ class _RepoDetState extends State<RepoDet> {
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
-      itemCount: snapshot.data.repos.length,
+      itemCount: (snapshot.data.repos.length + 1),
       itemBuilder: (context, index){
-        return Column(
+        
+        if(snapshot.data.repos.length == 0)
+         return  Text('No commits yet', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor));
+       
+        if(index == snapshot.data.repos.length)
+          return null; 
+
+         else return Column(
           children: <Widget>[
             ListTile(
             trailing: Icon(

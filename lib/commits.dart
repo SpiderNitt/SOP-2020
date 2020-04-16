@@ -85,12 +85,13 @@ class _CommitsState extends State<Commits> {
       child: ListView.builder(
       itemCount: (snapshot.data.commits.length + 1),
       itemBuilder: (context, index){
+        
+        if(snapshot.data.commits.length == 0)
+         return  Text('No commits yet', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor));
 
-        if( index == snapshot.data.commits.length)
-         
+        if(index == snapshot.data.commits.length) 
         return Column(
           children: [
-
        FutureBuilder(
          future: this.percent_res,
          builder: (context, snap){

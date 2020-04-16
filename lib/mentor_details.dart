@@ -73,10 +73,6 @@ _MenDetState(this.name, this.gitacc);
            children : <Widget>[Container(
           decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(
-            color: config.bordColor,
-            width: config.imgBordrWid,
-          ),
          ),
          child: CircleAvatar(
          backgroundImage: NetworkImage(snapshot.data.avatar_url),
@@ -89,7 +85,7 @@ _MenDetState(this.name, this.gitacc);
          ]
           );
        else if (snapshot.hasError) {
-       return Text("${snapshot.error}");
+       return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
       }
       else
      
