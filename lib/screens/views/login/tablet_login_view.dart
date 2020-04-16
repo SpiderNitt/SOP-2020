@@ -102,7 +102,7 @@ class LogintabletState extends State<Logintablet> {
                   padding: EdgeInsets.all(padding),
                   child: Container(
                     width: containerwidth,
-                    color: Color(0xFF003459).withOpacity(0.5),
+                    color: Color(0xFF003459),
                     child: Form(
                       key: _formKey,
                       child: Column(

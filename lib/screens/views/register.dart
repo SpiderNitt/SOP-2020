@@ -14,6 +14,7 @@ import 'package:inductions_20/screens/ui/base_widget.dart';
 import 'package:inductions_20/screens/views/widgets/custom_button.dart';
 import 'package:inductions_20/screens/views/widgets/custom_input.dart';
 import 'package:inductions_20/screens/views/login/responsive_login_view.dart';
+import 'package:inductions_20/screens/views/success_message.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _key = GlobalKey<FormState>();
@@ -113,21 +114,21 @@ class _RegisterScreenState extends State<RegisterView> {
           DeviceScreenType.LargeMobile) {
         if (sizingInformation.orientation == Orientation.portrait) {
           headingfontsize = 25;
-          formwidth = 2 * width / 3;
-          inputfieldwidth = 2 * width / 3;
-          containerwidth = 2 * width / 3;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
+          formwidth = 350;
+          inputfieldwidth = 350;
+          containerwidth = 350;
+          dropdownwidth = 250;
+          registerwidth = 350;
           registerheight = 30;
           padding = 15.0;
           fontsize = 18.0;
         } else {
           headingfontsize = 25;
-          formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
+          formwidth = 350;
+          inputfieldwidth = 350;
+          containerwidth = 350;
+          dropdownwidth = 250;
+          registerwidth = 350;
           registerheight = 30;
           padding = 15.0;
           fontsize = 18.0;
@@ -136,21 +137,21 @@ class _RegisterScreenState extends State<RegisterView> {
           DeviceScreenType.Tablet) {
         if (sizingInformation.orientation == Orientation.portrait) {
           headingfontsize = 25;
-          formwidth = width / 2;
-          inputfieldwidth = 3 * width / 7;
-          containerwidth = 3 * width / 7;
-          dropdownwidth = 3 * width / 15;
-          registerwidth = 3 * width / 10;
+          formwidth = 550;
+          inputfieldwidth = 500;
+          containerwidth = 500;
+          dropdownwidth = 400;
+          registerwidth = 500;
           registerheight = 60;
           padding = 15.0;
           fontsize = 20.0;
         } else {
           headingfontsize = 25;
-          formwidth = width / 2;
-          inputfieldwidth = 3 * width / 5;
-          containerwidth = 3 * width / 5;
-          dropdownwidth = 3 * width / 15;
-          registerwidth = 3 * width / 10;
+          formwidth = 550;
+          inputfieldwidth = 500;
+          containerwidth = 500;
+          dropdownwidth = 400;
+          registerwidth = 500;
           registerheight = 60;
           padding = 15.0;
           fontsize = 20.0;
@@ -158,21 +159,21 @@ class _RegisterScreenState extends State<RegisterView> {
       } else {
         if (sizingInformation.orientation == Orientation.portrait) {
           headingfontsize = 25;
-          formwidth = width / 3;
-          inputfieldwidth = 3 * width / 10;
-          containerwidth = 3 * width / 10;
-          dropdownwidth = 3 * width / 15;
-          registerwidth = 3 * width / 10;
+          formwidth = 600;
+          inputfieldwidth = 600;
+          containerwidth = 600;
+          dropdownwidth = 500;
+          registerwidth = 600;
           registerheight = 60;
           padding = 15.0;
           fontsize = 20.0;
         } else {
           headingfontsize = 25;
-          formwidth = width / 3;
-          inputfieldwidth = 3 * width / 10;
-          containerwidth = 3 * width / 10;
-          dropdownwidth = 3 * width / 15;
-          registerwidth = 3 * width / 10;
+          formwidth = 600;
+          inputfieldwidth = 600;
+          containerwidth = 600;
+          dropdownwidth = 500;
+          registerwidth = 600;
           registerheight = 60;
           padding = 15.0;
           fontsize = 20.0;
@@ -292,89 +293,17 @@ class _RegisterScreenState extends State<RegisterView> {
                                 data: Theme.of(context).copyWith(
                                   canvasColor: Color(0xFF172B34),
                                 ),
-                                child: DropdownButton<int>(
-                                  style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
-                                    fontSize: fontsize,
-                                  ),
-                                  items: _profiles.map((dropDownStringItem) {
-                                    var idx =
-                                        _profiles.indexOf(dropDownStringItem);
-                                    return DropdownMenuItem<int>(
-                                      value: idx,
-                                      child: Row(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0.0, 0.0, 7.0, 1.0),
-                                            child: Icon(_icons[idx],
-                                                color: Color(0xFF00A8E8)),
-                                          ),
-                                          Container(
-                                            width: dropdownwidth,
-                                            child: Text(
-                                              dropDownStringItem,
-                                              style: TextStyle(
-                                                fontSize: fontsize,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),
-                                  key: _key,
-                                  onChanged: (int newValueSelected) {
-                                    setState(() {
-                                      _dropDownError = '';
-                                      this._preferences[0] =
-                                          newValueSelected + 1;
-                                      for (int k = 0;
-                                          k < this._preferences.length;
-                                          k++) {
-                                        for (int l = k + 1;
-                                            l < this._preferences.length;
-                                            l++) {
-                                          if (this._preferences[k] ==
-                                                  this._preferences[l] &&
-                                              this._preferences[k] != 0) {
-                                            _dropDownError =
-                                                'Enter unique preferences';
-                                            break;
-                                          }
-                                        }
-                                        for (int k = 1;
-                                            k < this._preferences.length;
-                                            k++) {
-                                          if (this._preferences[k] != 0) {
-                                            for (int l = 1; l < k; l++)
-                                              if (this._preferences[l] == 0) {
-                                                _dropDownError =
-                                                    'Enter previous preferences first';
-                                                break;
-                                              }
-                                          }
-                                        }
-                                      }
-                                    });
-                                  },
-                                  value: _preferences[0] - 1,
-                                ),
-                              ),
-                              for (int i in items)
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                    canvasColor: Color(0xFF172B34),
-                                  ),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 10.0, 0.0, 10.0),
                                   child: DropdownButton<int>(
                                     style: TextStyle(
                                       color: Color(0xFFFFFFFF),
                                       fontSize: fontsize,
                                     ),
-                                    items:
-                                        _remprofiles.map((dropDownStringItem) {
-                                      var idx = _remprofiles
-                                          .indexOf(dropDownStringItem);
+                                    items: _profiles.map((dropDownStringItem) {
+                                      var idx =
+                                          _profiles.indexOf(dropDownStringItem);
                                       return DropdownMenuItem<int>(
                                         value: idx,
                                         child: Row(
@@ -383,7 +312,7 @@ class _RegisterScreenState extends State<RegisterView> {
                                               padding:
                                                   const EdgeInsets.fromLTRB(
                                                       0.0, 0.0, 7.0, 1.0),
-                                              child: Icon(_remicons[idx],
+                                              child: Icon(_icons[idx],
                                                   color: Color(0xFF00A8E8)),
                                             ),
                                             Container(
@@ -399,10 +328,12 @@ class _RegisterScreenState extends State<RegisterView> {
                                         ),
                                       );
                                     }).toList(),
+                                    key: _key,
                                     onChanged: (int newValueSelected) {
                                       setState(() {
                                         _dropDownError = '';
-                                        this._preferences[i] = newValueSelected;
+                                        this._preferences[0] =
+                                            newValueSelected + 1;
                                         for (int k = 0;
                                             k < this._preferences.length;
                                             k++) {
@@ -417,24 +348,114 @@ class _RegisterScreenState extends State<RegisterView> {
                                               break;
                                             }
                                           }
-                                        }
-                                        for (int k = 1;
-                                            k < this._preferences.length;
-                                            k++) {
-                                          if (this._preferences[k] != 0) {
-                                            for (int l = 1; l < k; l++)
-                                              if (this._preferences[l] == 0) {
-                                                _dropDownError =
-                                                    'Enter previous preferences first';
-                                                break;
-                                              }
+                                          for (int k = 1;
+                                              k < this._preferences.length;
+                                              k++) {
+                                            if (this._preferences[k] != 0) {
+                                              for (int l = 1; l < k; l++)
+                                                if (this._preferences[l] == 0) {
+                                                  _dropDownError =
+                                                      'Enter previous preferences first';
+                                                  break;
+                                                }
+                                            }
                                           }
                                         }
                                       });
                                     },
-                                    value: _preferences[i],
+                                    value: _preferences[0] - 1,
                                   ),
                                 ),
+                              ),
+                              for (int i in items)
+                                Theme(
+                                  data: Theme.of(context).copyWith(
+                                    canvasColor: Color(0xFF172B34),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0.0, 10.0, 0.0, 10.0),
+                                    child: DropdownButton<int>(
+                                      style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontSize: fontsize,
+                                      ),
+                                      items: _remprofiles
+                                          .map((dropDownStringItem) {
+                                        var idx = _remprofiles
+                                            .indexOf(dropDownStringItem);
+                                        return DropdownMenuItem<int>(
+                                          value: idx,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0.0, 0.0, 7.0, 1.0),
+                                                child: Icon(_remicons[idx],
+                                                    color: Color(0xFF00A8E8)),
+                                              ),
+                                              Container(
+                                                width: dropdownwidth,
+                                                child: Text(
+                                                  dropDownStringItem,
+                                                  style: TextStyle(
+                                                    fontSize: fontsize,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (int newValueSelected) {
+                                        setState(() {
+                                          _dropDownError = '';
+                                          this._preferences[i] =
+                                              newValueSelected;
+                                          for (int k = 0;
+                                              k < this._preferences.length;
+                                              k++) {
+                                            for (int l = k + 1;
+                                                l < this._preferences.length;
+                                                l++) {
+                                              if (this._preferences[k] ==
+                                                      this._preferences[l] &&
+                                                  this._preferences[k] != 0) {
+                                                _dropDownError =
+                                                    'Enter unique preferences';
+                                                break;
+                                              }
+                                            }
+                                          }
+                                          for (int k = 1;
+                                              k < this._preferences.length;
+                                              k++) {
+                                            if (this._preferences[k] != 0) {
+                                              for (int l = 1; l < k; l++)
+                                                if (this._preferences[l] == 0) {
+                                                  _dropDownError =
+                                                      'Enter previous preferences first';
+                                                  break;
+                                                }
+                                            }
+                                          }
+                                        });
+                                      },
+                                      value: _preferences[i],
+                                    ),
+                                  ),
+                                ),
+                              Padding(
+                                padding: EdgeInsets.all(padding),
+                                child: Text(
+                                  'NOTE: Selected profiles will be taken in order of preference from top to bottom',
+                                  style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -507,7 +528,7 @@ class _RegisterScreenState extends State<RegisterView> {
                             String username = _usernamecontroller.text;
                             bool have_laptop = _selections[0];
                             List<int> preference = [];
-                            final storage = new FlutterSecureStorage();
+//                            final storage = new FlutterSecureStorage();
                             String jwt = window.localStorage["jwt"];
                             int k = 0;
                             for (int i = 0; i < _preferences.length; i++) {
@@ -543,25 +564,10 @@ class _RegisterScreenState extends State<RegisterView> {
                                 },
                               );
                             } else {
-                              AlertDialog alert = AlertDialog(
-                                title: Text("Spider Inductions"),
-                                content:
-                                    Text("You have successfully registered"),
-                                actions: [
-                                  FlatButton(
-                                    child: Text("OK"),
-                                    onPressed: () {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pop('dialog');
-                                    },
-                                  ),
-                                ],
-                              );
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return alert;
-                                },
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Message()),
                               );
                             }
                           }

@@ -5,6 +5,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:inductions_20/screens/views/splash_screen.dart';
 import 'package:inductions_20/screens/views/login/responsive_login_view.dart';
 import 'package:inductions_20/screens/views/register.dart';
+import 'package:inductions_20/screens/views/success_message.dart';
 
 void main() {
   runApp(
@@ -18,8 +19,17 @@ void main() {
 //    ),
     MaterialApp(
       home: Scaffold(
-        backgroundColor: Color(0xFF00171f),
-        body: LoginView(),
+        body: Container(
+          child: LoginView(),
+          decoration: BoxDecoration(
+            gradient: RadialGradient(
+              colors: <Color>[
+                Color(0xFF003459),
+                Color(0xFF00171f),
+              ],
+            ),
+          ),
+        ),
       ),
     ),
   );

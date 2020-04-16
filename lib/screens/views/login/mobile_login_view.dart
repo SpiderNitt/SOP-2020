@@ -106,7 +106,7 @@ class LoginState extends State<Loginview> {
                 ),
                 Container(
                   width: formwidth,
-                  color: Color(0xFF003459).withOpacity(0.5),
+                  color: Color(0xFF003459),
                   child: Padding(
                     padding: EdgeInsets.all(padding),
                     child: Form(
