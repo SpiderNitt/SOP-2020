@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:like_button/like_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'main.dart';
+import 'mentee_home.dart';
 import 'comments.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
@@ -143,7 +143,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
  ): null,
        
        bottomNavigationBar:  Container(
-              height: 80, 
+              height: 50, 
                 width: 370, 
                       
                 child: Material(
@@ -194,11 +194,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             return result;
           },
         ),
-
-
-
-
-                          ),),      
+  ),),      
 
                                 InkWell(
                             onTap:(){ List a=task;
@@ -247,14 +243,9 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                                         color: Color(submitbarcolor)
                                       ), ),
                           ),),                            
-        
-
-
-
-                    ],
+        ],
                   )
-                  ,), ),
-  
+                  ,), ),  
 
 
         body: TabBarView(
