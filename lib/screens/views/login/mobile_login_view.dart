@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:inductions_20/screens/enum/device_screen_type.dart';
 import 'package:inductions_20/screens/ui/base_widget.dart';
@@ -182,19 +184,23 @@ class LoginState extends State<Loginview> {
                               () async {
                                 if (_formKey.currentState.validate()) {
                                   // set up POST request arguments
-                                  String url = '';
+                                  String url =
+                                      "https://spider.nitt.edu/inductions20/login";
                                   Map<String, String> headers = {
                                     "Content-type": "application/json"
                                   };
                                   String webmail = _webmailcontroller.text;
                                   String password = _passwordcontroller.text;
-                                  String json =
-                                      '{"rollno": $webmail, "password": $password}';
+                                  String Json =
+                                      '{"rollno": "$webmail", "password": "$password"}';
                                   Response response = await post(url,
-                                      headers: headers, body: json);
+                                      headers: headers, body: Json);
                                   int statusCode = response.statusCode;
-                                  String body = response.body;
-                                  print(body);
+                                  var parsedJson = json.decode(response.body);
+                                  final storage = new FlutterSecureStorage();
+                                  await storage.write(
+                                      key: "jwt", value: parsedJson.jwt);
+                                  print(parsedJson.message);
                                 }
                               },
                               signinwidth,

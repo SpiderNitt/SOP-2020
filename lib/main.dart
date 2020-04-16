@@ -8,19 +8,19 @@ import 'package:inductions_20/screens/views/register.dart';
 
 void main() {
   runApp(
-    DevicePreview(
-      builder: (context) => MaterialApp(
-        home: Scaffold(
-          backgroundColor: Color(0xFF00171f),
-          body: LoginView(),
-        ),
-      ),
-    ),
-//    MaterialApp(
-//      home: Scaffold(
-//        backgroundColor: Color(0xFF00171f),
-//        body: RegisterView(),
+//    DevicePreview(
+//      builder: (context) => MaterialApp(
+//        home: Scaffold(
+//          backgroundColor: Color(0xFF00171f),
+//          body: LoginView(),
+//        ),
 //      ),
 //    ),
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Color(0xFF00171f),
+        body: LoginView(),
+      ),
+    ),
   );
 }

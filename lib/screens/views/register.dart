@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inductions_20/screens/ui/base_widget.dart';
+import 'package:http/http.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // Files imported
 import 'package:inductions_20/screens/enum/device_screen_type.dart';
@@ -251,26 +253,26 @@ class _RegisterScreenState extends State<RegisterView> {
                         _usernamecontroller,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
-                      child: CustomInput(
-                        Icons.details,
-                        "Rollnumber",
-                        (value) {
-                          if (value.isEmpty) {
-                            return 'Enter Rollnumber';
-                          } else if (value.length != 9) {
-                            return 'Enter a valid Rollnumber';
-                          }
-                          return null;
-                        },
-                        false,
-                        TextInputType.number,
-                        inputfieldwidth,
-                        fontsize,
-                        _rollnocontroller,
-                      ),
-                    ),
+//                    Padding(
+//                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
+//                      child: CustomInput(
+//                        Icons.details,
+//                        "Rollnumber",
+//                        (value) {
+//                          if (value.isEmpty) {
+//                            return 'Enter Rollnumber';
+//                          } else if (value.length != 9) {
+//                            return 'Enter a valid Rollnumber';
+//                          }
+//                          return null;
+//                        },
+//                        false,
+//                        TextInputType.number,
+//                        inputfieldwidth,
+//                        fontsize,
+//                        _rollnocontroller,
+//                      ),
+//                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
                       child: Text(
@@ -510,11 +512,33 @@ class _RegisterScreenState extends State<RegisterView> {
                       padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
                       child: CustomButton(
                         'Register',
-                        () {
+                        () async {
                           if (_formKey.currentState.validate() &&
                               _dropDownError == '') {
-                            // Process data.
-
+                            // set up POST request arguments
+                            String url =
+                                "https://spider.nitt.edu/inductions20/register";
+                            Map<String, String> headers = {
+                              "Content-type": "application/json"
+                            };
+                            String name = _namecontroller.text;
+                            String username = _usernamecontroller.text;
+                            bool have_laptop = _selections[0];
+                            List preference;
+                            final storage = new FlutterSecureStorage();
+                            String jwt = await storage.read(key: "jwt");
+                            for (int i = 0; i < _preferences.length; i++) {
+                              if (_preferences[i] != 0) {
+                                preference.add(_preferences[i]);
+                              }
+                            }
+                            String json =
+                                '{"jwt": "$jwt", :"have_laptop": "$have_laptop", "username": "$username", "fullname": "$name", "profiles": "$preference"}';
+                            Response response =
+                                await post(url, headers: headers, body: json);
+                            int statusCode = response.statusCode;
+                            String body = response.body;
+                            print(body);
                           }
                         },
                         registerwidth,

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQLConfiguration {
-  static HttpLink httpLink = HttpLink(uri: "");
+  static HttpLink httpLink =
+      HttpLink(uri: "https://spider.nitt.edu/inductions20/register");
 
   ValueNotifier<GraphQLClient> client = ValueNotifier(
     GraphQLClient(
