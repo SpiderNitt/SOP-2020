@@ -11,7 +11,7 @@ import 'package:inductions_20/screens/views/widgets/custom_button.dart';
 import 'package:inductions_20/screens/views/widgets/custom_input.dart';
 
 final _formKey = GlobalKey<FormState>();
-final _webmailcontroller = TextEditingController();
+final _rollnocontroller = TextEditingController();
 final _passwordcontroller = TextEditingController();
 
 class Logintablet extends StatefulWidget {
@@ -137,26 +137,22 @@ class LogintabletState extends State<Logintablet> {
                       Padding(
                         padding: EdgeInsets.all(padding),
                         child: CustomInput(
-                          Icons.email,
-                          "Webmail",
+                          Icons.person,
+                          "Rollnumber",
                           (value) {
-                            String p =
-                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                            RegExp regExp = new RegExp(p);
-
                             if (value.isEmpty) {
-                              return 'Enter Webmail';
-                            } else if (!regExp.hasMatch(value)) {
-                              return 'Enter a valid email';
+                              return 'Enter Rollnumber';
+                            } else if (value.toString().length > 9 ||
+                                value.toString().length < 9) {
+                              return 'Enter a valid rollnumber';
                             }
-
                             return null;
                           },
                           false,
                           TextInputType.emailAddress,
                           inputfieldwidth,
                           fontsize,
-                          _webmailcontroller,
+                          _rollnocontroller,
                         ),
                       ),
                       Padding(
@@ -189,7 +185,8 @@ class LogintabletState extends State<Logintablet> {
                               Map<String, String> headers = {
                                 "Content-type": "application/json"
                               };
-                              String webmail = _webmailcontroller.text;
+                              String webmail =
+                                  _rollnocontroller.text.toString();
                               String password = _passwordcontroller.text;
                               String Json =
                                   '{"rollno": $webmail, "password": $password}';
@@ -300,7 +297,7 @@ class Login_Tablet_Landscape extends StatelessWidget {
                       TextInputType.emailAddress,
                       width / 2,
                       20,
-                      _webmailcontroller,
+                      _rollnocontroller,
                     ),
                   ),
                   Padding(
@@ -332,7 +329,7 @@ class Login_Tablet_Landscape extends StatelessWidget {
                           Map<String, String> headers = {
                             "Content-type": "application/json"
                           };
-                          String webmail = _webmailcontroller.text;
+                          String webmail = _rollnocontroller.text;
                           String password = _passwordcontroller.text;
                           String json =
                               '{"rollno": "$webmail", "password": "$password"}';

@@ -8,9 +8,10 @@ import 'package:inductions_20/screens/enum/device_screen_type.dart';
 import 'package:inductions_20/screens/ui/base_widget.dart';
 import 'package:inductions_20/screens/views/widgets/custom_button.dart';
 import 'package:inductions_20/screens/views/widgets/custom_input.dart';
+import 'package:inductions_20/screens/views/register.dart';
 
 final _formKey = GlobalKey<FormState>();
-final _webmailcontroller = TextEditingController();
+final _rollnocontroller = TextEditingController();
 final _passwordcontroller = TextEditingController();
 
 class Loginview extends StatefulWidget {
@@ -138,25 +139,22 @@ class LoginState extends State<Loginview> {
                           Padding(
                             padding: EdgeInsets.all(padding),
                             child: CustomInput(
-                              Icons.email,
-                              "Webmail",
+                              Icons.person,
+                              "Rollnumber",
                               (value) {
-                                String p =
-                                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                                RegExp regExp = new RegExp(p);
-
                                 if (value.isEmpty) {
-                                  return 'Enter Webmail';
-                                } else if (!regExp.hasMatch(value)) {
-                                  return 'Enter a valid email';
+                                  return 'Enter Rollnumber';
+                                } else if (value.toString().length > 9 ||
+                                    value.toString().length < 9) {
+                                  return 'Enter a valid rollnumber';
                                 }
                                 return null;
                               },
                               false,
-                              TextInputType.emailAddress,
+                              TextInputType.number,
                               inputfieldwidth,
                               fontsize,
-                              _webmailcontroller,
+                              _rollnocontroller,
                             ),
                           ),
                           Padding(
@@ -189,18 +187,48 @@ class LoginState extends State<Loginview> {
                                   Map<String, String> headers = {
                                     "Content-type": "application/json"
                                   };
-                                  String webmail = _webmailcontroller.text;
+                                  String rollno =
+                                      _rollnocontroller.text.toString();
                                   String password = _passwordcontroller.text;
                                   String Json =
-                                      '{"rollno": "$webmail", "password": "$password"}';
+                                      '{"rollno": "$rollno", "password": "$password"}';
                                   Response response = await post(url,
                                       headers: headers, body: Json);
+                                  print(response.body);
                                   int statusCode = response.statusCode;
                                   var parsedJson = json.decode(response.body);
-                                  final storage = new FlutterSecureStorage();
-                                  await storage.write(
-                                      key: "jwt", value: parsedJson.jwt);
-                                  print(parsedJson.message);
+                                  if (parsedJson["success"] == true) {
+                                    var storage = new FlutterSecureStorage();
+                                    await storage.write(
+                                        key: "jwt", value: parsedJson.token);
+                                    await Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                RegisterView()));
+                                    print(parsedJson.message);
+                                  } else {
+                                    AlertDialog alert = AlertDialog(
+                                      title: Text("Spider Inductions"),
+                                      content:
+                                          Text("Invalid username and password"),
+                                      actions: [
+                                        FlatButton(
+                                          child: Text("OK"),
+                                          onPressed: () {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop('dialog');
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return alert;
+                                      },
+                                    );
+                                  }
                                 }
                               },
                               signinwidth,
