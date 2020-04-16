@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -40,11 +41,11 @@ class _RegisterScreenState extends State<RegisterView> {
   List _remprofiles = [
     'None',
     'Algos',
-    'App Development - Flutter',
     'App Development - Android Native',
+    'App Development - Flutter',
     'App Development - React Native',
-    'Tronix - Robotics and control',
     'Tronix - Embedded Systems and Analog Electronics',
+    'Tronix - Robotics and control',
     'Tronix - Signal Processing and Machine Learning',
     'Web Development'
   ];
@@ -524,21 +525,66 @@ class _RegisterScreenState extends State<RegisterView> {
                             String name = _namecontroller.text;
                             String username = _usernamecontroller.text;
                             bool have_laptop = _selections[0];
-                            List preference;
+                            List<int> preference = [];
                             final storage = new FlutterSecureStorage();
-                            String jwt = await storage.read(key: "jwt");
+                            //String jwt = await storage.read(key: "jwt");
+                            String jwt =
+                                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc01lbnRvciI6ZmFsc2UsIlJvbGxObyI6IjEwNjExODA4OSIsImV4cCI6MTU4NzE2MTk2N30.iaFU6PZHcs8dOUjAToBuBn_21_j8l-DY7rPVRcXnXy8";
+                            int k = 0;
                             for (int i = 0; i < _preferences.length; i++) {
                               if (_preferences[i] != 0) {
-                                preference.add(_preferences[i]);
+                                preference.insert(k, _preferences[i]);
+                                k++;
                               }
                             }
-                            String json =
-                                '{"jwt": "$jwt", :"have_laptop": "$have_laptop", "username": "$username", "fullname": "$name", "profiles": "$preference"}';
+                            String Json =
+                                '{"jwt": "$jwt", "have_laptop": $have_laptop, "username": "$username", "fullname": "$name", "profiles": $preference}';
                             Response response =
-                                await post(url, headers: headers, body: json);
+                                await post(url, headers: headers, body: Json);
+                            print(response.body);
                             int statusCode = response.statusCode;
-                            String body = response.body;
-                            print(body);
+                            if (statusCode == 403) {
+                              AlertDialog alert = AlertDialog(
+                                title: Text("Spider Inductions"),
+                                content: Text("You've already registered"),
+                                actions: [
+                                  FlatButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog');
+                                    },
+                                  ),
+                                ],
+                              );
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                },
+                              );
+                            } else {
+                              AlertDialog alert = AlertDialog(
+                                title: Text("Spider Inductions"),
+                                content:
+                                    Text("You have successfully registered"),
+                                actions: [
+                                  FlatButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop('dialog');
+                                    },
+                                  ),
+                                ],
+                              );
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                },
+                              );
+                            }
                           }
                         },
                         registerwidth,
