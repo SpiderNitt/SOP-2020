@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -88,13 +89,13 @@ class _RegisterScreenState extends State<RegisterView> {
     return ResponsiveBuild(builder: (context, sizingInformation) {
       if (sizingInformation.deviceScreenType == DeviceScreenType.Mobile) {
         if (sizingInformation.orientation == Orientation.portrait) {
-          headingfontsize = 25;
-          formwidth = 3 * width / 4;
-          inputfieldwidth = 4 * width / 5;
-          containerwidth = 4 * width / 5;
-          dropdownwidth = 3 * width / 5;
-          registerwidth = 6 * width / 7;
-          registerheight = width / 8;
+          headingfontsize = 22;
+          formwidth = width / 2;
+          inputfieldwidth = width / 2;
+          containerwidth = width / 2;
+          dropdownwidth = 3 * width / 8;
+          registerwidth = width / 2;
+          registerheight = 40;
           padding = 10.0;
           fontsize = 18.0;
         } else {
@@ -104,7 +105,7 @@ class _RegisterScreenState extends State<RegisterView> {
           containerwidth = width / 2;
           dropdownwidth = 3 * width / 8;
           registerwidth = width / 2;
-          registerheight = width / 15;
+          registerheight = 40;
           padding = 10.0;
           fontsize = 18.0;
         }
@@ -112,12 +113,12 @@ class _RegisterScreenState extends State<RegisterView> {
           DeviceScreenType.LargeMobile) {
         if (sizingInformation.orientation == Orientation.portrait) {
           headingfontsize = 25;
-          formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
+          formwidth = 2 * width / 3;
+          inputfieldwidth = 2 * width / 3;
+          containerwidth = 2 * width / 3;
           dropdownwidth = 3 * width / 8;
           registerwidth = width / 2;
-          registerheight = width / 15;
+          registerheight = 30;
           padding = 15.0;
           fontsize = 18.0;
         } else {
@@ -127,53 +128,54 @@ class _RegisterScreenState extends State<RegisterView> {
           containerwidth = width / 2;
           dropdownwidth = 3 * width / 8;
           registerwidth = width / 2;
-          registerheight = width / 15;
+          registerheight = 30;
           padding = 15.0;
           fontsize = 18.0;
         }
       } else if (sizingInformation.deviceScreenType ==
           DeviceScreenType.Tablet) {
         if (sizingInformation.orientation == Orientation.portrait) {
-          headingfontsize = 30;
+          headingfontsize = 25;
           formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
-          registerheight = width / 15;
-          padding = 20.0;
-          fontsize = 25.0;
+          inputfieldwidth = 3 * width / 7;
+          containerwidth = 3 * width / 7;
+          dropdownwidth = 3 * width / 15;
+          registerwidth = 3 * width / 10;
+          registerheight = 60;
+          padding = 15.0;
+          fontsize = 20.0;
         } else {
-          headingfontsize = 30;
+          headingfontsize = 25;
           formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
-          registerheight = width / 15;
-          padding = 25.0;
+          inputfieldwidth = 3 * width / 5;
+          containerwidth = 3 * width / 5;
+          dropdownwidth = 3 * width / 15;
+          registerwidth = 3 * width / 10;
+          registerheight = 60;
+          padding = 15.0;
+          fontsize = 20.0;
         }
       } else {
         if (sizingInformation.orientation == Orientation.portrait) {
-          headingfontsize = 40;
-          formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
-          registerheight = width / 15;
-          padding = 25.0;
-          fontsize = 30.0;
+          headingfontsize = 25;
+          formwidth = width / 3;
+          inputfieldwidth = 3 * width / 10;
+          containerwidth = 3 * width / 10;
+          dropdownwidth = 3 * width / 15;
+          registerwidth = 3 * width / 10;
+          registerheight = 60;
+          padding = 15.0;
+          fontsize = 20.0;
         } else {
-          headingfontsize = 40;
-          formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
-          registerheight = width / 15;
-          padding = 25.0;
-          fontsize = 30.0;
+          headingfontsize = 25;
+          formwidth = width / 3;
+          inputfieldwidth = 3 * width / 10;
+          containerwidth = 3 * width / 10;
+          dropdownwidth = 3 * width / 15;
+          registerwidth = 3 * width / 10;
+          registerheight = 60;
+          padding = 15.0;
+          fontsize = 20.0;
         }
       }
       return Center(
@@ -186,7 +188,7 @@ class _RegisterScreenState extends State<RegisterView> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
                 child: Container(
-                  width: formwidth,
+                  width: inputfieldwidth,
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -216,7 +218,7 @@ class _RegisterScreenState extends State<RegisterView> {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
+                      padding: EdgeInsets.all(padding),
                       child: CustomInput(
                         Icons.person,
                         "Name",
@@ -230,12 +232,12 @@ class _RegisterScreenState extends State<RegisterView> {
                         false,
                         TextInputType.text,
                         inputfieldwidth,
-                        18,
+                        fontsize,
                         _namecontroller,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
+                      padding: EdgeInsets.all(padding),
                       child: CustomInput(
                         Icons.account_box,
                         "Username",
@@ -253,28 +255,8 @@ class _RegisterScreenState extends State<RegisterView> {
                         _usernamecontroller,
                       ),
                     ),
-//                    Padding(
-//                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
-//                      child: CustomInput(
-//                        Icons.details,
-//                        "Rollnumber",
-//                        (value) {
-//                          if (value.isEmpty) {
-//                            return 'Enter Rollnumber';
-//                          } else if (value.length != 9) {
-//                            return 'Enter a valid Rollnumber';
-//                          }
-//                          return null;
-//                        },
-//                        false,
-//                        TextInputType.number,
-//                        inputfieldwidth,
-//                        fontsize,
-//                        _rollnocontroller,
-//                      ),
-//                    ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
+                      padding: EdgeInsets.all(padding),
                       child: Text(
                         'Select Profile with Preferences',
                         style: TextStyle(
@@ -284,7 +266,7 @@ class _RegisterScreenState extends State<RegisterView> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0.0, padding, 0.0, padding),
+                      padding: EdgeInsets.all(padding),
                       child: Container(
                         width: containerwidth,
                         decoration: BoxDecoration(
@@ -519,16 +501,14 @@ class _RegisterScreenState extends State<RegisterView> {
                             String url =
                                 "https://spider.nitt.edu/inductions20/register";
                             Map<String, String> headers = {
-                              "Content-type": "application/json"
+                              "Content-type": "application/json",
                             };
                             String name = _namecontroller.text;
                             String username = _usernamecontroller.text;
                             bool have_laptop = _selections[0];
                             List<int> preference = [];
                             final storage = new FlutterSecureStorage();
-                            //String jwt = await storage.read(key: "jwt");
-                            String jwt =
-                                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc01lbnRvciI6ZmFsc2UsIlJvbGxObyI6IjEwNjExODA4OSIsImV4cCI6MTU4NzE2MzIzNH0.UEmrqqFh0UWkZVsin-n7agbw-iUwxxF-ctxLRuFjm00";
+                            String jwt = window.localStorage["jwt"];
                             int k = 0;
                             for (int i = 0; i < _preferences.length; i++) {
                               if (_preferences[i] != 0) {

@@ -19,7 +19,7 @@ void main() {
     MaterialApp(
       home: Scaffold(
         backgroundColor: Color(0xFF00171f),
-        body: RegisterView(),
+        body: LoginView(),
       ),
     ),
   );

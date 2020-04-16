@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -38,180 +39,222 @@ class LogintabletState extends State<Logintablet> {
       builder: (context, sizingInformation) {
         if (sizingInformation.deviceScreenType == DeviceScreenType.Tablet) {
           if (sizingInformation.orientation == Orientation.portrait) {
-            headingfontsize = 30;
-            imagesize = height / 4;
+            headingfontsize = 25;
+            imagesize = 200;
             containerheight = height / 3;
             containerwidth = width / 2;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
-            signinheight = width / 20;
+            signinheight = 60;
             padding = 15.0;
-            fontsize = 22.0;
+            fontsize = 20.0;
           } else {
-            headingfontsize = 30;
-            imagesize = height / 4;
-            containerheight = height / 3;
+            headingfontsize = 25;
+            imagesize = 200;
+            containerheight = height / 4;
             containerwidth = width / 2;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
-            signinheight = width / 20;
+            signinheight = 60;
             padding = 15.0;
-            fontsize = 22.0;
+            fontsize = 20.0;
           }
         } else {
           if (sizingInformation.orientation == Orientation.portrait) {
-            headingfontsize = 40;
-            imagesize = height / 2;
-            containerheight = height / 3;
-            containerwidth = 2 * height / 5;
-            inputfieldwidth = 3 * width / 8;
-            signinwidth = 3 * width / 8;
-            signinheight = width / 20;
-            padding = 10.0;
-            fontsize = 30.0;
-          } else {
-            headingfontsize = 40;
-            imagesize = height / 4;
+            headingfontsize = 25;
+            imagesize = 230;
             containerheight = height / 4;
             containerwidth = 2 * height / 5;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
-            signinheight = width / 20;
-            padding = 10.0;
-            fontsize = 30.0;
+            signinheight = 60;
+            padding = 15.0;
+            fontsize = 20.0;
+          } else {
+            headingfontsize = 25;
+            imagesize = 230;
+            containerheight = height / 4;
+            containerwidth = 2 * height / 5;
+            inputfieldwidth = 3 * width / 8;
+            signinwidth = 3 * width / 8;
+            signinheight = 60;
+            padding = 15.0;
+            fontsize = 20.0;
           }
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/SpiderLogo.webp',
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Image(
+                  image: AssetImage(
+                    'assets/images/SpiderLogo.webp',
+                  ),
+                  height: imagesize,
+                  width: imagesize,
                 ),
-                height: imagesize,
-                width: imagesize,
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                width: containerwidth,
-                height: containerheight,
-                color: Color(0xFF003459).withOpacity(0.5),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Center(
-                        child: Container(
-                          width: inputfieldwidth,
-                          child: Padding(
-                            padding: EdgeInsets.all(padding),
-                            child: Row(
-                              children: <Widget>[
-                                Text(
-                                  'Sign',
-                                  style: TextStyle(
-                                    color: Color(0xFFFFFFFF),
-                                    fontSize: headingfontsize,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.8,
-                                  ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: EdgeInsets.all(padding),
+                  child: Container(
+                    width: containerwidth,
+                    color: Color(0xFF003459).withOpacity(0.5),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Center(
+                            child: Container(
+                              width: inputfieldwidth,
+                              child: Padding(
+                                padding: EdgeInsets.all(padding),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Sign',
+                                      style: TextStyle(
+                                        color: Color(0xFFFFFFFF),
+                                        fontSize: headingfontsize,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 0.8,
+                                      ),
+                                    ),
+                                    Text(
+                                      'In',
+                                      style: TextStyle(
+                                        color: Color(0xFF00A8E8),
+                                        fontSize: headingfontsize,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 0.8,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  'In',
-                                  style: TextStyle(
-                                    color: Color(0xFF00A8E8),
-                                    fontSize: headingfontsize,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 0.8,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.all(padding),
+                            child: CustomInput(
+                              Icons.person,
+                              "Rollnumber",
+                              (value) {
+                                if (value.isEmpty) {
+                                  return 'Enter Rollnumber';
+                                } else if (value.toString().length > 9 ||
+                                    value.toString().length < 9) {
+                                  return 'Enter a valid rollnumber';
+                                }
+                                return null;
+                              },
+                              false,
+                              TextInputType.emailAddress,
+                              inputfieldwidth,
+                              fontsize,
+                              _rollnocontroller,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(padding),
+                            child: CustomInput(
+                              Icons.lock,
+                              "Password",
+                              (value) {
+                                if (value.isEmpty) {
+                                  return 'Enter Password';
+                                }
+                                return null;
+                              },
+                              true,
+                              TextInputType.text,
+                              inputfieldwidth,
+                              fontsize,
+                              _passwordcontroller,
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
+                            child: CustomButton(
+                              'Sign In',
+                              () async {
+                                if (_formKey.currentState.validate()) {
+                                  // set up POST request arguments
+                                  String url =
+                                      "https://spider.nitt.edu/inductions20/login";
+                                  Map<String, String> headers = {
+                                    "Content-type": "application/json",
+                                  };
+                                  String rollno =
+                                      _rollnocontroller.text.toString();
+                                  String password = _passwordcontroller.text;
+                                  String Json =
+                                      '{"rollno": "$rollno", "password": "$password"}';
+                                  Response response = await post(url,
+                                      headers: headers, body: Json);
+                                  print(response.body);
+                                  int statusCode = response.statusCode;
+                                  var parsedJson = json.decode(response.body);
+                                  if (parsedJson["success"] == true) {
+//                                    var storage = new FlutterSecureStorage();
+//                                    await storage.write(
+//                                        key: "jwt", value: parsedJson.token);
+                                    final Storage _localStorage =
+                                        window.localStorage;
+
+                                    _localStorage['jwt'] = parsedJson["token"];
+
+                                    await Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                RegisterView()));
+                                    print(parsedJson.message);
+                                  } else {
+                                    AlertDialog alert = AlertDialog(
+                                      title: Text("Spider Inductions"),
+                                      content:
+                                          Text("Invalid username and password"),
+                                      actions: [
+                                        FlatButton(
+                                          child: Text("OK"),
+                                          onPressed: () {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop('dialog');
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return alert;
+                                      },
+                                    );
+                                  }
+                                }
+                              },
+                              signinwidth,
+                              signinheight,
+                              fontsize,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: CustomInput(
-                          Icons.person,
-                          "Rollnumber",
-                          (value) {
-                            if (value.isEmpty) {
-                              return 'Enter Rollnumber';
-                            } else if (value.toString().length > 9 ||
-                                value.toString().length < 9) {
-                              return 'Enter a valid rollnumber';
-                            }
-                            return null;
-                          },
-                          false,
-                          TextInputType.emailAddress,
-                          inputfieldwidth,
-                          fontsize,
-                          _rollnocontroller,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: CustomInput(
-                          Icons.lock,
-                          "Password",
-                          (value) {
-                            if (value.isEmpty) {
-                              return 'Enter Password';
-                            }
-                            return null;
-                          },
-                          true,
-                          TextInputType.text,
-                          inputfieldwidth,
-                          fontsize,
-                          _passwordcontroller,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: CustomButton(
-                          'Sign In',
-                          () async {
-                            if (_formKey.currentState.validate()) {
-                              // set up POST request arguments
-                              String url =
-                                  "https://spider.nitt.edu/inductions20/login";
-                              Map<String, String> headers = {
-                                "Content-type": "application/json"
-                              };
-                              String webmail =
-                                  _rollnocontroller.text.toString();
-                              String password = _passwordcontroller.text;
-                              String Json =
-                                  '{"rollno": $webmail, "password": $password}';
-                              Response response =
-                                  await post(url, headers: headers, body: Json);
-                              int statusCode = response.statusCode;
-                              var parsedJson = json.decode(response.body);
-                              final storage = new FlutterSecureStorage();
-                              await storage.write(
-                                  key: "jwt", value: parsedJson.jwt);
-                              print(parsedJson.message);
-                            }
-                          },
-                          signinwidth,
-                          signinheight,
-                          fontsize,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              Container(
+                height: 50.0,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -337,9 +380,12 @@ class Login_Tablet_Landscape extends StatelessWidget {
                           int statusCode = response.statusCode;
                           var parsedJson = json.decode(response.body);
                           if (parsedJson["success"] == true) {
-                            var storage = new FlutterSecureStorage();
-                            await storage.write(
-                                key: "jwt", value: parsedJson.token);
+//                            var storage = new FlutterSecureStorage();
+//                            await storage.write(
+//                                key: "jwt", value: parsedJson.token);
+                            final Storage _localStorage = window.localStorage;
+
+                            _localStorage['jwt'] = parsedJson["token"];
                             await Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>

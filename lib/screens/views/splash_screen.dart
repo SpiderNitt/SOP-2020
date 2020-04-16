@@ -18,9 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
   // todo: implement initState
   void initState() {
     super.initState();
-//    Timer(Duration(seconds: 5), () {
-//      _navigateToLogin();
-//    });
+    Timer(Duration(seconds: 3), () {
+      _navigateToLogin();
+    });
   }
 
   void _navigateToLogin() {

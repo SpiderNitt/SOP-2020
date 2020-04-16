@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
@@ -29,6 +30,7 @@ class LoginState extends State<Loginview> {
   double fontsize;
   double imagesize;
   double containerheight;
+  double containerwidth;
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +40,21 @@ class LoginState extends State<Loginview> {
       builder: (context, sizingInformation) {
         if (sizingInformation.deviceScreenType == DeviceScreenType.Mobile) {
           if (sizingInformation.orientation == Orientation.portrait) {
-            headingfontsize = 25;
-            imagesize = height / 4;
-            containerheight = 3 * height / 8;
-            formwidth = 4 * width / 5;
-            inputfieldwidth = 3 * width / 4;
-            signinwidth = 9 * width / 16;
-            signinheight = width / 8;
-            padding = 10.0;
+            headingfontsize = 22;
+            imagesize = 190;
+            containerheight = height / 3;
+            containerwidth = 3 * width / 4;
+            inputfieldwidth = 3 * width / 8;
+            signinwidth = 3 * width / 8;
+            signinheight = 60;
+            padding = 15.0;
             fontsize = 18.0;
           } else {
             headingfontsize = 25;
-            containerheight = height / 2;
-            imagesize = height / 4;
-            formwidth = width / 2;
-            inputfieldwidth = 3 * width / 8;
+            containerheight = width / 2;
+            imagesize = 190;
+            formwidth = 2 * height / 5;
+            inputfieldwidth = 9 * width / 16;
             signinwidth = 9 * width / 16;
             signinheight = width / 20;
             padding = 10.0;
@@ -61,20 +63,20 @@ class LoginState extends State<Loginview> {
         } else if (sizingInformation.deviceScreenType ==
             DeviceScreenType.LargeMobile) {
           if (sizingInformation.orientation == Orientation.portrait) {
-            headingfontsize = 25;
-            imagesize = height / 3;
-            containerheight = height / 2;
-            formwidth = 4 * width / 5;
-            inputfieldwidth = 3 * width / 4;
-            signinwidth = 9 * width / 16;
-            signinheight = width / 8;
-            padding = 10.0;
+            headingfontsize = 22;
+            imagesize = 190;
+            containerheight = height / 3;
+            containerwidth = 3 * width / 4;
+            inputfieldwidth = 3 * width / 8;
+            signinwidth = 3 * width / 8;
+            signinheight = 60;
+            padding = 15.0;
             fontsize = 18.0;
           } else {
             headingfontsize = 25;
-            imagesize = height / 3;
+            imagesize = 190;
             containerheight = height / 2;
-            formwidth = width / 2;
+            formwidth = 2 * height / 5;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
             signinheight = width / 10;
@@ -89,7 +91,7 @@ class LoginState extends State<Loginview> {
                 Padding(
                   padding: const EdgeInsets.all(40.0),
                   child: Container(
-                    height: containerheight,
+                    width: containerwidth,
                     child: Image(
                       image: AssetImage(
                         'assets/images/SpiderLogo.webp',
@@ -98,6 +100,9 @@ class LoginState extends State<Loginview> {
                       width: imagesize,
                     ),
                   ),
+                ),
+                Container(
+                  height: 30,
                 ),
                 Container(
                   width: formwidth,
@@ -185,7 +190,7 @@ class LoginState extends State<Loginview> {
                                   String url =
                                       "https://spider.nitt.edu/inductions20/login";
                                   Map<String, String> headers = {
-                                    "Content-type": "application/json"
+                                    "Content-type": "application/json",
                                   };
                                   String rollno =
                                       _rollnocontroller.text.toString();
@@ -198,9 +203,14 @@ class LoginState extends State<Loginview> {
                                   int statusCode = response.statusCode;
                                   var parsedJson = json.decode(response.body);
                                   if (parsedJson["success"] == true) {
-                                    var storage = new FlutterSecureStorage();
-                                    await storage.write(
-                                        key: "jwt", value: parsedJson.token);
+//                                    var storage = new FlutterSecureStorage();
+//                                    await storage.write(
+//                                        key: "jwt", value: parsedJson.token);
+                                    final Storage _localStorage =
+                                        window.localStorage;
+
+                                    _localStorage['jwt'] = parsedJson["token"];
+
                                     await Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
