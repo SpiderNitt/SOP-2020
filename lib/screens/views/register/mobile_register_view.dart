@@ -261,6 +261,18 @@ class _RegisterPortraitScreenState extends State<Register_Mobile_Portrait> {
                                           break;
                                         }
                                       }
+                                      for (int k = 1;
+                                          k < this._preferences.length;
+                                          k++) {
+                                        if (this._preferences[k] != 0) {
+                                          for (int l = 1; l < k; l++)
+                                            if (this._preferences[l] == 0) {
+                                              _dropDownError =
+                                                  'Enter previous preferences first';
+                                              break;
+                                            }
+                                        }
+                                      }
                                     }
                                   });
                                 },
