@@ -8,15 +8,16 @@ class CustomInput extends StatelessWidget {
   final TextInputType _type;
   final double _width;
   final double _fontsize;
-
+  final _controller;
   CustomInput(this._icon, this._hintText, this._validator, this._obscureText,
-      this._type, this._width, this._fontsize);
+      this._type, this._width, this._fontsize, this._controller);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: _width,
       child: TextFormField(
+        controller: _controller,
         keyboardType: _type,
         obscureText: _obscureText,
         style: TextStyle(
