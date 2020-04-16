@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+
 
 class Data {
 
@@ -22,6 +24,12 @@ factory Data.getdata(List json){
 
 }
 
+class PercentData {
+  double adv_percent;
+  double beg_percent;
+  PercentData(this.adv_percent, this.beg_percent);
+}
+
 class Commits extends StatefulWidget {
 
 
@@ -37,6 +45,7 @@ class _CommitsState extends State<Commits> {
 
   String repo_det;
   dynamic res;
+  dynamic percent_res;
 
   _CommitsState(this.repo_det);
 
@@ -45,11 +54,17 @@ class _CommitsState extends State<Commits> {
   return Data.getdata(jsonDecode(resp.body));
   }
   
+  Future<PercentData> getdatatest() async{
+  Response resp = await get('https://api.github.com/repos/chakki1234/$repo_det/commits');
+  return PercentData(0.6, 0.2);
+  }
+  
 
   @override
   void initState(){
   super.initState();
   this.res = getdata();
+  this.percent_res = getdatatest();
   }
 
   @override
@@ -70,18 +85,60 @@ class _CommitsState extends State<Commits> {
       child: ListView.builder(
       itemCount: (snapshot.data.commits.length + 1),
       itemBuilder: (context, index){
-        print(index);
+
         if( index == snapshot.data.commits.length)
          
-        return  FlatButton(
-          
-          onPressed: (){
+        return Column(
+          children: [
+
+       FutureBuilder(
+         future: this.percent_res,
+         builder: (context, snap){
+           
+            if(snap.hasData) 
+              return Column(
+                children: <Widget>[
+                Divider(
+                color: config.fontColor,
+                ),
+              Text('Adv Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+              CircularPercentIndicator(
+              radius: 100.0,
+              lineWidth: 10.0,
+              percent: (snap.data.adv_percent),
+              progressColor: Colors.green,
+              animation: true),
+               SizedBox(
+                height: 10,
+              ),
+              Text('Beginar Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+              CircularPercentIndicator(
+              radius: 100.0,
+              lineWidth: 10.0,
+              percent: (snap.data.beg_percent),
+              progressColor: Colors.red,
+              animation: true),
+              SizedBox(
+                height: 10,
+              ),
+              FlatButton(
+            onPressed: (){
             Navigator.pushNamed(context, '/writereview', arguments: {
               'repo_det': this.repo_det,
             });
           }, 
-         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)));
-         
+         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+         ),
+                ],
+              );
+
+              else if(snap.hasError)
+              return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),); 
+              
+              else return CircularProgressIndicator();
+         }),
+          ],
+          ); 
          else return  Card(
         shape: RoundedRectangleBorder(
        borderRadius: BorderRadius.circular(config.borRadi)),
