@@ -46,7 +46,7 @@ String gitacc;
       children: <Widget>[
         MenDet(this.name, this.gitacc),
         SizedBox(height: 10),
-        Text('Mentee details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.bordColor)),
+        Text('Mentee details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
         MenteeDet(this.name, this.gitacc)
       ],

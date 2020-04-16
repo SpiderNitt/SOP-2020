@@ -23,20 +23,9 @@ MenteeDet(String name, String gitacc){
       child: ListView.builder(
       itemCount: name.length,
       itemBuilder: (context, index){
-        return  Card(
-          shape: RoundedRectangleBorder(
-       borderRadius: BorderRadius.circular(config.borRadi)),
-        elevation: 0.0,
-        child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(config.borRadi),
-          border: Border.all(
-            width: config.bordWid,
-            color: config.bordColor,
-          ),
-          color: config.conColor,
-        ),
-        child: ListTile(
+        return Column(
+          children: <Widget>[
+            ListTile(
           trailing: Icon(
             Icons.keyboard_arrow_right,
             color: config.fontColor, ),
@@ -53,7 +42,11 @@ MenteeDet(String name, String gitacc){
           ),
           title: Text('${name[index]}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         ),
+        Divider(
+          color: config.fontColor,
+          indent: 70,
         ),
+        ],
         );
       }
     ),

@@ -98,9 +98,6 @@ class _CommitsState extends State<Commits> {
             if(snap.hasData) 
               return Column(
                 children: <Widget>[
-                Divider(
-                color: config.fontColor,
-                ),
               Text('Adv Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
               CircularPercentIndicator(
               radius: 100.0,
@@ -139,27 +136,18 @@ class _CommitsState extends State<Commits> {
          }),
           ],
           ); 
-         else return  Card(
-        shape: RoundedRectangleBorder(
-       borderRadius: BorderRadius.circular(config.borRadi)),
-        elevation: 0.0,
-        child: Container(
-          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(config.borRadi),
-          border: Border.all(
-            width: config.bordWid,
-            color: config.bordColor,
-          ),
-          color: config.conColor,
-        ),
-          child: ListTile(
+         else return  Column(
+           children: <Widget>[
+             ListTile(
           contentPadding: EdgeInsets.all(3),
           title: Text(snapshot.data.commits[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Text(snapshot.data.date[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         ),
-        ),
-        );
+        Divider(
+          color: config.fontColor,
+        )
+        ],
+         );
       }
     ),
     );

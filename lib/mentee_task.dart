@@ -29,7 +29,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         children: <Widget>[
         MenDet(data['name'], data['git']),
         SizedBox(height: 10),
-        Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.bordColor)),
+        Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
         RepoDet(data['git'], data['name']),
        ]

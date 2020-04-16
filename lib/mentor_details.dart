@@ -52,14 +52,14 @@ _MenDetState(this.name, this.gitacc);
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: config.conColor,
-        border: Border.all(
-          color: config.bordColor,
-          width: config.bordWid,
-        ),
-        borderRadius: BorderRadius.circular(config.borRadi),
-      ),
+      // decoration: BoxDecoration(
+      //   color: config.conColor,
+      //   border: Border.all(
+      //     color: config.bordColor,
+      //     width: config.bordWid,
+      //   ),
+      //   borderRadius: BorderRadius.circular(config.borRadi),
+      // ),
       margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Center(

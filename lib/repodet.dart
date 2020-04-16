@@ -68,21 +68,9 @@ class _RepoDetState extends State<RepoDet> {
       child: ListView.builder(
       itemCount: snapshot.data.repos.length,
       itemBuilder: (context, index){
-        return  Card(
-       shape: RoundedRectangleBorder(
-       borderRadius: BorderRadius.circular(config.borRadi)),
-        elevation: 0.0,
-        child: Container(
-          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(config.borRadi),
-          border: Border.all(
-            width: config.bordWid,
-            color: config.bordColor,
-          ),
-          color: config.conColor,
-        ),
-          child: ListTile(
+        return Column(
+          children: <Widget>[
+            ListTile(
             trailing: Icon(
             Icons.keyboard_arrow_right,
             color: config.fontColor, ),
@@ -96,7 +84,10 @@ class _RepoDetState extends State<RepoDet> {
           },
           title: Text(snapshot.data.repos[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         ),
-        ),
+        Divider(
+          color: config.fontColor,
+        )
+          ],
         );
       }
     ),

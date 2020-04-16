@@ -31,7 +31,7 @@ class _CommitsFinal extends State<CommitsFinal> {
         Container(
           padding: EdgeInsets.all(20),
          child: Center(
-           child: Text('Commit History for ${data['repo_det']}',  style: TextStyle( fontSize: 17, fontFamily: config.fontFamily, color: config.bordColor)),
+           child: Text('Commit History for ${data['repo_det']}',  style: TextStyle( fontSize: 17, fontFamily: config.fontFamily, color: config.fontColor)),
          ),
         ),
         Commits(data['repo_det']),
