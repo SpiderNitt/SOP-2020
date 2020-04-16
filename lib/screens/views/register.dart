@@ -18,7 +18,6 @@ final _formKey = GlobalKey<FormState>();
 final _key = GlobalKey<FormState>();
 final _namecontroller = TextEditingController();
 final _usernamecontroller = TextEditingController();
-final _rollnocontroller = TextEditingController();
 List items = [1, 2, 3, 4, 5, 6, 7];
 
 class RegisterView extends StatefulWidget {
@@ -30,11 +29,11 @@ class _RegisterScreenState extends State<RegisterView> {
   List<bool> _selections = [true, false];
   List _profiles = [
     'Algos',
-    'App Development - Flutter',
     'App Development - Android Native',
+    'App Development - Flutter',
     'App Development - React Native',
-    'Tronix - Robotics and control',
     'Tronix - Embedded Systems and Analog Electronics',
+    'Tronix - Robotics and control',
     'Tronix - Signal Processing and Machine Learning',
     'Web Development'
   ];
@@ -529,7 +528,7 @@ class _RegisterScreenState extends State<RegisterView> {
                             final storage = new FlutterSecureStorage();
                             //String jwt = await storage.read(key: "jwt");
                             String jwt =
-                                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc01lbnRvciI6ZmFsc2UsIlJvbGxObyI6IjEwNjExODA4OSIsImV4cCI6MTU4NzE2MTk2N30.iaFU6PZHcs8dOUjAToBuBn_21_j8l-DY7rPVRcXnXy8";
+                                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJc01lbnRvciI6ZmFsc2UsIlJvbGxObyI6IjEwNjExODA4OSIsImV4cCI6MTU4NzE2MzIzNH0.UEmrqqFh0UWkZVsin-n7agbw-iUwxxF-ctxLRuFjm00";
                             int k = 0;
                             for (int i = 0; i < _preferences.length; i++) {
                               if (_preferences[i] != 0) {
