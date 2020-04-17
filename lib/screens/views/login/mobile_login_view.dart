@@ -205,7 +205,6 @@ class LoginState extends State<Loginview> {
                                         '{"rollno": "$rollno", "password": "$password"}';
                                     Response response = await post(url,
                                         headers: headers, body: Json);
-                                    print(response.body);
                                     int statusCode = response.statusCode;
                                     var parsedJson = json.decode(response.body);
                                     if (parsedJson["success"] == true) {
@@ -238,7 +237,6 @@ class LoginState extends State<Loginview> {
                                           ),
                                         ),
                                       );
-                                      print(parsedJson.message);
                                     } else {
                                       AlertDialog alert = AlertDialog(
                                         title: Text("Spider Orientation"),

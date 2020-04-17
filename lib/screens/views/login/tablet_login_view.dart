@@ -200,7 +200,6 @@ class LogintabletState extends State<Logintablet> {
                                       '{"rollno": "$rollno", "password": "$password"}';
                                   Response response = await post(url,
                                       headers: headers, body: Json);
-                                  print(response.body);
                                   int statusCode = response.statusCode;
                                   var parsedJson = json.decode(response.body);
                                   if (parsedJson["success"] == true) {
@@ -232,7 +231,6 @@ class LogintabletState extends State<Logintablet> {
                                         ),
                                       ),
                                     );
-                                    print(parsedJson.message);
                                   } else {
                                     AlertDialog alert = AlertDialog(
                                       title: Text("Spider Orientation"),

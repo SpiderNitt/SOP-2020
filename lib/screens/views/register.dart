@@ -551,7 +551,6 @@ class _RegisterScreenState extends State<RegisterView> {
                                 '{"jwt": "$jwt", "have_laptop": $have_laptop, "username": "$username", "fullname": "$name", "profiles": $preference}';
                             Response response =
                                 await post(url, headers: headers, body: Json);
-                            print(response.body);
                             int statusCode = response.statusCode;
                             if (statusCode == 403) {
                               AlertDialog alert = AlertDialog(
