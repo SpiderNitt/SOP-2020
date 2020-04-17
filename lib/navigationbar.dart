@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'config.dart';
 
 class NavigationBar extends StatefulWidget {
+  
   @override
 
-int value;
+  int value;
 
-   NavigationBar(int value){
-    this.value = value;
-   }
+   NavigationBar(this.value);
 
   _NavigationBarState createState() => _NavigationBarState(this.value);
 }
@@ -19,9 +18,7 @@ class _NavigationBarState extends State<NavigationBar> {
 
   int currindex = 0;
 
-  _NavigationBarState(int value){
-  currindex = value;
-  }
+  _NavigationBarState(this.currindex);
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +53,9 @@ class _NavigationBarState extends State<NavigationBar> {
         }
          if (index == 2 ){
           Navigator.pushNamed(context, '/bio');
+        }
+        if (index == 1 ){
+          Navigator.pushNamed(context, '/review');
         }
           setState((){
             currindex = index;

@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'config.dart';
 
-class MenteeDet extends StatelessWidget {
+class Requestlist extends StatelessWidget {
 
 String mentorname;
 String mentorgitacc;  
 
 final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vishal',  'ashuwin',  'akash',  'sidb'];
 
-MenteeDet(this.mentorname, this.mentorgitacc);
+Requestlist(this.mentorname, this.mentorgitacc);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-      minHeight: 5.0,
-      maxHeight: 390.0,
-      ),
-      margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-      child: ListView.builder(
+    return ListView.builder(
       itemCount: name.length,
       itemBuilder: (context, index){
         return Column(
@@ -47,7 +41,6 @@ MenteeDet(this.mentorname, this.mentorgitacc);
         ],
         );
       }
-    ),
     );
   }
 }

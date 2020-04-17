@@ -81,7 +81,12 @@ _MenDetState(this.name, this.gitacc);
            ),
         SizedBox(height: 8),
         Text('${this.name}', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-        Text('${snapshot.data.gitacc}', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)), 
+        Text('${snapshot.data.gitacc}', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+        Divider(
+          color: config.fontColor,
+          indent: 20,
+          endIndent: 20,
+        ) 
          ]
           );
        else if (snapshot.hasError) {
@@ -90,7 +95,6 @@ _MenDetState(this.name, this.gitacc);
       else
      
       return CircularProgressIndicator();
-
         }),
       ),
     );

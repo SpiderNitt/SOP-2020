@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inductions_20/review.dart';
 import 'bio.dart';
 import 'commitsfinal.dart';
 import 'home.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       '/menteetask' : (context) => MenteeTask(),
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
-      '/commits': (context)=> CommitsFinal()  
+      '/commits': (context)=> CommitsFinal(),
+      '/review': (context) => Request() 
     },
   );
   }

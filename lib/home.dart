@@ -9,10 +9,7 @@ class Home extends StatefulWidget {
 String name;
 String gitacc;
  
-  Home(String name, String gitacc){
-    this.name = name;
-    this.gitacc = gitacc;
-  }
+  Home(this.name, this.gitacc);
 
   @override
   _HomeState createState() => _HomeState(this.name, this.gitacc);
@@ -23,10 +20,7 @@ class _HomeState extends State<Home> {
 String name;
 String gitacc;
  
-  _HomeState(String name, String gitacc){
-    this.name = name;
-    this.gitacc = gitacc;
-  }
+  _HomeState(this.name, this.gitacc);
  
   @override
 
@@ -47,7 +41,7 @@ String gitacc;
         MenDet(this.name, this.gitacc),
         SizedBox(height: 10),
         Text('Mentee details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
-        SizedBox(height: 10),
+        SizedBox(height: 15),
         MenteeDet(this.name, this.gitacc)
       ],
       ),
