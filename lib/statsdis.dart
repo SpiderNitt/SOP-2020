@@ -19,9 +19,10 @@ class Statsdis extends StatelessWidget {
               Text('Adv Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
               CircularPercentIndicator(
               radius: 100.0,
+              center: Text('${this.adv_percent*100}%', style: TextStyle( fontSize: 10, fontFamily: config.fontFamily, color: config.fontColor)),
               lineWidth: 10.0,
               percent: (this.adv_percent),
-              progressColor: Colors.green,
+              progressColor: Colors.red,
               animation: true),
                SizedBox(
                 height: 10,
@@ -30,8 +31,9 @@ class Statsdis extends StatelessWidget {
               CircularPercentIndicator(
               radius: 100.0,
               lineWidth: 10.0,
+              center: Text('${this.beg_percent*100}%', style: TextStyle( fontSize: 10, fontFamily: config.fontFamily, color: config.fontColor)),
               percent: (this.beg_percent),
-              progressColor: Colors.red,
+              progressColor: Colors.green,
               animation: true),
               SizedBox(
                 height: 10,
