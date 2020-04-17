@@ -81,6 +81,7 @@ class _RegisterScreenState extends State<RegisterView> {
   double registerheight;
   double padding;
   double fontsize;
+  double dropdownheight = 60;
 
   String _dropDownError = '';
   @override
@@ -296,93 +297,16 @@ class _RegisterScreenState extends State<RegisterView> {
                                 child: Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       0.0, 10.0, 0.0, 10.0),
-                                  child: DropdownButton<int>(
-                                    style: TextStyle(
-                                      color: Color(0xFFFFFFFF),
-                                      fontSize: fontsize,
-                                    ),
-                                    items: _profiles.map((dropDownStringItem) {
-                                      var idx =
-                                          _profiles.indexOf(dropDownStringItem);
-                                      return DropdownMenuItem<int>(
-                                        value: idx,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0.0, 0.0, 7.0, 1.0),
-                                              child: Icon(_icons[idx],
-                                                  color: Color(0xFF00A8E8)),
-                                            ),
-                                            Container(
-                                              width: dropdownwidth,
-                                              child: Text(
-                                                dropDownStringItem,
-                                                style: TextStyle(
-                                                  fontSize: fontsize,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                    key: _key,
-                                    onChanged: (int newValueSelected) {
-                                      setState(() {
-                                        _dropDownError = '';
-                                        this._preferences[0] =
-                                            newValueSelected + 1;
-                                        for (int k = 0;
-                                            k < this._preferences.length;
-                                            k++) {
-                                          for (int l = k + 1;
-                                              l < this._preferences.length;
-                                              l++) {
-                                            if (this._preferences[k] ==
-                                                    this._preferences[l] &&
-                                                this._preferences[k] != 0) {
-                                              _dropDownError =
-                                                  'Enter unique preferences';
-                                              break;
-                                            }
-                                          }
-                                          for (int k = 1;
-                                              k < this._preferences.length;
-                                              k++) {
-                                            if (this._preferences[k] != 0) {
-                                              for (int l = 1; l < k; l++)
-                                                if (this._preferences[l] == 0) {
-                                                  _dropDownError =
-                                                      'Enter previous preferences first';
-                                                  break;
-                                                }
-                                            }
-                                          }
-                                        }
-                                      });
-                                    },
-                                    value: _preferences[0] - 1,
-                                  ),
-                                ),
-                              ),
-                              for (int i in items)
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                    canvasColor: Color(0xFF172B34),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 10.0, 0.0, 10.0),
+                                  child: Container(
+                                    height: dropdownheight,
                                     child: DropdownButton<int>(
                                       style: TextStyle(
                                         color: Color(0xFFFFFFFF),
                                         fontSize: fontsize,
                                       ),
-                                      items: _remprofiles
-                                          .map((dropDownStringItem) {
-                                        var idx = _remprofiles
+                                      items:
+                                          _profiles.map((dropDownStringItem) {
+                                        var idx = _profiles
                                             .indexOf(dropDownStringItem);
                                         return DropdownMenuItem<int>(
                                           value: idx,
@@ -392,7 +316,7 @@ class _RegisterScreenState extends State<RegisterView> {
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         0.0, 0.0, 7.0, 1.0),
-                                                child: Icon(_remicons[idx],
+                                                child: Icon(_icons[idx],
                                                     color: Color(0xFF00A8E8)),
                                               ),
                                               Container(
@@ -408,11 +332,12 @@ class _RegisterScreenState extends State<RegisterView> {
                                           ),
                                         );
                                       }).toList(),
+                                      key: _key,
                                       onChanged: (int newValueSelected) {
                                         setState(() {
                                           _dropDownError = '';
-                                          this._preferences[i] =
-                                              newValueSelected;
+                                          this._preferences[0] =
+                                              newValueSelected + 1;
                                           for (int k = 0;
                                               k < this._preferences.length;
                                               k++) {
@@ -427,22 +352,107 @@ class _RegisterScreenState extends State<RegisterView> {
                                                 break;
                                               }
                                             }
-                                          }
-                                          for (int k = 1;
-                                              k < this._preferences.length;
-                                              k++) {
-                                            if (this._preferences[k] != 0) {
-                                              for (int l = 1; l < k; l++)
-                                                if (this._preferences[l] == 0) {
-                                                  _dropDownError =
-                                                      'Enter previous preferences first';
-                                                  break;
-                                                }
+                                            for (int k = 1;
+                                                k < this._preferences.length;
+                                                k++) {
+                                              if (this._preferences[k] != 0) {
+                                                for (int l = 1; l < k; l++)
+                                                  if (this._preferences[l] ==
+                                                      0) {
+                                                    _dropDownError =
+                                                        'Enter previous preferences first';
+                                                    break;
+                                                  }
+                                              }
                                             }
                                           }
                                         });
                                       },
-                                      value: _preferences[i],
+                                      value: _preferences[0] - 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              for (int i in items)
+                                Theme(
+                                  data: Theme.of(context).copyWith(
+                                    canvasColor: Color(0xFF172B34),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        0.0, 10.0, 0.0, 10.0),
+                                    child: Container(
+                                      height: dropdownheight,
+                                      child: DropdownButton<int>(
+                                        style: TextStyle(
+                                          color: Color(0xFFFFFFFF),
+                                          fontSize: fontsize,
+                                        ),
+                                        items: _remprofiles
+                                            .map((dropDownStringItem) {
+                                          var idx = _remprofiles
+                                              .indexOf(dropDownStringItem);
+                                          return DropdownMenuItem<int>(
+                                            value: idx,
+                                            child: Row(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0.0, 0.0, 7.0, 1.0),
+                                                  child: Icon(_remicons[idx],
+                                                      color: Color(0xFF00A8E8)),
+                                                ),
+                                                Container(
+                                                  width: dropdownwidth,
+                                                  child: Text(
+                                                    dropDownStringItem,
+                                                    style: TextStyle(
+                                                      fontSize: fontsize,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (int newValueSelected) {
+                                          setState(() {
+                                            _dropDownError = '';
+                                            this._preferences[i] =
+                                                newValueSelected;
+                                            for (int k = 0;
+                                                k < this._preferences.length;
+                                                k++) {
+                                              for (int l = k + 1;
+                                                  l < this._preferences.length;
+                                                  l++) {
+                                                if (this._preferences[k] ==
+                                                        this._preferences[l] &&
+                                                    this._preferences[k] != 0) {
+                                                  _dropDownError =
+                                                      'Enter unique preferences';
+                                                  break;
+                                                }
+                                              }
+                                            }
+                                            for (int k = 1;
+                                                k < this._preferences.length;
+                                                k++) {
+                                              if (this._preferences[k] != 0) {
+                                                for (int l = 1; l < k; l++)
+                                                  if (this._preferences[l] ==
+                                                      0) {
+                                                    _dropDownError =
+                                                        'Enter previous preferences first';
+                                                    break;
+                                                  }
+                                              }
+                                            }
+                                          });
+                                        },
+                                        value: _preferences[i],
+                                      ),
                                     ),
                                   ),
                                 ),

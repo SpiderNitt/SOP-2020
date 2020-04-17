@@ -20,7 +20,7 @@ void main() {
     MaterialApp(
       home: Scaffold(
         body: Container(
-          child: RegisterView(),
+          child: LoginView(),
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: <Color>[
