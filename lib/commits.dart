@@ -119,15 +119,7 @@ class _CommitsState extends State<Commits> {
               SizedBox(
                 height: 10,
               ),
-              FlatButton(
-            onPressed: (){
-            Navigator.pushNamed(context, '/writereview', arguments: {
-              'repo_det': this.repo_det,
-            });
-          }, 
-         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-         ),
-                ],
+              ],
               );
 
               else if(snap.hasError)

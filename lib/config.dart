@@ -10,7 +10,9 @@ class Config{
   double simgBordWid = 2.0; 
   String fontFamily = 'Inria';
   Color fontColor = Color.fromRGBO(255, 255, 255, 1);
-  double borRadi = 8.0; 
+  double borRadi = 8.0;
+  Color danger = Colors.red;
+  Color success = Colors.green;
 }
 
 Config config =  Config();

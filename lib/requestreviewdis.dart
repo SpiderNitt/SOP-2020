@@ -18,9 +18,6 @@ Requestlist(this.mentorname, this.mentorgitacc);
         return Column(
           children: <Widget>[
             ListTile(
-          trailing: Icon(
-            Icons.keyboard_arrow_right,
-            color: config.fontColor, ),
           contentPadding: EdgeInsets.all(3),
           onTap: (){
             Navigator.pushNamed(context, '/menteetask', arguments: {
@@ -33,6 +30,34 @@ Requestlist(this.mentorname, this.mentorgitacc);
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
           title: Text('${name[index]}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                   SizedBox(
+                    height:5,
+                  ),
+                  Text('Task1',  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  SizedBox(
+                    height:5,
+                  ),
+                  Text('Repo link: http://github.com/chakki/dfgh/dsafgdhf/sdafghj/dfshk/dfshk/dfhjkl/dfshk/dsfhj', maxLines: 5, softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                   SizedBox(
+                    height:5,
+                  ),
+                  Text('Not reviewed',  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)),
+                  SizedBox(
+                    height:5,
+                  ),
+                  FlatButton(
+                  onPressed: (){
+                  Navigator.pushNamed(context, '/writereview', arguments: {
+                  'repo_det': 'task1',
+                   });
+          }, 
+         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+         ),
+                ],
+              ),
         ),
         Divider(
           color: config.fontColor,
