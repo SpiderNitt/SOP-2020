@@ -43,9 +43,9 @@ class LogintabletState extends State<Logintablet> {
             headingfontsize = 25;
             imagesize = 200;
             containerheight = height / 3;
-            containerwidth = width / 2;
-            inputfieldwidth = 3 * width / 8;
-            signinwidth = 3 * width / 8;
+            containerwidth = 300;
+            inputfieldwidth = 250;
+            signinwidth = 250;
             signinheight = 60;
             padding = 15.0;
             fontsize = 20.0;
@@ -53,9 +53,9 @@ class LogintabletState extends State<Logintablet> {
             headingfontsize = 25;
             imagesize = 200;
             containerheight = height / 4;
-            containerwidth = width / 2;
-            inputfieldwidth = 3 * width / 8;
-            signinwidth = 3 * width / 8;
+            containerwidth = 300;
+            inputfieldwidth = 250;
+            signinwidth = 250;
             signinheight = 60;
             padding = 15.0;
             fontsize = 20.0;
@@ -65,7 +65,7 @@ class LogintabletState extends State<Logintablet> {
             headingfontsize = 25;
             imagesize = 230;
             containerheight = height / 4;
-            containerwidth = 2 * height / 5;
+            containerwidth = 300;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
             signinheight = 60;
@@ -75,7 +75,7 @@ class LogintabletState extends State<Logintablet> {
             headingfontsize = 25;
             imagesize = 230;
             containerheight = height / 4;
-            containerwidth = 2 * height / 5;
+            containerwidth = 300;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
             signinheight = 60;
@@ -84,22 +84,21 @@ class LogintabletState extends State<Logintablet> {
           }
         }
         return Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Image(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image(
                   image: AssetImage(
                     'assets/images/SpiderLogo.webp',
                   ),
                   height: imagesize,
                   width: imagesize,
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Padding(
+                Container(
+                  height: 50,
+                ),
+                Padding(
                   padding: EdgeInsets.all(padding),
                   child: Container(
                     width: containerwidth,
@@ -261,16 +260,19 @@ class LogintabletState extends State<Logintablet> {
                               fontsize,
                             ),
                           ),
+                          Container(
+                            height: 20,
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                height: 50.0,
-              ),
-            ],
+                Container(
+                  height: 50.0,
+                ),
+              ],
+            ),
           ),
         );
       },

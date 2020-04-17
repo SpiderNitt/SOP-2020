@@ -44,22 +44,24 @@ class LoginState extends State<Loginview> {
             headingfontsize = 22;
             imagesize = 190;
             containerheight = height / 3;
-            containerwidth = 3 * width / 4;
+            containerwidth = 300;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
             signinheight = 60;
             padding = 15.0;
             fontsize = 18.0;
+            formwidth = 300;
           } else {
-            headingfontsize = 25;
-            containerheight = width / 2;
+            headingfontsize = 22;
             imagesize = 190;
-            formwidth = 2 * height / 5;
-            inputfieldwidth = 9 * width / 16;
-            signinwidth = 9 * width / 16;
-            signinheight = width / 20;
-            padding = 10.0;
+            containerheight = height / 3;
+            containerwidth = 300;
+            inputfieldwidth = 3 * width / 8;
+            signinwidth = 3 * width / 8;
+            signinheight = 60;
+            padding = 15.0;
             fontsize = 18.0;
+            formwidth = 300;
           }
         } else if (sizingInformation.deviceScreenType ==
             DeviceScreenType.LargeMobile) {
@@ -67,27 +69,28 @@ class LoginState extends State<Loginview> {
             headingfontsize = 22;
             imagesize = 190;
             containerheight = height / 3;
-            containerwidth = 3 * width / 4;
+            containerwidth = 300;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
             signinheight = 60;
             padding = 15.0;
             fontsize = 18.0;
+            formwidth = 300;
           } else {
-            headingfontsize = 25;
+            headingfontsize = 22;
             imagesize = 190;
-            containerheight = height / 2;
-            formwidth = 2 * height / 5;
+            containerheight = height / 3;
+            containerwidth = 300;
             inputfieldwidth = 3 * width / 8;
             signinwidth = 3 * width / 8;
-            signinheight = width / 10;
-            padding = 10.0;
+            signinheight = 60;
+            padding = 15.0;
             fontsize = 18.0;
+            formwidth = 300;
           }
         }
         return Container(
           height: height,
-          width: width,
           child: SingleChildScrollView(
             child: Center(
               child: Column(
@@ -266,6 +269,9 @@ class LoginState extends State<Loginview> {
                                 signinheight,
                                 fontsize,
                               ),
+                            ),
+                            Container(
+                              height: 20,
                             ),
                           ],
                         ),
