@@ -12,6 +12,7 @@ import 'package:inductions_20/screens/ui/base_widget.dart';
 import 'package:inductions_20/screens/views/widgets/custom_button.dart';
 import 'package:inductions_20/screens/views/widgets/custom_input.dart';
 import 'package:inductions_20/screens/views/register.dart';
+import 'package:inductions_20/screens/views/success_message.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _rollnocontroller = TextEditingController();
@@ -152,6 +153,9 @@ class LogintabletState extends State<Logintablet> {
                                     value.toString().length < 9) {
                                   return 'Enter a valid rollnumber';
                                 }
+//                                else if (value.toString()[5] != '9') {
+//                                  return 'Enter a valid rollnumber';
+//                                }
                                 return null;
                               },
                               false,
@@ -201,7 +205,29 @@ class LogintabletState extends State<Logintablet> {
                                       headers: headers, body: Json);
                                   int statusCode = response.statusCode;
                                   var parsedJson = json.decode(response.body);
-                                  if (parsedJson["success"] == true) {
+                                  if (window.localStorage['registered'] ==
+                                      "true") {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MaterialApp(
+                                          home: Scaffold(
+                                            body: Container(
+                                              child: Message(),
+                                              decoration: BoxDecoration(
+                                                gradient: RadialGradient(
+                                                  colors: <Color>[
+                                                    Color(0xFF003459),
+                                                    Color(0xFF00171f),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } else if (parsedJson["success"] == true) {
 //                                    var storage = new FlutterSecureStorage();
 //                                    await storage.write(
 //                                        key: "jwt", value: parsedJson.token);

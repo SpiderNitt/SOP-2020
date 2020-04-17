@@ -92,24 +92,26 @@ class _RegisterScreenState extends State<RegisterView> {
       if (sizingInformation.deviceScreenType == DeviceScreenType.Mobile) {
         if (sizingInformation.orientation == Orientation.portrait) {
           headingfontsize = 22;
-          formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
+          formwidth = 290;
+          inputfieldwidth = 290;
+          containerwidth = 290;
+          dropdownwidth = 230;
+          registerwidth = 260;
           registerheight = 40;
-          padding = 10.0;
+          padding = 5.0;
           fontsize = 18.0;
+          dropdownheight = 80;
         } else {
-          headingfontsize = 25;
-          formwidth = width / 2;
-          inputfieldwidth = width / 2;
-          containerwidth = width / 2;
-          dropdownwidth = 3 * width / 8;
-          registerwidth = width / 2;
+          headingfontsize = 22;
+          formwidth = 290;
+          inputfieldwidth = 290;
+          containerwidth = 290;
+          dropdownwidth = 230;
+          registerwidth = 260;
           registerheight = 40;
-          padding = 10.0;
+          padding = 5.0;
           fontsize = 18.0;
+          dropdownheight = 100;
         }
       } else if (sizingInformation.deviceScreenType ==
           DeviceScreenType.LargeMobile) {
@@ -573,6 +575,8 @@ class _RegisterScreenState extends State<RegisterView> {
                                 },
                               );
                             } else {
+                              final Storage _localStorage = window.localStorage;
+                              _localStorage['registered'] = "true";
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
