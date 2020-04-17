@@ -74,9 +74,9 @@ class _CommitsState extends State<Commits> {
       future: this.res, 
       builder: (context, snapshot){
 
-       if(snapshot.hasData)
+      if(snapshot.hasData){
       
-       return Container(
+      return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
       maxHeight: 360.0,
@@ -88,50 +88,13 @@ class _CommitsState extends State<Commits> {
         
         if(snapshot.data.commits.length == 0)
          return  Text('No commits yet', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor));
+      
+        else if(index == snapshot.data.commits.length)
+        return null;
 
-        if(index == snapshot.data.commits.length) 
-        return Column(
-          children: [
-       FutureBuilder(
-         future: this.percent_res,
-         builder: (context, snap){
-           
-            if(snap.hasData) 
-              return Column(
-                children: <Widget>[
-              Text('Adv Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-              CircularPercentIndicator(
-              radius: 100.0,
-              lineWidth: 10.0,
-              percent: (snap.data.adv_percent),
-              progressColor: Colors.green,
-              animation: true),
-               SizedBox(
-                height: 10,
-              ),
-              Text('Beginar Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-              CircularPercentIndicator(
-              radius: 100.0,
-              lineWidth: 10.0,
-              percent: (snap.data.beg_percent),
-              progressColor: Colors.red,
-              animation: true),
-              SizedBox(
-                height: 10,
-              ),
-              ],
-              );
-
-              else if(snap.hasError)
-              return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),); 
-              
-              else return CircularProgressIndicator();
-         }),
-          ],
-          ); 
-           else return  Column(
+        else return  Column(
            children: <Widget>[
-             ListTile(
+            ListTile(
           contentPadding: EdgeInsets.all(3),
           title: Text(snapshot.data.commits[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Text(snapshot.data.date[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
@@ -144,6 +107,7 @@ class _CommitsState extends State<Commits> {
       }
     ),
     );
+   }
 
        else if(snapshot.hasError)
        return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),); 
