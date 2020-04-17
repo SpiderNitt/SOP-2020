@@ -211,6 +211,7 @@ class LogintabletState extends State<Logintablet> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => MaterialApp(
+                                          title: 'Spider Orientation',
                                           home: Scaffold(
                                             body: Container(
                                               child: Message(),
@@ -240,6 +241,7 @@ class LogintabletState extends State<Logintablet> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => MaterialApp(
+                                          title: 'Spider Orientation',
                                           home: Scaffold(
                                             body: Container(
                                               child: RegisterView(),

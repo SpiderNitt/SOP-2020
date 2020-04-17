@@ -18,6 +18,7 @@ void main() {
 //      ),
 //    ),
     MaterialApp(
+      title: 'Spider Orientation',
       home: Scaffold(
         body: Container(
           child: LoginView(),

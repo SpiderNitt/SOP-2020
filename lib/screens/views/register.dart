@@ -581,6 +581,7 @@ class _RegisterScreenState extends State<RegisterView> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => MaterialApp(
+                                    title: 'Spider Orientation',
                                     home: Scaffold(
                                       body: Container(
                                         child: Message(),
