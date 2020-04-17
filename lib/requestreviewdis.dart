@@ -36,15 +36,15 @@ Requestlist(this.mentorname, this.mentorgitacc);
                    SizedBox(
                     height:5,
                   ),
-                  Text('Task1',  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('Task1', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                   SizedBox(
                     height:5,
                   ),
-                  Text('Repo link: http://github.com/chakki/dfgh/dsafgdhf/sdafghj/dfshk/dfshk/dfhjkl/dfshk/dsfhj', maxLines: 5, softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('Repo link: http://github.com/chakki/dfgh/dsafgdhf/sdafghj/dfshk/dfshk/dfhjkl/dfshk/dsfhj',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                    SizedBox(
                     height:5,
                   ),
-                  Text('Not reviewed',  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)),
+                  Text('Not reviewed', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)),
                   SizedBox(
                     height:5,
                   ),

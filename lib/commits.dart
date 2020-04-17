@@ -129,7 +129,7 @@ class _CommitsState extends State<Commits> {
          }),
           ],
           ); 
-         else return  Column(
+           else return  Column(
            children: <Widget>[
              ListTile(
           contentPadding: EdgeInsets.all(3),
