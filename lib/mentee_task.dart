@@ -28,6 +28,8 @@ class _MenteeTaskState extends State<MenteeTask> {
         title: Text('Mentee task'),
         centerTitle: true,
         bottom: TabBar(
+          indicatorColor: config.fontColor,
+          indicatorPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
           tabs: [
             Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
             Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
