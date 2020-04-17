@@ -162,10 +162,11 @@ class LoginState extends State<Loginview> {
                                   } else if (value.toString().length > 9 ||
                                       value.toString().length < 9) {
                                     return 'Enter a valid rollnumber';
+                                  } else if (value.toString()[0] != '1') {
+                                    return 'Enter a valid rollnumber';
+                                  } else if (value.toString()[5] != '9') {
+                                    return 'Enter a valid rollnumber';
                                   }
-//                                  else if (value.toString()[5] != '9') {
-//                                    return 'Enter a valid rollnumber';
-//                                  }
                                   return null;
                                 },
                                 false,
@@ -214,8 +215,7 @@ class LoginState extends State<Loginview> {
                                         headers: headers, body: Json);
                                     int statusCode = response.statusCode;
                                     var parsedJson = json.decode(response.body);
-                                    if (window.localStorage['registered'] ==
-                                        "true") {
+                                    if (parsedJson["is_registered"] == true) {
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(
