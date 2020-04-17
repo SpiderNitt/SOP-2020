@@ -28,6 +28,7 @@ dependencies:
   graphql_flutter: ^2.0.1
   http: ^0.12.0+2
   flutter_secure_storage: ^3.3.2
+  string_validator: ^0.1.4
   device_preview:
 
 dev_dependencies:

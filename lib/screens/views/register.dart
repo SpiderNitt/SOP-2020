@@ -555,7 +555,7 @@ class _RegisterScreenState extends State<RegisterView> {
                             int statusCode = response.statusCode;
                             if (statusCode == 403) {
                               AlertDialog alert = AlertDialog(
-                                title: Text("Spider Inductions"),
+                                title: Text("Spider Orientation"),
                                 content: Text("You've already registered"),
                                 actions: [
                                   FlatButton(
@@ -577,7 +577,22 @@ class _RegisterScreenState extends State<RegisterView> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Message()),
+                                  builder: (context) => MaterialApp(
+                                    home: Scaffold(
+                                      body: Container(
+                                        child: Message(),
+                                        decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            colors: <Color>[
+                                              Color(0xFF003459),
+                                              Color(0xFF00171f),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               );
                             }
                           }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:string_validator/string_validator.dart';
 
 import 'package:inductions_20/screens/ui/base_widget.dart';
 import 'package:inductions_20/screens/enum/device_screen_type.dart';
@@ -146,6 +147,8 @@ class LogintabletState extends State<Logintablet> {
                               (value) {
                                 if (value.isEmpty) {
                                   return 'Enter Rollnumber';
+                                } else if (!isNumeric(value)) {
+                                  return 'Enter a valid rollnumber';
                                 } else if (value.toString().length > 9 ||
                                     value.toString().length < 9) {
                                   return 'Enter a valid rollnumber';
@@ -153,7 +156,7 @@ class LogintabletState extends State<Logintablet> {
                                 return null;
                               },
                               false,
-                              TextInputType.emailAddress,
+                              TextInputType.number,
                               inputfieldwidth,
                               fontsize,
                               _rollnocontroller,
@@ -212,12 +215,27 @@ class LogintabletState extends State<Logintablet> {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => RegisterView()),
+                                        builder: (context) => MaterialApp(
+                                          home: Scaffold(
+                                            body: Container(
+                                              child: RegisterView(),
+                                              decoration: BoxDecoration(
+                                                gradient: RadialGradient(
+                                                  colors: <Color>[
+                                                    Color(0xFF003459),
+                                                    Color(0xFF00171f),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     );
                                     print(parsedJson.message);
                                   } else {
                                     AlertDialog alert = AlertDialog(
-                                      title: Text("Spider Inductions"),
+                                      title: Text("Spider Orientation"),
                                       content:
                                           Text("Invalid username and password"),
                                       actions: [
@@ -258,174 +276,6 @@ class LogintabletState extends State<Logintablet> {
           ),
         );
       },
-    );
-  }
-}
-
-class Login_Tablet_Landscape extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.width;
-    final width = MediaQuery.of(context).size.height;
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Image(
-              image: AssetImage(
-                'assets/images/SpiderLogo.webp',
-              ),
-              height: height / 4,
-              width: height / 4,
-            ),
-          ),
-          Container(
-            width: 2 * height / 5,
-            height: height / 3,
-            color: Color(0xFF003459).withOpacity(0.5),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: Container(
-                      width: width / 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              'Sign',
-                              style: TextStyle(
-                                color: Color(0xFFFFFFFF),
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.8,
-                              ),
-                            ),
-                            Text(
-                              'In',
-                              style: TextStyle(
-                                color: Color(0xFF00A8E8),
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.8,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: CustomInput(
-                      Icons.person,
-                      "Rollno",
-                      (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Rollnumber';
-                        } else if (value.toString().length > 9 ||
-                            value.toString().length < 9) {
-                          return 'Enter a valid rollnumber';
-                        }
-                        return null;
-                      },
-                      false,
-                      TextInputType.number,
-                      width / 2,
-                      20,
-                      _rollnocontroller,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: CustomInput(
-                      Icons.lock,
-                      "Password",
-                      (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Password';
-                        }
-                        return null;
-                      },
-                      true,
-                      TextInputType.text,
-                      width / 2,
-                      20,
-                      _passwordcontroller,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: CustomButton(
-                      'Sign In',
-                      () async {
-                        if (_formKey.currentState.validate()) {
-                          // set up POST request arguments
-                          String url =
-                              "https://spider.nitt.edu/inductions20/login";
-                          Map<String, String> headers = {
-                            "Content-type": "application/json"
-                          };
-                          String rollno = _rollnocontroller.text.toString();
-                          String password = _passwordcontroller.text;
-                          String Json =
-                              '{"rollno": "$rollno", "password": "$password"}';
-                          Response response =
-                              await post(url, headers: headers, body: Json);
-                          print(response.body);
-                          int statusCode = response.statusCode;
-                          var parsedJson = json.decode(response.body);
-                          if (parsedJson["success"] == true) {
-//                            var storage = new FlutterSecureStorage();
-//                            await storage.write(
-//                                key: "jwt", value: parsedJson.token);
-                            final Storage _localStorage = window.localStorage;
-
-                            _localStorage['jwt'] = parsedJson["token"];
-                            await Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        RegisterView()));
-                            print(parsedJson.message);
-                          } else {
-                            AlertDialog alert = AlertDialog(
-                              title: Text("Spider Inductions"),
-                              content: Text("Invalid username and password"),
-                              actions: [
-                                FlatButton(
-                                  child: Text("OK"),
-                                  onPressed: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop('dialog');
-                                  },
-                                ),
-                              ],
-                            );
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return alert;
-                              },
-                            );
-                          }
-                        }
-                      },
-                      2 * width / 5,
-                      width / 15,
-                      25,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
