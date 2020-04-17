@@ -4,8 +4,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class Data {
-  String gitacc;
-  String avatar_url;
+  String gitacc, avatar_url;
 
   Data({this.gitacc, this.avatar_url});
 
@@ -20,8 +19,7 @@ class Data {
 
 class MenDet extends StatefulWidget {
 
-String name;
-String gitacc;
+String name, gitacc;
  
 MenDet(this.name, this.gitacc);
 
@@ -31,8 +29,7 @@ MenDet(this.name, this.gitacc);
 
 class _MenDetState extends State<MenDet> {
 
-String name;
-String gitacc;
+String name, gitacc;
 dynamic res;
  
 _MenDetState(this.name, this.gitacc);

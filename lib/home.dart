@@ -6,8 +6,7 @@ import 'mentor_details.dart';
 
 class Home extends StatefulWidget {
 
-String name;
-String gitacc;
+String name, gitacc;
  
   Home(this.name, this.gitacc);
 
@@ -17,8 +16,7 @@ String gitacc;
 
 class _HomeState extends State<Home> {
 
-String name;
-String gitacc;
+String name, gitacc;
  
   _HomeState(this.name, this.gitacc);
  

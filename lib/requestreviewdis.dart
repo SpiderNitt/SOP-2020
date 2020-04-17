@@ -3,8 +3,7 @@ import 'config.dart';
 
 class Requestlist extends StatelessWidget {
 
-String mentorname;
-String mentorgitacc;  
+String mentorname, mentorgitacc;  
 
 final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vishal',  'ashuwin',  'akash',  'sidb'];
 

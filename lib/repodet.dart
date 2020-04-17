@@ -20,8 +20,7 @@ factory Data.getdata(List json){
 
 class RepoDet extends StatefulWidget {
  
-  String gitacc;
-  String menteename;
+  String gitacc, menteename;
   
   RepoDet(this.gitacc, this.menteename);
 
@@ -31,8 +30,7 @@ class RepoDet extends StatefulWidget {
 
 class _RepoDetState extends State<RepoDet> {
 
-  String gitacc;
-  String menteename;
+  String gitacc, menteename;
   dynamic res;
 
   _RepoDetState(this.gitacc, this.menteename);

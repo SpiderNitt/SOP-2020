@@ -5,8 +5,7 @@ import 'config.dart';
 class Statsdis extends StatelessWidget {
   
   String taskname;
-  double adv_percent;
-  double beg_percent;
+  double adv_percent, beg_percent;
 
   Statsdis(this.taskname, this.adv_percent, this.beg_percent);
 

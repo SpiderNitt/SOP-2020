@@ -3,8 +3,7 @@ import 'config.dart';
 
 class MenteeDet extends StatelessWidget {
 
-String mentorname;
-String mentorgitacc;  
+String mentorname, mentorgitacc;  
 
 final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vishal',  'ashuwin',  'akash',  'sidb'];
 

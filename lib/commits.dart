@@ -7,14 +7,12 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Data {
 
-List<String> commits;
-List<String> date;
+List<String> commits, date;
 
 Data(this.commits, this.date);
 
 factory Data.getdata(List json){
-    List<String> commitList = [];
-    List<String> dateList = [];
+    List<String> commitList = [], dateList = [];
     json.forEach((element){
       commitList.add(element['commit']['message']);
       dateList.add(element['commit']['committer']['date']);
@@ -24,14 +22,7 @@ factory Data.getdata(List json){
 
 }
 
-class PercentData {
-  double adv_percent;
-  double beg_percent;
-  PercentData(this.adv_percent, this.beg_percent);
-}
-
 class Commits extends StatefulWidget {
-
 
   String repo_det;
   
@@ -45,7 +36,6 @@ class _CommitsState extends State<Commits> {
 
   String repo_det;
   dynamic res;
-  dynamic percent_res;
 
   _CommitsState(this.repo_det);
 
@@ -53,18 +43,12 @@ class _CommitsState extends State<Commits> {
   Response resp = await get('https://api.github.com/repos/chakki1234/$repo_det/commits');
   return Data.getdata(jsonDecode(resp.body));
   }
-  
-  Future<PercentData> getdatatest() async{
-  Response resp = await get('https://api.github.com/repos/chakki1234/$repo_det/commits');
-  return PercentData(0.6, 0.2);
-  }
-  
+
 
   @override
   void initState(){
   super.initState();
   this.res = getdata();
-  this.percent_res = getdatatest();
   }
 
   @override

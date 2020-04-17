@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:inductions_20/statsdis.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 
 class Stats extends StatefulWidget {
