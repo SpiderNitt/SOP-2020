@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:inductions_20/screens/ui/base_widget.dart';
 import 'package:http/http.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // Files imported
 import 'package:inductions_20/screens/enum/device_screen_type.dart';
