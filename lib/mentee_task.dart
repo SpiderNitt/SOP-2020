@@ -29,7 +29,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         centerTitle: true,
         bottom: TabBar(
           indicatorColor: config.fontColor,
-          indicatorPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          indicatorPadding: EdgeInsets.fromLTRB(35, 0, 35, 0),
           tabs: [
             Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
             Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),

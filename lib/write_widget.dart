@@ -2,14 +2,26 @@ import 'package:flutter/material.dart';
 import 'navigationbar.dart';
 import 'config.dart';
 
-class Review extends StatelessWidget {
+class Review extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  _ReviewState createState() => _ReviewState();
+}
 
+class _ReviewState extends State<Review> {
+  
+  double adv_percent, beg_percent;
+  String review;
   final _formkey = GlobalKey<FormState>();
   
+  
+  @override
+
+  Widget build(BuildContext context) {
+  
+
   Map data = ModalRoute.of(context).settings.arguments;
 
+  
     return Scaffold(
     backgroundColor: config.bgColor,
     resizeToAvoidBottomPadding: true,
@@ -19,7 +31,8 @@ class Review extends StatelessWidget {
       elevation: 0,
       backgroundColor: config.bgColor,
     ),
-    body: SingleChildScrollView(
+    body: Builder(
+      builder: (context) => SingleChildScrollView(
      child: Column(
       children: <Widget>[
         Container(
@@ -53,13 +66,18 @@ class Review extends StatelessWidget {
           validator: (String value){
             if(value.isEmpty)
             return 'Please write your review';
-            else
+            else{
+              this.setState((){
+              this.review = value;
+              });
             return null;
+            }
           },
           ),
-  SizedBox(height: 10),
- TextFormField(
-    keyboardType: TextInputType.number,
+        SizedBox(height: 10),
+
+        TextFormField(
+       keyboardType: TextInputType.number,
           cursorColor: config.fontColor,
           style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
           maxLines: null,
@@ -75,15 +93,21 @@ class Review extends StatelessWidget {
              hintText: '',
           ),
           validator: (String value){
+            print(int.tryParse(value));
             if(value.isEmpty)
             return 'Please enter a pecentage';
-            if(int.tryParse(value)> 100)
+            else if(int.tryParse(value)> 100)
             return 'Please enter a valid percentage';
-            else
+            else{
+              this.setState((){
+              this.adv_percent = double.tryParse(value);
+              });
             return null;
+            }
           },
           ),   
           SizedBox(height: 10),
+
           TextFormField(
           keyboardType: TextInputType.number,
           cursorColor: config.fontColor,
@@ -101,30 +125,44 @@ class Review extends StatelessWidget {
              hintText: '',
           ),
           validator: (String value){
+            print(int.tryParse(value));
             if(value.isEmpty)
             return 'Please enter a pecentage';
-            if(int.tryParse(value)> 100)
+            else if(int.tryParse(value) > 100)
             return 'Please enter a valid percentage';
-            else
+            else{
+              this.setState((){
+              this.beg_percent = double.tryParse(value);
+              });
             return null;
+            }
           },
-          ),        
-
+          ), 
+           SizedBox(height: 10),
+         FlatButton(
+          onPressed: (){
+            if(_formkey.currentState.validate())
+            {
+              Scaffold.of(context).showSnackBar(
+                   SnackBar(
+                    backgroundColor: config.success,
+                    content: Text('Submitted', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+                 )
+                 );
+            }
+            else
+            print('failure');
+          },
+          child: Text('Send', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+         ),       
           ],
           )
           ),
          ),
-         SizedBox(height: 10),
-         FlatButton(
-          onPressed: (){
-            if(_formkey.currentState.validate())
-            return null;
-          },
-          child:  Text('Send', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-         ),
       ]
     ),
     ),
+    ), 
     bottomNavigationBar: NavigationBar(0),
     );
   }

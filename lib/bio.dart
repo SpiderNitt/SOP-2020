@@ -9,8 +9,10 @@ class Bio extends StatefulWidget {
 
 class _BioState extends State<Bio> {
   
+   
   final _formkey  = GlobalKey<FormState>();
-
+  String name, githubacc, year, dept;
+  
   @override
 
   Widget build(BuildContext context) {
@@ -24,8 +26,9 @@ class _BioState extends State<Bio> {
         centerTitle: true,
         backgroundColor: config.bgColor,
       ),
-      body: SingleChildScrollView(child: 
-         Container(
+      body:Builder(
+        builder: (context) => SingleChildScrollView(
+      child: Container(
       padding: EdgeInsets.all(30),
       child: Form(
         key: _formkey,
@@ -50,8 +53,12 @@ class _BioState extends State<Bio> {
               validator: (String value){
                 if(value.isEmpty)
                 return 'Enter your name';
-                else
-                return null;
+                else{
+                  this.setState((){
+                    this.name = value;
+                  });
+                  return null;
+                }
               },
             ),
             SizedBox(height: 15),
@@ -74,8 +81,12 @@ class _BioState extends State<Bio> {
               validator: (String value){
                 if(value.isEmpty)
                 return 'Enter your Dept';
-                else
+                else{
+                 this.setState((){
+                    this.dept = value;
+                });
                 return null;
+                }
               },
             ),
             SizedBox(height: 15),
@@ -98,8 +109,12 @@ class _BioState extends State<Bio> {
               validator: (String value){
                 if(value.isEmpty)
                 return 'Enter your Github account';
-                else
-                return null;
+                 else{
+                  this.setState((){
+                    this.githubacc = value;
+                  });
+                  return null;
+                }
               },
             ),
              SizedBox(height: 15),
@@ -127,15 +142,28 @@ class _BioState extends State<Bio> {
                     return 'Please enter year';
                  else if (data <= 0 || data > 4)
                     return 'Please enter a correct year';
-                 else
-                   return null;    
+                  else{
+                  this.setState((){
+                    this.year = value;
+                  });
+                  return null;
+                }
               },
             ),
             SizedBox(height: 25),
             FlatButton(
               onPressed: (){
             if(_formkey.currentState.validate())
-               return null; 
+               {
+                 Scaffold.of(context).showSnackBar(
+                   SnackBar(
+                    backgroundColor: config.success,
+                    content: Text('Submitted', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+                 )
+                 );
+               }
+               else 
+               print('failure'); 
             }, 
             child: Text('Submit', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor))),
           ],
@@ -143,6 +171,7 @@ class _BioState extends State<Bio> {
       ),
     ),
     ),
+  ), 
     bottomNavigationBar: NavigationBar(2),
     );
   }

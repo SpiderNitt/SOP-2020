@@ -58,7 +58,7 @@ class _NavigationBarState extends State<NavigationBar> {
           Navigator.pushNamed(context, '/review');
         }
           setState((){
-            currindex = index;
+            this.currindex = index;
           });
       },
       ) 
