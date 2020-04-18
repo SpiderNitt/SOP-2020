@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inductions_20/graphqltemp.dart';
 import 'config.dart';
 import 'mentees_details.dart';
 import 'navigationbar.dart';
@@ -40,7 +41,7 @@ String name, gitacc;
         SizedBox(height: 10),
         Text('Mentee details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 15),
-        MenteeDet(this.name, this.gitacc)
+        Graphqltemp(MenteeDet(this.name, this.gitacc)) 
       ],
       ),
         ),

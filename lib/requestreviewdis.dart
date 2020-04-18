@@ -34,16 +34,15 @@ Requestlist(this.mentorname, this.mentorgitacc);
       ),
       builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }){
  
-       if(result.hasException)
-        return Text("${result.exception}", style: TextStyle( color: config.fontColor ),);
-      
-       else if(result.loading)
+       if(result.loading)
         return Center(
           child: CircularProgressIndicator(),
         );
        
        else if(result.data == null)
-       return Text("No data found", style: TextStyle( color: config.fontColor ),);
+       return Center(
+          child: Text("No data found", style: TextStyle( color: config.fontColor ))
+        );
 
        else{
      
@@ -54,12 +53,6 @@ Requestlist(this.mentorname, this.mentorgitacc);
           children: <Widget>[
             ListTile(
           contentPadding: EdgeInsets.all(3),
-          onTap: (){
-            Navigator.pushNamed(context, '/menteetask', arguments: {
-              'name': name[index],
-              'git': name[index],
-            });
-          },
           leading: CircleAvatar(
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
