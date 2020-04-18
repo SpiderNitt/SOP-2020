@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inductions_20/screens/views/navigation/widgets/custom_list_tile.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_list_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   final String _name;
