@@ -12,7 +12,7 @@ void main() {
       title: 'Spider Orientation',
       home: Scaffold(
         body: Container(
-          child: Message(),
+          child: LoginView(),
           decoration: BoxDecoration(
             gradient: RadialGradient(
               colors: <Color>[
