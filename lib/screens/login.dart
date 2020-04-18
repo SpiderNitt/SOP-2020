@@ -135,19 +135,18 @@ class LoginViewState extends State<LoginView> {
                         padding: EdgeInsets.all(padding),
                         child: CustomInput(
                           Icons.person,
-                          "Rollnumber",
+                          "Roll number",
                           (value) {
                             if (value.isEmpty) {
-                              return 'Enter Rollnumber';
+                              return 'Enter roll number';
                             } else if (!isNumeric(value)) {
-                              return 'Enter a valid rollnumber';
+                              return 'Enter a valid roll number';
                             } else if (value.toString().length > 9 ||
                                 value.toString().length < 9) {
-                              return 'Enter a valid rollnumber';
-                            } else if (value.toString()[0] != '1') {
-                              return 'Enter a valid rollnumber';
-                            } else if (value.toString()[5] != '9') {
-                              return 'Enter a valid rollnumber';
+                              return 'Enter a valid roll number';
+                            } else if (value.toString()[0] != '1' ||
+                                value.toString()[5] != '9') {
+                              return 'Only  BTech first years can register';
                             }
                             return null;
                           },
@@ -165,7 +164,7 @@ class LoginViewState extends State<LoginView> {
                           "Password",
                           (value) {
                             if (value.isEmpty) {
-                              return 'Enter Password';
+                              return 'Enter password';
                             }
                             return null;
                           },
@@ -274,6 +273,19 @@ class LoginViewState extends State<LoginView> {
                           signinwidth,
                           signinheight,
                           fontsize,
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(padding, padding, 0.0, padding),
+                        child: Center(
+                          child: Text(
+                            'Enter your webmail roll number and password',
+                            style: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontSize: 15,
+                            ),
+                          ),
                         ),
                       ),
                       Container(
