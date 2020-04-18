@@ -11,7 +11,7 @@ class _BioState extends State<Bio> {
   
    
   final _formkey  = GlobalKey<FormState>();
-  String name, githubacc, year, dept;
+  String name, githubacc, year =  '', dept;
   
   @override
 

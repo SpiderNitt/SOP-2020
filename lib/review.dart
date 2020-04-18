@@ -11,6 +11,7 @@ class Request extends StatefulWidget {
 class _RequestState extends State<Request> {
   @override
 
+
  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: config.bgColor,
@@ -21,7 +22,9 @@ class _RequestState extends State<Request> {
         centerTitle: true,
         backgroundColor: config.bgColor,
       ),
-      body: Requestlist('anish', 'chakki1234'),
+      body: SingleChildScrollView(
+        child: Requestlist('anish', 'chakki1234'),
+      ),
       bottomNavigationBar: NavigationBar(1),
     );
   }
