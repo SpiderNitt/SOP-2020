@@ -5,6 +5,8 @@ import 'commitsfinal.dart';
 import 'home.dart';
 import 'write_widget.dart';
 import 'mentee_task.dart';
+import 'graphqltemp.dart';
+import 'testgraph.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,7 +23,8 @@ class MyApp extends StatelessWidget {
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
       '/commits': (context)=> CommitsFinal(),
-      '/review': (context) => Request() 
+      // '/review': (context) => Request() 
+      '/review': (context) => Graphqltemp(TestGraphql()) 
     },
   );
   }
