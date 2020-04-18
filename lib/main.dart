@@ -23,8 +23,7 @@ class MyApp extends StatelessWidget {
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
       '/commits': (context)=> CommitsFinal(),
-      // '/review': (context) => Request() 
-      '/review': (context) => Graphqltemp(TestGraphql()) 
+      '/review': (context) => Graphqltemp(Request()) 
     },
   );
   }

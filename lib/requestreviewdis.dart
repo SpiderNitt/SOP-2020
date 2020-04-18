@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'config.dart';
 
 class Requestlist extends StatelessWidget {
@@ -7,12 +8,47 @@ String mentorname, mentorgitacc;
 
 final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vishal',  'ashuwin',  'akash',  'sidb'];
 
+  final String query = r"""
+                    query GetContinent($code : ID!){
+                      continent(code:$code){
+                        name
+                        countries{
+                          name
+                          capital
+                        }
+                      }
+                    }
+                  """;
+
+
 Requestlist(this.mentorname, this.mentorgitacc);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: name.length,
+    return Query(
+      options: QueryOptions(
+        documentNode: gql(query),
+        variables: {
+          "code": "AS"
+        }
+      ),
+      builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }){
+ 
+       if(result.hasException)
+        return Text("${result.exception}", style: TextStyle( color: config.fontColor ),);
+      
+       else if(result.loading)
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+       
+       else if(result.data == null)
+       return Text("No data found", style: TextStyle( color: config.fontColor ),);
+
+       else{
+     
+      return ListView.builder(
+      itemCount: result.data["continent"]["countries"].length,
       itemBuilder: (context, index){
         return Column(
           children: <Widget>[
@@ -28,14 +64,14 @@ Requestlist(this.mentorname, this.mentorgitacc);
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
-          title: Text('${name[index]}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text('${result.data["continent"]["countries"][index]["name"]}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(
                     height:5,
                   ),
-                  Text('Task1', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${result.data["continent"]["countries"][index]["capital"]}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                   SizedBox(
                     height:5,
                   ),
@@ -66,5 +102,7 @@ Requestlist(this.mentorname, this.mentorgitacc);
         );
       }
     );
+  }
+});
   }
 }
