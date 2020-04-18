@@ -17,8 +17,6 @@ String mentorname, mentorgitacc;
                     }
                   """;
 
-final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vishal',  'ashuwin',  'akash',  'sidb'];
-
 MenteeDet(this.mentorname, this.mentorgitacc);
 
   @override

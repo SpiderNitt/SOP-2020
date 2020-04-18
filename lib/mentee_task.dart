@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inductions_20/graphqltemp.dart';
 import 'package:inductions_20/stats.dart';
 import 'mentor_details.dart';
 import 'navigationbar.dart';
@@ -56,7 +57,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 10),
         Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        Stats(),
+        Graphqltemp(Stats(data['name'], data['git'])),
         ]
        ),
       ),

@@ -6,8 +6,6 @@ class Requestlist extends StatelessWidget {
 
 String mentorname, mentorgitacc;  
 
-final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vishal',  'ashuwin',  'akash',  'sidb'];
-
   final String query = r"""
                     query GetContinent($code : ID!){
                       continent(code:$code){
@@ -19,7 +17,6 @@ final List <String> name = ['anish', 'jerry', 'Thrishik', 'Bharat', 'joel', 'vis
                       }
                     }
                   """;
-
 
 Requestlist(this.mentorname, this.mentorgitacc);
 
@@ -79,7 +76,7 @@ Requestlist(this.mentorname, this.mentorgitacc);
                   FlatButton(
                   onPressed: (){
                   Navigator.pushNamed(context, '/writereview', arguments: {
-                  'repo_det': 'task1',
+                  'repo_det': result.data["continent"]["countries"][index]["capital"],
                    });
           }, 
          child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
