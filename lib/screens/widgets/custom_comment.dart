@@ -20,14 +20,14 @@ Widget build(BuildContext context) {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text('', 
-                      style: TextStyle(color: Colors.white),),
+                      child: Text(_text, 
+                      style: TextStyle(color: Color(_textcolor)),),
                     ),
                   ),
                 );
 }
 
-
+}
 
 class Triangle extends CustomPainter {
   

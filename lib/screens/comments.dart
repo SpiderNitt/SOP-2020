@@ -144,20 +144,10 @@ ScrollController scrollController;
                 var triangle = CustomPaint(
                   painter: Triangle(),
                 );
-
-                var messagebody = DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Color(secondary1),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(_messages[index]),
-                    ),
-                  ),
-                );
+                
+                var messagebody = 
+                Comment_box(_messages[index], secondary1, 0xff000000);
+             
 
                 Widget message;
 
