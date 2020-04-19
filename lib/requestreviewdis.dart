@@ -39,7 +39,7 @@ List<Widget> listmaker(dynamic contxt){
 
 List<Widget> finallist = [];
 for(int i = 0; i< this.resultobt['continent']['countries'].length; i++){
-  if(this.resultobt['continent']['countries'][i]['name'].contains(this.searchword) || this.searchword == null){
+  if(this.resultobt['continent']['countries'][i]['name'].contains(this.searchword) || this.searchword == ''){
     finallist.add(
       Column(
           children: <Widget>[

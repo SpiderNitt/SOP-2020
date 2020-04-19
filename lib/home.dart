@@ -4,12 +4,18 @@ import 'config.dart';
 import 'mentees_details.dart';
 import 'navigationbar.dart';
 import 'mentor_details.dart';
+import 'jwtparse.dart';
 
 class Home extends StatefulWidget {
 
-String name, gitacc;
- 
-  Home(this.name, this.gitacc);
+String name, gitacc, jwt;
+dynamic res;
+
+  Home(this.jwt){
+   this.res = tryParseJwt(this.jwt);
+   this.name = this.res['name'];
+   this.gitacc = 'chakki1234';
+  }
 
   @override
   _HomeState createState() => _HomeState(this.name, this.gitacc);

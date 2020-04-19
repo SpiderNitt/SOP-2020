@@ -6,7 +6,6 @@ import 'home.dart';
 import 'write_widget.dart';
 import 'mentee_task.dart';
 import 'graphqltemp.dart';
-import 'testgraph.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
     routes: {
-      '/': (context) => Home('Anish', 'chakki1234'),
+      '/': (context) => Home('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ'),
       '/menteetask' : (context) => MenteeTask(),
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
