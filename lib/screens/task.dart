@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:like_button/like_button.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'widgets/custom_graph.dart';
 import 'mentee_home.dart';
 import 'comments.dart';
+import 'feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
+import 'widgets/custom_comment.dart';
 class TASK extends StatefulWidget{
   
   List task;
@@ -102,22 +104,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
         title: Text('${task[0]} TASK ${task[1]}'),
         
         backgroundColor: Color(0xff000000) ,
-        actions: <Widget>[  
-            // action button
-            IconButton(
-              icon: Icon( Icons.remove_red_eye ,
-                                       color: Color(secondary1),
-                                       size: 20,),),
-
-          Padding(padding:const EdgeInsets.symmetric(vertical: 20.0),
-          child:  Text("${view_count}", style: TextStyle(
-  
-                               fontWeight: FontWeight.bold,
-                               color: Color(secondary1)
-           ) )),
-          Padding(padding: const EdgeInsets.only(left: 104.0),
-                  child: Icon(Icons.more_vert, color: Colors.white),
-          )],
+       
           bottom: TabBar(
             controller: _tabController,
             tabs: myTabs         
@@ -131,13 +118,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   child: ListView(
    children: <Widget>[
     Padding(padding: const EdgeInsets.only(bottom:0),),
-     new CircularPercentIndicator(
-            
-           radius: 48.0,
-           lineWidth: 8.0,
-           percent: (this.overall_per),
-           center: new Text("$decoverall_per"),
-          progressColor: Colors.green,         ),
+    Circular_percentage(48, 8, this.overall_per, Text("$decoverall_per"), 0xff80c904),
+    
          ]
  )
  ): null,
@@ -154,60 +136,45 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
+                  
                     children: <Widget>[
 
-                       GestureDetector(
-                                   
-                                   child: Container(
-                                   padding: EdgeInsets.all(15),
-                                   margin: EdgeInsets.all(0),
-                                   width:150,
-                                   child: LikeButton(
-          size: 20,
-          circleColor:
-              CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
-          bubblesColor: BubblesColor(
-            dotPrimaryColor: Color(0xff33b5e5),
-            dotSecondaryColor: Color(0xff0099cc),
-          ),
-          likeBuilder: (bool isLiked) {
-            return Icon(
-              Icons.favorite,
-              color: isLiked ? Colors.red :Colors.white,
-              size: 20,
-            );
-          },
-          likeCount: 15,
-          countBuilder: (int count, bool isLiked, String text) {
-            var color = isLiked ? Colors.red : Colors.white;
-            Widget result;
-            if (count == 0) {
-              result = Text(
-                "love",
-                style: TextStyle(color: color),
-              );
-            } else
-              result = Text(
-                text,
-                style: TextStyle(color: color),
-              );
-            return result;
-          },
-        ),
-  ),),      
+                  Container(      
+                                  padding: EdgeInsets.only(left:10),
+                             
+                                   width:170,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  
+                    children: <Widget>[
 
-                                InkWell(
-                            onTap:(){ List a=task;
-                            Navigator.push(context, 
-                            PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKcomments(task: a),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child){
-                              return SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(0.0, 1.0),
-                                end: Offset.zero,
 
-                              
-                                ).animate(animation),
+               IconButton(
+              icon: Icon( Icons.done ,
+                                       color: Color(secondary1),
+                                       size: 20,),),
+
+          Padding(padding:const EdgeInsets.symmetric(vertical: 16.0),
+          child:  Text("${view_count} submission", style: TextStyle(
+  
+                               fontWeight: FontWeight.bold,
+                               color: Color(secondary1)
+           ) )),])),
+                             
+                             Custom_box('Submit',(){
+                                _tabController.animateTo((_tabController.index+1));},110,50,15,0xff000000,15,0,0),
+
+                             Custom_box('Comments',(){
+                                   List a=task;
+                                   Navigator.push(context, 
+                                   PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKcomments(task: a),
+                                   transitionsBuilder: (context, animation, secondaryAnimation, child){
+                                   return SlideTransition(
+                                     position: Tween<Offset>(
+                                     begin: const Offset(0.0, 1.0),
+                                     end: Offset.zero,
+                                     ).animate(animation),
                                 child: SlideTransition(
                                      position: Tween<Offset>(
                                      end: const Offset(0.0, 1.0),
@@ -218,31 +185,11 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                               );
                             }
                             )
-                            );},
-                                   child: Container(
-                                   padding: EdgeInsets.all(18),
-                                   margin: EdgeInsets.all(0),
-                                   width:120,
-                                   child: Text('Comments',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                      ), ),
-                          ),),                            
+                            ); },110,50,15, 0xff000000,15,0,0)
+                             
 
 
-                                InkWell(
-                                   onTap: () => _tabController.animateTo((_tabController.index+1)),
-                                   child: Container(
-                                   padding: EdgeInsets.all(18),
-                                   margin: EdgeInsets.all(0),
-                                   width:120,
-                                   child:  Text('Submit',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(submitbarcolor)
-                                      ), ),
-                          ),),                            
+
         ],
                   )
                   ,), ),  
@@ -316,7 +263,29 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
              
              child: Column(      children: <Widget>[
         
-    
+     Padding(padding: const EdgeInsets.all(16.0),
+              child: Container(
+              height: 30, 
+              width: 370, 
+                      
+                child: Material(
+                  color: Color(primary),
+
+
+  
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+
+                    
+                    Custom_box('Contact Thrishik (992993922)',(){},280,50,16,primary,0,0,0),
+                    Custom_box('view profile',(){},80,20,14,primary,0,0,0),
+
+                     
+                    ],
+                  )
+                  ,), )),
           
         Container(
             margin:  const EdgeInsets.all( 10.0),
@@ -340,36 +309,13 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           ),
         
         
-          InkWell(
-          onTap: (){
-                              var text = textEditingController.value.text;
-                               textEditingController.clear();
+        Custom_box('Submit',(){  
+          var text = textEditingController.value.text;
+            textEditingController.clear();
             setState(() {
-                  taskSubmitted.add(text);
-            });
-          },
-          child: Container(
-                            
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.all(3),
-                            
-                            decoration: BoxDecoration(
-                              color: Color(secondary1),
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Text('Submit',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                        
-                                        
-                                      ), ) ,
-                      )
-  
-              
+            taskSubmitted.add(text);
+            });},68,38,14,secondary1,10,3,10),
 
-                
-              ),
 
           Container(
             child: Column(children: <Widget>[
@@ -388,39 +334,20 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                    InkWell(
-                        
-                         onTap:()=> launch('${taskSubmitted[i]}'),
-                          
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            margin: EdgeInsets.all(3),
-                            
-                            color: Color(primary1),
-                            width: 320,
-                            child: Text('${taskSubmitted[i]}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                      ), ),
-                          ),),   
-                    IconButton(
-              icon: Icon( Icons.clear ,
-                                       color: Colors.white,
-                                       size: 20,), onPressed:(){
 
-                                         setState(() {
-                                           taskSubmitted.remove(taskSubmitted[i]);
-                                         });
-                                       },),
+                 Custom_box('${taskSubmitted[i]}',(){  
+                 launch('${taskSubmitted[i]}');},320,38,15,primary1,10,3,0),
+                 IconButton(
+                      icon: Icon( Icons.clear ,
+                      color: Colors.white,
+                      size: 20,), onPressed:(){
+
+                        setState(() {
+                          taskSubmitted.remove(taskSubmitted[i]);
+                        });
+                      },),
                    ]
-              ),
-
-
-            ],),
-          )
-           
-      ],)),
+              ),],), ) ],)),
            new Divider(
             color: Colors.white,
             height: 50,
@@ -437,7 +364,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                   ),
                 ),
           Padding(padding: const EdgeInsets.only(left:12.0),
-         child: CustomPaint(
+             child: CustomPaint(
                   painter: Triangle(),
                 )),
                 DecoratedBox(
@@ -454,11 +381,34 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                     ),
                   ),
                 )
+]),
+       
+Custom_box('Previous feedbacks',(){
+                            List a=task;
+                            Navigator.push(context, 
+                            PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKfeedback(task: a),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child){
+                              return SlideTransition(
+                              position: Tween<Offset>(
+                                begin: const Offset(0.0, 1.0),
+                                end: Offset.zero,
 
-          ]),
-        
+                              
+                                ).animate(animation),
+                                child: SlideTransition(
+                                     position: Tween<Offset>(
+                                     end: const Offset(0.0, 1.0),
+                                     begin: Offset.zero,
+                                     ).animate(secondaryAnimation),
+                                     child: child,
+                                ),
+                              );
+                            }
+                            )
+                            );},320,50,14.5,0xff000000,15,10,0)    ,   
+                        
         Container(
-             margin: const EdgeInsets.only(top:80.0, left:10, right: 10),
+             margin: const EdgeInsets.only(top:30.0, left:10, right: 10),
              padding: const EdgeInsets.all(20.0),
             color: Colors.black,
              child: Column
@@ -481,42 +431,18 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
 
                       ),
              ),
-            InkWell(
-                            child: Container(
-                            width: 420,
-                            padding: EdgeInsets.only(left:90, top:20, bottom:20),
-                            margin: EdgeInsets.only(top:30),
-                            
-                            decoration: BoxDecoration(
-                              color: Color(secondary1),
-                              borderRadius: BorderRadius.circular(10)
-                            ),
-                            child: Text('Send Request to Review',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                        
-                                        
-                                      ), ) ,
-                      ),
-            )
+
+            Custom_box('                Send Request to Review',(){},420,50,14.5,secondary1,15,8,10),
+            
            ],)),
 
-Padding(padding: const EdgeInsets.only(bottom:40),),
-     new CircularPercentIndicator(
+            Padding(padding: const EdgeInsets.only(bottom:40),),
 
-           radius: 180.0,
-           lineWidth: 15.0,
-           percent: (this.advance_per),
-           center:new CircularPercentIndicator(
-           animation: true,
-           radius: 130.0,
-           lineWidth: 15.0,
-           percent: (this.basic_per),
-           center: new Text("$decoverall_per", style: TextStyle(color: Colors.white),),
-          progressColor: Colors.blue,         ),
-      
-          progressColor: Colors.green,         ),
+            Circular_percentage(180.0,15.0, this.advance_per, 
+            Circular_percentage(130.0, 15.0,this.basic_per,Text("$decoverall_per", style: TextStyle(color: Colors.white),),secondary1)
+            , 0xff80c904),
+
+
       Padding(padding: const EdgeInsets.only(bottom:40),),
 
         Container(
@@ -593,22 +519,5 @@ Padding(padding: const EdgeInsets.only(bottom:40),),
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return null;
-  }
-}
-class Triangle extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Color(0xff00a8e8);
-
-    var path = Path();
-    path.lineTo(10, 0);
-    path.lineTo(0, -10);
-    path.lineTo(-10, 0);
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
   }
 }

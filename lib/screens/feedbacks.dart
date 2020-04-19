@@ -7,16 +7,17 @@ import 'package:like_button/like_button.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'mentee_home.dart';
 import 'widgets/custom_comment.dart';
-class TASKcomments extends StatefulWidget{
+
+class TASKfeedback extends StatefulWidget{
   
   List task;
-  TASKcomments({this.task});
+  TASKfeedback({this.task});
 
-  TASKcommentsState createState() => TASKcommentsState();
+  TASKfeedbackState createState() => TASKfeedbackState();
 
 
 }
-class TASKcommentsState extends State<TASKcomments> with SingleTickerProviderStateMixin {
+class TASKfeedbackState extends State<TASKfeedback> with SingleTickerProviderStateMixin {
 
   var primary=0xff00171f;
   var secondary= 0xff003459;
@@ -32,77 +33,21 @@ ScrollController scrollController;
   @override
   void initState() {
      _messages = List<String>();
-
+    _messages.add("change your name");
+        _messages.add("saniod adhajbdc eazkjsbnck");
+            _messages.add("change your namesa sdhvui sdbvjshd jkdsbnc \n dncjds");
+            
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
 }
 
-  void handleSendMessage() {
-    var text = textEditingController.value.text;
-    textEditingController.clear();
-    setState(() {
-      _messages.add(text);
-      enableButton = false;
-    });
-
-    Future.delayed(Duration(milliseconds: 100), () {
-      scrollController.animateTo(scrollController.position.maxScrollExtent,
-          curve: Curves.ease, duration: Duration(milliseconds: 500));
-    });
-  }
 
   
 
   @override
   Widget build(BuildContext context) {
-    var textInput =Row(
-            
-      children: <Widget>[
-        
-        Expanded(
-          
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-          
-            child: TextField(
-              onChanged: (text) {
-                setState(() {
-                  enableButton = text.isNotEmpty;
-                });
-              },
-              style: TextStyle(
-                color: Colors.white,
-              ),
-              decoration: InputDecoration.collapsed(
-                hintText: "Type a comment",
-                hintStyle:(TextStyle(color: Colors.white12 )),
-                
-                fillColor: Colors.white
-              ),
-              controller: textEditingController,
-            ),
-          ),
-        ),
-        enableButton
-            ? IconButton(
-                color: Color(secondary1),
-                icon: Icon(
-                  Icons.send,
-                ),
-                disabledColor: Colors.white,
-                onPressed: handleSendMessage,
-              )
-            : IconButton(
-                color: Color(secondary1),
-                icon: Icon(
-                  Icons.send,
-                ),
-                disabledColor: Colors.white,
-                onPressed: null,
-              )
-      ],
-    );
+   
     task= widget.task;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -127,12 +72,7 @@ ScrollController scrollController;
               controller: scrollController,
               itemCount: _messages.length,
               itemBuilder: (context, index) {
-                bool reverse = false;
-
-                if (index == 0) {
-                  reverse = true;
-                }
-
+              
                 var avatar = Padding(
                   padding:
                       const EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
@@ -161,35 +101,17 @@ ScrollController scrollController;
 
                 Widget message;
 
-                if (reverse) {
-                  message = Stack(
-                    children: <Widget>[
-                      messagebody,
-                      Positioned(right: 0, bottom: 0, child: triangle),
-                    ],
-                  );
-                } else {
+
                   message = Stack(
                     children: <Widget>[
                       Positioned(left: 0, bottom: 0, child: triangle),
                       messagebody,
                     ],
                   );
-                }
+          
 
-                if (reverse) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: message,
-                      ),
-                      avatar,
-                    ],
-                  );
-                } else {
+          
+
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
@@ -200,12 +122,11 @@ ScrollController scrollController;
                       ),
                     ],
                   );
-                }
+         
               },
             ),
           ),
-          Divider(height: 2.0),
-          textInput
+
         ],
       ),
 
