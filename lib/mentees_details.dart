@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'config.dart';
+import 'jwtparse.dart';
 
 class MenteeDet extends StatelessWidget {
 
-String mentorname, mentorgitacc;  
+String jwttoken;  
+dynamic rollno;
 
  final String query = r"""
                     query GetContinent($code : ID!){
@@ -17,7 +19,9 @@ String mentorname, mentorgitacc;
                     }
                   """;
 
-MenteeDet(this.mentorname, this.mentorgitacc);
+MenteeDet(this.jwttoken){
+   this.rollno = tryParseJwt(this.jwttoken); //add fieldname
+}
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +65,9 @@ MenteeDet(this.mentorname, this.mentorgitacc);
             Navigator.pushNamed(context, '/menteetask', arguments: {
               'name': result.data["continent"]["countries"][index]["name"],
               'git':result.data["continent"]["countries"][index]["name"],
+              'jwt': this.jwttoken,
+              'menteeroll': 107718015,
+              //change here
             });
           },
           leading: CircleAvatar(

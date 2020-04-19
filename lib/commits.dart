@@ -24,20 +24,21 @@ factory Data.getdata(List json){
 
 class Commits extends StatefulWidget {
 
-  String repo_det;
+  String repo_det, gitacc;
+
   
-  Commits(this.repo_det);
+  Commits(this.repo_det, this.gitacc);
 
   @override
-  _CommitsState createState() => _CommitsState(this.repo_det);
+  _CommitsState createState() => _CommitsState(this.repo_det, this.gitacc);
 }
 
 class _CommitsState extends State<Commits> {
 
-  String repo_det;
+  String repo_det, gitacc;
   dynamic res;
 
-  _CommitsState(this.repo_det);
+  _CommitsState(this.repo_det, this.gitacc);
 
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/repos/chakki1234/$repo_det/commits');

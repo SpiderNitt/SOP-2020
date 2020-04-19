@@ -5,17 +5,18 @@ import 'config.dart';
 
 class Stats extends StatefulWidget {
  
- String menteename, gitacc;
- Stats(this.menteename, this.gitacc);
+ String menteename, gitacc, jwt;
+ dynamic menteeroll;
+ Stats(this.menteename, this.gitacc, this.jwt, this.menteeroll);
 
   @override
-  _StatsState createState() => _StatsState(this.menteename, this.gitacc);
+  _StatsState createState() => _StatsState(this.menteename, this.gitacc, this.jwt, this.menteeroll);
 }
 
 class _StatsState extends State<Stats> {
 
-  String menteename, gitacc;
- 
+  String menteename, gitacc, jwt;
+  dynamic menteeroll;
   final String query = r"""
    
    query GetContinent($code : ID!){
@@ -27,7 +28,7 @@ class _StatsState extends State<Stats> {
                     }
    """;
 
-  _StatsState(this.menteename, this.gitacc);
+  _StatsState(this.menteename, this.gitacc, this.jwt, this.menteeroll);
 
   @override
 

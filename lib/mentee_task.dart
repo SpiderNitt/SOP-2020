@@ -5,6 +5,7 @@ import 'mentor_details.dart';
 import 'navigationbar.dart';
 import 'repodet.dart';
 import 'config.dart';
+import 'jwtparse.dart';
 
 class MenteeTask extends StatefulWidget {
   @override
@@ -12,11 +13,16 @@ class MenteeTask extends StatefulWidget {
 }
 
 class _MenteeTaskState extends State<MenteeTask> {
+  
+  dynamic res;
+  String jwt;
+  
   @override
-
   Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
-    
+   this.res = tryParseJwt(data['jwt']);
+   this.jwt = data['jwt'];
+
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
@@ -45,7 +51,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 10),
         Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        RepoDet(data['git'], data['name']),
+        RepoDet(data['git'], data['name'], this.jwt),
         ]
        ),
       ),
@@ -57,12 +63,12 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 10),
         Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        Graphqltemp(Stats(data['name'], data['git'])),
+        Graphqltemp(Stats(data['name'], data['git'], this.jwt, data['menteeroll'])), //remove unnecessary
         ]
        ),
       ),
         ]), 
-      bottomNavigationBar: NavigationBar(0),
+      bottomNavigationBar: NavigationBar(0, this.jwt),
     ));
   }
 }

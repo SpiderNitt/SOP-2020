@@ -4,12 +4,12 @@ import 'config.dart';
 
 class Requestlist extends StatefulWidget {
 
-String mentorname, mentorgitacc;  
+String mentorname, mentorgitacc, jwt;  
 
-Requestlist(this.mentorname, this.mentorgitacc);
+Requestlist(this.mentorname, this.mentorgitacc, this.jwt);
 
   @override
-  _RequestlistState createState() => _RequestlistState(this.mentorname, this.mentorgitacc);
+  _RequestlistState createState() => _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt);
 }
 
 class _RequestlistState extends State<Requestlist> {
@@ -26,13 +26,13 @@ class _RequestlistState extends State<Requestlist> {
                     }
                   """;
 
-  String mentorname, mentorgitacc, searchword = '';  
+  String mentorname, mentorgitacc, searchword = '', jwt;  
 
   final _formkey = GlobalKey<FormState>();
 
   dynamic resultobt; 
 
-  _RequestlistState(this.mentorname, this.mentorgitacc);
+  _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt);
  
 
 List<Widget> listmaker(dynamic contxt){
@@ -72,6 +72,7 @@ for(int i = 0; i< this.resultobt['continent']['countries'].length; i++){
                   onPressed: (){
                   Navigator.pushNamed(contxt, '/writereview', arguments: {
                   'repo_det': this.resultobt['continent']['countries'][i]['capital'],
+                  'jwt': this.jwt
                    });
           }, 
          child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),

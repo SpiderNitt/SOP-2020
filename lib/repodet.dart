@@ -20,20 +20,20 @@ factory Data.getdata(List json){
 
 class RepoDet extends StatefulWidget {
  
-  String gitacc, menteename;
+  String gitacc, menteename, jwt;
   
-  RepoDet(this.gitacc, this.menteename);
+  RepoDet(this.gitacc, this.menteename, this.jwt);
 
   @override
-  _RepoDetState createState() => _RepoDetState(this.gitacc, this.menteename);
+  _RepoDetState createState() => _RepoDetState(this.gitacc, this.menteename, this.jwt);
 }
 
 class _RepoDetState extends State<RepoDet> {
 
-  String gitacc, menteename;
+  String gitacc, menteename ,jwt;
   dynamic res;
 
-  _RepoDetState(this.gitacc, this.menteename);
+  _RepoDetState(this.gitacc, this.menteename, this.jwt);
 
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
@@ -84,7 +84,8 @@ class _RepoDetState extends State<RepoDet> {
             Navigator.pushNamed(context, '/commits', arguments: {
               'repo_det': snapshot.data.repos[index],
               'git_acc': this.gitacc,
-              'menteename': this.menteename
+              'menteename': this.menteename,
+              'jwt': this.jwt
             });
           },
           title: Text(snapshot.data.repos[index],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),

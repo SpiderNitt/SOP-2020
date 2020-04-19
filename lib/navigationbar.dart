@@ -6,10 +6,11 @@ class NavigationBar extends StatefulWidget {
   @override
 
   int value;
+  String jwt;
 
-   NavigationBar(this.value);
+   NavigationBar(this.value, this.jwt);
 
-  _NavigationBarState createState() => _NavigationBarState(this.value);
+  _NavigationBarState createState() => _NavigationBarState(this.value, this.jwt);
 }
 
 class _NavigationBarState extends State<NavigationBar> {
@@ -17,8 +18,10 @@ class _NavigationBarState extends State<NavigationBar> {
 
 
   int currindex = 0;
+  String jwt;
 
-  _NavigationBarState(this.currindex);
+  _NavigationBarState(this.currindex, this.jwt);
+  // pass this to review page
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _NavigationBarState extends State<NavigationBar> {
           ),
           BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          title: Text('Bio', style: TextStyle( fontSize: 15, fontFamily: config.fontFamily, color: config.fontColor))
+          title: Text('Update Gitacc', style: TextStyle( fontSize: 15, fontFamily: config.fontFamily, color: config.fontColor))
           )
       ],
       onTap: (index){
@@ -52,10 +55,14 @@ class _NavigationBarState extends State<NavigationBar> {
           Navigator.pushNamed(context, '/');
         }
          if (index == 2 ){
-          Navigator.pushNamed(context, '/bio');
+          Navigator.pushNamed(context, '/bio', arguments: {
+            'jwt': this.jwt
+          });
         }
         if (index == 1 ){
-          Navigator.pushNamed(context, '/review');
+          Navigator.pushNamed(context, '/review', arguments: {
+            'jwt': this.jwt
+          });
         }
           setState((){
             this.currindex = index;

@@ -18,14 +18,14 @@ dynamic res;
   }
 
   @override
-  _HomeState createState() => _HomeState(this.name, this.gitacc);
+  _HomeState createState() => _HomeState(this.name, this.gitacc, this.jwt);
 }
 
 class _HomeState extends State<Home> {
 
-String name, gitacc;
+String name, gitacc, jwt;
  
-  _HomeState(this.name, this.gitacc);
+  _HomeState(this.name, this.gitacc, this.jwt);
  
   @override
 
@@ -47,12 +47,12 @@ String name, gitacc;
         SizedBox(height: 10),
         Text('Mentee details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 15),
-        Graphqltemp(MenteeDet(this.name, this.gitacc)) 
+        Graphqltemp(MenteeDet(this.jwt)) 
       ],
       ),
         ),
         ),
-      bottomNavigationBar: NavigationBar(0),
+      bottomNavigationBar: NavigationBar(0,this.jwt),
     );
   }
 }

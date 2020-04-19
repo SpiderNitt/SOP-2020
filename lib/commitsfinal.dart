@@ -11,9 +11,12 @@ class CommitsFinal extends StatefulWidget {
 
 class _CommitsFinal extends State<CommitsFinal> {
   @override
-
+   
+   String jwt;
+   
    Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
+   this.jwt = data['jwt'];
     
     return Scaffold(
       backgroundColor: config.bgColor,
@@ -34,12 +37,12 @@ class _CommitsFinal extends State<CommitsFinal> {
            child: Text('Commit History for ${data['repo_det']}',  style: TextStyle( fontSize: 17, fontFamily: config.fontFamily, color: config.fontColor)),
          ),
         ),
-        Commits(data['repo_det']),
+        Commits(data['repo_det'], data['git_acc']),
         SizedBox(height: 20),
         ]
       ),
       ),
-      bottomNavigationBar: NavigationBar(0),
+      bottomNavigationBar: NavigationBar(0, this.jwt),
     );
   }
 }

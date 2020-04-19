@@ -10,7 +10,7 @@ class Review extends StatefulWidget {
 class _ReviewState extends State<Review> {
   
   double adv_percent, beg_percent;
-  String review;
+  String review, jwt;
   final _formkey = GlobalKey<FormState>();
   
   
@@ -20,8 +20,8 @@ class _ReviewState extends State<Review> {
   
 
   Map data = ModalRoute.of(context).settings.arguments;
+  this.jwt = data['jwt'];
 
-  
     return Scaffold(
     backgroundColor: config.bgColor,
     resizeToAvoidBottomPadding: true,
@@ -163,7 +163,7 @@ class _ReviewState extends State<Review> {
     ),
     ),
     ), 
-    bottomNavigationBar: NavigationBar(0),
+    bottomNavigationBar: NavigationBar(0, this.jwt),
     );
   }
 }
