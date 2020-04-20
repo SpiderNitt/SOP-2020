@@ -24,7 +24,7 @@ class _CommitsFinal extends State<CommitsFinal> {
       appBar: AppBar(
          automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: config.bgColor,
+        backgroundColor: config.appbarcolor,
         title: Text('Mentee task'),
         centerTitle: true,
       ),

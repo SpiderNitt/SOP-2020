@@ -26,7 +26,7 @@ class _RequestState extends State<Request> {
         elevation: 0,
         title: Text('Review Requests'),
         centerTitle: true,
-        backgroundColor: config.bgColor,
+        backgroundColor: config.appbarcolor,
       ),
       body: SingleChildScrollView(
         child: Requestlist('anish', 'chakki1234', this.jwt),

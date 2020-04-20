@@ -38,7 +38,7 @@ String name, gitacc, jwt;
         elevation: 0,
         title: Text('Mentor Page'),
         centerTitle: true,
-        backgroundColor: config.bgColor,
+        backgroundColor: config.appbarcolor,
       ),
       body: SingleChildScrollView(
         child: Container(

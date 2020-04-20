@@ -30,7 +30,7 @@ class _BioState extends State<Bio> {
         elevation: 0,
         title: Text('Update Gitacc'),
         centerTitle: true,
-        backgroundColor: config.bgColor,
+           backgroundColor: config.appbarcolor,
       ),
       body:Builder(
         builder: (context) => SingleChildScrollView(

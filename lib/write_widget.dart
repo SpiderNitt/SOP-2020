@@ -32,7 +32,7 @@ class _ReviewState extends State<Review> {
       title: Text('Review'),
       centerTitle: true,
       elevation: 0,
-      backgroundColor: config.bgColor,
+         backgroundColor: config.appbarcolor,
     ),
     body: Builder(
       builder: (context) => SingleChildScrollView(

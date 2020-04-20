@@ -13,6 +13,7 @@ class Config{
   double borRadi = 8.0;
   Color danger = Colors.red;
   Color success = Colors.green;
+  Color appbarcolor = Colors.black;
 }
 
 Config config =  Config();
