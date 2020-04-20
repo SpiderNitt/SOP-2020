@@ -45,7 +45,6 @@ dynamic res;
 
   Future<Data>  getdata() async{
    Response resp = await get('https://jsonplaceholder.typicode.com/posts');
-   print(resp);
    return Data.model(jsonDecode(resp.body));
 }
    @override

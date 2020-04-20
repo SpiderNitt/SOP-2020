@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+
 
 
 class Data {

@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'config.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
+
+class Data{
+  
+  List<String> menteenames;
+  
+  Data(this.menteenames);
+ 
+  factory Data.model(List res) {
+    
+    List<String> temp = [];
+    for(int i = 0; i < res.length; i++ )
+      temp.add(res[i]['title']);
+    return Data(temp);
+  }
+
+}
 
 class Requestlist extends StatefulWidget {
 
@@ -14,32 +32,31 @@ Requestlist(this.mentorname, this.mentorgitacc, this.jwt);
 
 class _RequestlistState extends State<Requestlist> {
 
- final String query = r"""
-                    query GetContinent($code : ID!){
-                      continent(code:$code){
-                        name
-                        countries{
-                          name
-                          capital
-                        }
-                      }
-                    }
-                  """;
-
   String mentorname, mentorgitacc, searchword = '', jwt;  
 
   final _formkey = GlobalKey<FormState>();
 
-  dynamic resultobt; 
+  dynamic resultobt, res; 
 
   _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt);
  
 
+  Future<Data>  getdata() async{
+   Response resp = await get('https://jsonplaceholder.typicode.com/posts');
+   return Data.model(jsonDecode(resp.body));
+}
+   @override
+   void initState(){
+   super.initState();
+   this.res = getdata();
+  }
+
 List<Widget> listmaker(dynamic contxt){
 
 List<Widget> finallist = [];
-for(int i = 0; i< this.resultobt['continent']['countries'].length; i++){
-  if(this.resultobt['continent']['countries'][i]['name'].contains(this.searchword) || this.searchword == ''){
+
+for(int i = 0; i< this.resultobt.length; i++){
+  if(this.resultobt[i].contains(this.searchword) || this.searchword == ''){
     finallist.add(
       Column(
           children: <Widget>[
@@ -49,14 +66,14 @@ for(int i = 0; i< this.resultobt['continent']['countries'].length; i++){
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
-          title: Text('${this.resultobt['continent']['countries'][i]['name']}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text('${this.resultobt[i]}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(
                     height:5,
                   ),
-                  Text('${this.resultobt['continent']['countries'][i]['capital']}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${this.resultobt[i]}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                   SizedBox(
                     height:5,
                   ),
@@ -71,7 +88,7 @@ for(int i = 0; i< this.resultobt['continent']['countries'].length; i++){
                   FlatButton(
                   onPressed: (){
                   Navigator.pushNamed(contxt, '/writereview', arguments: {
-                  'repo_det': this.resultobt['continent']['countries'][i]['capital'],
+                  'repo_det': this.resultobt[i],
                   'jwt': this.jwt
                    });
           }, 
@@ -94,27 +111,13 @@ return finallist;
 
   @override
   Widget build(BuildContext context) {
-    return Query(
-      options: QueryOptions(
-        documentNode: gql(query),
-        variables: {
-          "code": "AS"
-        }
-      ),
-      builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }){
+    return FutureBuilder(
+      future: this.res,
+      builder: (context, snapshot){
  
-       if(result.loading)
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-       
-       else if(result.data == null)
-       return Center(
-          child: Text("No data found", style: TextStyle( color: config.fontColor ))
-        );
+      if(snapshot.hasData){
 
-       else{
-      this.resultobt = result.data;
+      this.resultobt = snapshot.data.menteenames;
       return
       Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -156,9 +159,18 @@ return finallist;
       ),
     ],
     ),
-  );    
-  }
-});
+  );
+        
+      }
+
+      else if(snapshot.hasError)
+      return Center(
+      child: Text("${snapshot.error}", style: TextStyle(color: config.fontColor),)
+      );
+         
+      else return  Center(
+          child: CircularProgressIndicator(),
+        );
+      });
   }
 }
-
