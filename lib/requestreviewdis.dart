@@ -13,8 +13,9 @@ class Data{
   factory Data.model(List res) {
     
     List<String> temp = [];
-    for(int i = 0; i < res.length; i++ )
-      temp.add(res[i]['title']);
+    res.forEach((element) {
+      temp.add(element['title']);
+    });
     return Data(temp);
   }
 
@@ -55,8 +56,9 @@ List<Widget> listmaker(dynamic contxt){
 
 List<Widget> finallist = [];
 
-for(int i = 0; i< this.resultobt.length; i++){
-  if(this.resultobt[i].contains(this.searchword) || this.searchword == ''){
+this.resultobt.forEach((element){
+
+  if(element.contains(this.searchword) || this.searchword == ''){
     finallist.add(
       Column(
           children: <Widget>[
@@ -66,14 +68,14 @@ for(int i = 0; i< this.resultobt.length; i++){
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
-          title: Text('${this.resultobt[i]}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text('${element}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(
                     height:5,
                   ),
-                  Text('${this.resultobt[i]}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${element}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                   SizedBox(
                     height:5,
                   ),
@@ -88,7 +90,7 @@ for(int i = 0; i< this.resultobt.length; i++){
                   FlatButton(
                   onPressed: (){
                   Navigator.pushNamed(contxt, '/writereview', arguments: {
-                  'repo_det': this.resultobt[i],
+                  'repo_det': element,
                   'jwt': this.jwt
                    });
           }, 
@@ -105,7 +107,9 @@ for(int i = 0; i< this.resultobt.length; i++){
         )
     );
   }
-}
+
+});
+
 return finallist;
 }
 

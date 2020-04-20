@@ -13,11 +13,11 @@ class Data{
   factory Data.model(List res) {
     
     List<String> temp = [];
-    for(int i = 0; i < res.length; i++ )
-      temp.add(res[i]['title']);
+    res.forEach((element){
+      temp.add(element['title']);
+    });
     return Data(temp);
   }
-
 }
 
 class MenteeDet extends StatefulWidget {
