@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:inductions_20/statsdis.dart';
 import 'config.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
+
+class Data{
+  
+  List<String> menteenames;
+  
+  Data(this.menteenames);
+ 
+  factory Data.model(List res) {
+    
+    List<String> temp = [];
+    for(int i = 0; i < res.length; i++ )
+      temp.add(res[i]['title']);
+    return Data(temp);
+  }
+
+}
+
 
 class Stats extends StatefulWidget {
  
@@ -16,57 +34,50 @@ class Stats extends StatefulWidget {
 class _StatsState extends State<Stats> {
 
   String menteename, gitacc, jwt;
-  dynamic menteeroll;
-  final String query = r"""
-   
-   query GetContinent($code : ID!){
-                      country(code:$code){
-                        name
-                        capital
-  											currency
-                      }
-                    }
-   """;
+  dynamic menteeroll, res;
+
+  
+  Future<Data>  getdata() async{
+   Response resp = await get('https://jsonplaceholder.typicode.com/posts');
+   return Data.model(jsonDecode(resp.body));
+}
+   @override
+  void initState(){
+  super.initState();
+  this.res = getdata();
+  }
 
   _StatsState(this.menteename, this.gitacc, this.jwt, this.menteeroll);
 
   @override
 
   Widget build(BuildContext context) {
-    return  Query(
-      options: QueryOptions(
-        documentNode: gql(query),
-        variables: {
-          "code": "GB"
-        }
-      ), 
-      builder: (QueryResult result, { VoidCallback refetch, FetchMore fetchMore }){
-      
-       if(result.loading)
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-       
-       else if(result.data == null)
-       return Center(
-          child: Text("No data found", style: TextStyle( color: config.fontColor ))
-        );
-
-      else{
-        return Container(
+    return  FutureBuilder(
+      future: this.res,
+      builder: (context, snapshot){
+          
+          if(snapshot.hasData){
+          return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
       maxHeight: 390.0,
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
-        itemCount: 1,
+        itemCount: snapshot.data.menteenames.length,
       itemBuilder: (context, index){
-        return Statsdis(result.data['country']['name'], 0.6, 0.2) ;
+        return Statsdis(snapshot.data.menteenames[index], 0.6, 0.2) ;
       }
     ),
     );
-  }
-});
+    }
+
+      else if (snapshot.hasError)
+      return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),);
+         
+      else return CircularProgressIndicator();
+
+      });
   }
 }
+

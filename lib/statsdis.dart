@@ -15,6 +15,9 @@ class Statsdis extends StatelessWidget {
     return  Column(
               children: <Widget>[
               Text(this.taskname, style: TextStyle( fontSize: 25, fontFamily: config.fontFamily, color: config.fontColor)),
+                 SizedBox(
+                height: 10,
+              ),
               Text('Adv Task Percentage', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
               CircularPercentIndicator(
               radius: 100.0,

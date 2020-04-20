@@ -63,7 +63,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 10),
         Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        Graphqltemp(Stats(data['name'], data['git'], this.jwt, data['menteeroll'])), //remove unnecessary
+        Stats(data['name'], data['git'], this.jwt, data['menteeroll']), //remove unnecessary
         ]
        ),
       ),
