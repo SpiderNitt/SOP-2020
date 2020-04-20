@@ -40,7 +40,6 @@ class _RepoDetState extends State<RepoDet> {
   return Data.getdata(jsonDecode(resp.body));
   }
   
-
   @override
   void initState(){
   super.initState();
