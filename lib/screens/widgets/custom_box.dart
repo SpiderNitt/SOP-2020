@@ -31,9 +31,9 @@ Widget build(BuildContext context) {
         borderRadius: BorderRadius.circular(_borderRadius)
       ),
     child: Text('${_text}',
-                
+            textAlign: TextAlign.center,
             style:TextStyle(
-              fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.bold,
               color: Colors.white,
               fontSize:_fontsize 
             ),

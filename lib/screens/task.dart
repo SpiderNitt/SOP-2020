@@ -7,6 +7,7 @@ import 'package:like_button/like_button.dart';
 import 'widgets/custom_graph.dart';
 import 'mentee_home.dart';
 import 'comments.dart';
+import 'package:http/http.dart' as http;
 import 'feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
@@ -37,9 +38,9 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   var view_count=56;
   List task;
   var decbasic_per;
-   var decadvance_per;
-     var decbasic_barper;
-   var decadvance_barper;
+  var decadvance_per;
+  var decbasic_barper;
+  var decadvance_barper;
    TextEditingController textEditingController;
   List taskSubmitted=['https://github.com/thrishik7/ML-algos','https://github.com/thrishik7/Networking-Kss'];
  
@@ -49,10 +50,11 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   ];
 
   TabController  _tabController;
-
+ 
  
   @override
   void initState() {
+    
     super.initState();
       _tabController = TabController(
       length: 2,
@@ -76,8 +78,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
    this.decoverall_per=this.overall_per*100 ;
    decbasic_per=this.basic_per*100;
    decadvance_per= this.advance_per*100;
-   decbasic_barper=this.basic_per*150;
-   decadvance_barper= this.advance_per*150;
+
 
     this.taskdes = "Description"; }
   @override
@@ -85,8 +86,83 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   _tabController.dispose();
   super.dispose();
   }
+  createAlertDialog(BuildContext context){
+
+    TextEditingController customController = TextEditingController();
+    return showDialog(context: context, builder: (context){
+    return AlertDialog(
+          content:  TextField(
+          controller: customController,
+          ),
+
+      );
+    });
+  }
+  
+  double bottombarwidth;
+  double submitedlinkswidth;
+  double commentwidth;
+  double submissionwidth;
+  double percentbarwidth;
+  double linkinputwidth;
+  double previousfeedbackwidth;
+  double reviewpadding;
+  double leftpaddingwidth;
   @override
   Widget build(BuildContext context) {
+ 
+  final height = MediaQuery.of(context).size.height;
+  final width = MediaQuery.of(context).size.width;
+  if (width <= 400) {
+     submitedlinkswidth=265;
+     submissionwidth=110;
+     commentwidth=210;
+     reviewpadding=10;
+     linkinputwidth=370;
+     bottombarwidth=105;
+     percentbarwidth=120;
+     leftpaddingwidth=5;
+     previousfeedbackwidth=320;
+     decbasic_barper=this.basic_per*percentbarwidth;
+     decadvance_barper= this.advance_per*percentbarwidth;
+
+  } else if (width <= 600) {
+     submitedlinkswidth=300;
+     submissionwidth=110;
+     commentwidth=230;
+     linkinputwidth=370;
+     leftpaddingwidth=5;
+     reviewpadding=10;
+     previousfeedbackwidth=320;
+     bottombarwidth=125;
+     percentbarwidth=130;
+     decbasic_barper=this.basic_per*percentbarwidth;
+     decadvance_barper= this.advance_per*percentbarwidth;
+  } else if (width <= 900) {
+     submitedlinkswidth=350;
+     submissionwidth=110;
+     commentwidth=290;
+     bottombarwidth=136;
+     leftpaddingwidth=5;
+     linkinputwidth=370;
+     reviewpadding=10;
+     previousfeedbackwidth=320;
+     percentbarwidth=130;
+     decbasic_barper=this.basic_per*percentbarwidth;
+     decadvance_barper= this.advance_per*percentbarwidth;
+  } else {
+     submitedlinkswidth=600;
+     submissionwidth=110;
+     commentwidth=390;
+     leftpaddingwidth=180;
+     bottombarwidth=430;
+     percentbarwidth=600;
+     linkinputwidth=500;
+     reviewpadding=340;
+     previousfeedbackwidth=400;
+     decbasic_barper=this.basic_per*percentbarwidth;
+     decadvance_barper= this.advance_per*percentbarwidth;
+  }  
   task= widget.task;
   return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -124,24 +200,28 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                   Container(      
-                  padding: EdgeInsets.only(left:10),
-                  width:170,
+                  padding: EdgeInsets.only(left:1),
+                  width:bottombarwidth,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    
                     children: <Widget>[
-                   IconButton(
-                   icon: Icon( Icons.done ,
-                   color: Color(secondary1),
-                   size: 20,),),
-                   Padding(padding:const EdgeInsets.symmetric(vertical: 16.0),
+                
+                   Padding(padding: EdgeInsets.only(top:16, left:leftpaddingwidth, right: 0),
+                   
                    child:  Text("${view_count} submission",
+                   textAlign: TextAlign.center,
                    style: TextStyle(
                    fontWeight: FontWeight.bold,
                    color: Color(secondary1)
                    ) )),])),
+                   
                    Custom_box('Submit',(){
-                   _tabController.animateTo((_tabController.index+1));},110,50,15,0xff000000,15,0,0),
+                   _tabController.animateTo((_tabController.index+1));
+                   double width = MediaQuery.of(context).size.width;
+                   print(width);
+                   },bottombarwidth,50,15,0xff000000,15,0,0),
                    Custom_box('Comments',(){
                                    List a=task;
                                    Navigator.push(context, 
@@ -162,7 +242,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                               );
                             }
                             )
-                            ); },110,50,15, 0xff000000,15,0,0)
+                            ); },bottombarwidth,50,15, 0xff000000,15,0,0)
            ] ),), ),  
         body: TabBarView(
               controller: _tabController,
@@ -188,33 +268,43 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                                          crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                     Custom_box('Contact Thrishik ',(){},150,50,16,primary,0,0,0),
-                    Custom_box('(992993922)',(){ launch("tel://21213123");},90,20,14,primary,0,0,0),
+                    Custom_box('(992993922)',(){ launch("tel://21213123");},95,50,16,primary,0,0,0),
                     ],),), )),
                     Container(
                     margin:  const EdgeInsets.all( 10.0),
                     padding: const EdgeInsets.only(left:18.0),
+                    width:linkinputwidth ,
                     decoration: BoxDecoration(
                                 color: Color(secondary),
                                 borderRadius: BorderRadius.circular(10)
                             ),
                     child: TextField(
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                     color: Colors.white,
                     ),
                     decoration: InputDecoration.collapsed(
-                    hintText: "               Submit the Link of the task",
+                    hintText: "Submit the Link of the task",
+                    
                     hintStyle:(TextStyle(color: Colors.white24 )),
                     fillColor: Colors.white
               ),
              controller: textEditingController,
             ),
           ),
-          Custom_box('Submit',(){  
+          Custom_box('Submit',()async{  
                               var text = textEditingController.value.text;
+                              final response =
+                                 await http.head(text);
+
+                              if (response.statusCode == 200) {
                               textEditingController.clear();
                               setState(() {
                               taskSubmitted.add(text);
-                               });},68,38,14,secondary1,10,3,10),
+                               });
+                              }else {
+                              
+                             }},68,38,14,secondary1,10,3,10),
           Container(
           child: Column(
                  children: <Widget>[
@@ -232,8 +322,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Custom_box('${taskSubmitted[i]}',(){  
-                  launch('${taskSubmitted[i]}');},320,38,15,primary1,10,3,0),
+                  Custom_box('''${taskSubmitted[i]}''',(){  
+                  launch('${taskSubmitted[i]}');},submitedlinkswidth,38,15,primary1,10,3,0),
                   IconButton(
                       icon: Icon( Icons.clear ,
                       color: Colors.white,
@@ -259,9 +349,9 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             ),
             Padding(padding: const EdgeInsets.only(left:12.0),
             child: CustomPaint(painter: Triangle(),)),
-            Comment_box('you got to change some features, \n add extra features and commit', secondary1,0xffffffff),
+            Comment_box('''you got to change some features,  add extra features and commit''', secondary1,0xffffffff, commentwidth),
             ]),
-    Custom_box('Previous feedbacks',(){
+            Custom_box('Previous feedbacks',(){
                             List a=task;
                             Navigator.push(context, 
                             PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKfeedback(task: a),
@@ -283,24 +373,29 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                               );
                             }
                             )
-                            );},320,50,14.5,0xff000000,15,10,0)    ,   
+  
+                            );},previousfeedbackwidth,50,14.5,0xff000000,15,10,0)    ,  
+         
     Container(
-    margin: const EdgeInsets.only(top:30.0, left:10, right: 10),
+  
+    margin:  EdgeInsets.only(top:30.0, left:reviewpadding, right: reviewpadding),
     padding: const EdgeInsets.all(20.0),
+    
     color: Colors.black,
     child: Column(
     children: <Widget>[
     TextFormField(
+    textAlign: TextAlign.center,
     style: TextStyle(
            color: Colors.white
            ),
     decoration: InputDecoration(
-    labelText:'                 add a comment with the request',
-    labelStyle: TextStyle(
+    hintText:'add a comment with the request',
+    hintStyle: TextStyle(
     color: Colors.white,
     fontSize: 15
     ) ),   ),
-    Custom_box('                Send Request to Review',(){},420,50,14.5,secondary1,15,8,10),
+    Custom_box('Send Request to Review',(){},420,50,14.5,secondary1,15,8,10),
     ],)),
 
     Padding(padding: const EdgeInsets.only(bottom:40),),
@@ -309,7 +404,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             Circular_percentage(130.0, 15.0,this.basic_per,Text("$decoverall_per", style: TextStyle(color: Colors.white),),secondary1)
             , 0xff80c904),
     Container(
-    margin: const EdgeInsets.only(bottom:20, left:10, right: 10),
+    margin: const EdgeInsets.only(bottom:20, top:20,left:10, right: 10),
     padding: const EdgeInsets.all(20.0),
     color: Colors.black,
     child: Table(
@@ -330,7 +425,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             children:<Widget>[
             Container(width: decbasic_barper, height: 15, 
                       color: Colors.blue,),]),
-            Container(width: 150, height: 40, 
+            Container(width: percentbarwidth, height: 40, 
                       padding: const EdgeInsets.only (top:0, left:10),
                       child: Text('Basic Task : ${decbasic_per} %', style: TextStyle(color: Colors.white, ),),
                       )
@@ -343,7 +438,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             Container(width: decadvance_barper, height: 15, 
                       color: Colors.green,
                       ) ]),
-            Container(width: 150, height: 40, 
+            Container(width: percentbarwidth, height: 40, 
                       padding: const EdgeInsets.only (top:0, left:10),
                       child: Text('Advance Task : ${decadvance_per} %', style: TextStyle(color: Colors.white, ),),
                       )

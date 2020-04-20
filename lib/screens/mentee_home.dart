@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'widgets/custom_box.dart';
 
 void main() => runApp(MyApp());
@@ -26,6 +26,7 @@ class homepage extends StatefulWidget{
 }
 
 class _MyHomePage extends State<homepage> {
+
 
 
   var username="VishalS99";
@@ -56,7 +57,25 @@ class _MyHomePage extends State<homepage> {
    });
   }
   @override 
+ 
+  
+  
+  double profilewidth;
+
   Widget build(BuildContext context) {
+
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    if (width <= 400) {
+      profilewidth=95;
+    } else if (width <= 600) {
+      profilewidth=95;
+    } else if (width <= 900) {
+     profilewidth=95;
+    } else {
+     profilewidth=320;
+    }
+
   return Scaffold(
       backgroundColor:  Color(primary),
       appBar: AppBar(
@@ -92,7 +111,7 @@ class _MyHomePage extends State<homepage> {
             Padding(
             padding: const EdgeInsets.only(top:45),
             child:CircleAvatar(
-                  backgroundImage: NetworkImage('${this.user["avatar_url"]}'),
+                  backgroundImage: CachedNetworkImageProvider('${this.user["avatar_url"]}'), 
                   radius:  90,
                  ))
                ],
@@ -170,7 +189,7 @@ class _MyHomePage extends State<homepage> {
                                                else
                                                clickcolor[j]= primary1;}
                                                task=list[i];});
-                                                },95,80,15,clickcolor[i],20,3,10),
+                                                },profilewidth,80,15,clickcolor[i],20,3,10),
                                           ], ),
                                     ),         
                                    new Divider(

@@ -53,10 +53,16 @@ ScrollController scrollController;
   }
 
   
-
+  double commentwidth;
   @override
   Widget build(BuildContext context) {
-    var textInput =Row(
+  final width = MediaQuery.of(context).size.width;
+  if (width <= 400) {
+   commentwidth=210;} else if (width <= 600) {
+   commentwidth=230;} else if (width <= 900) {
+   commentwidth=290;} else {
+   commentwidth=390;}  
+   var textInput =Row(
             
       children: <Widget>[
         
@@ -146,7 +152,7 @@ ScrollController scrollController;
                 );
                 
                 var messagebody = 
-                Comment_box(_messages[index], secondary1, 0xff000000);
+                Comment_box(_messages[index], secondary1, 0xff000000,commentwidth);
              
 
                 Widget message;

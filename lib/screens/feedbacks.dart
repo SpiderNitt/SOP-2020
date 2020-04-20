@@ -44,10 +44,15 @@ ScrollController scrollController;
 
 
   
-
+  double commentwidth;
   @override
   Widget build(BuildContext context) {
-   
+     final width = MediaQuery.of(context).size.width;
+   if (width <= 400) {
+   commentwidth=210;} else if (width <= 600) {
+   commentwidth=230;} else if (width <= 900) {
+   commentwidth=290;} else {
+   commentwidth=390;}  
     task= widget.task;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -85,7 +90,7 @@ ScrollController scrollController;
                   painter: Triangle(),
                 );
 
-                var messagebody = Comment_box(_messages[index], secondary1, 0xff000000);
+                var messagebody = Comment_box(_messages[index], secondary1, 0xff000000,commentwidth);
                 Widget message;
 
 

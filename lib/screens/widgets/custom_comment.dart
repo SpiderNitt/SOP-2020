@@ -7,19 +7,23 @@ class Comment_box extends StatelessWidget{
 final String _text;
 final _backgroundColor;
 final _textcolor;
+final double _width;
 
-Comment_box(this._text, this._backgroundColor, this._textcolor);
+Comment_box(this._text, this._backgroundColor, this._textcolor, this._width);
 
 Widget build(BuildContext context) {
-  return  DecoratedBox(
+  return  Container(
+                  width: _width,
                   decoration: BoxDecoration(
                     color: Color(_backgroundColor) ,
+                    
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
+                      
                       child: Text(_text, 
                       style: TextStyle(color: Color(_textcolor)),),
                     ),
