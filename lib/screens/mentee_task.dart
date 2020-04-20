@@ -17,11 +17,15 @@ class _MenteeTaskState extends State<MenteeTask> {
   
   dynamic res; 
   String jwt;
-  
+
+  String value;
   void readstorage() async{
   
   final storage = new FlutterSecureStorage(); 
-  String value = await storage.read(key: 'jwt');
+  this.value = await storage.read(key: 'jwt');
+  print('//////////');
+  print(this.value);
+  print('//////////');
   }
 
   @override
@@ -61,7 +65,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SingleChildScrollView(
         child: Column(
         children: <Widget>[
-        MenDet(data['name'], data['git']),
+        MenDet(this.value, data['git']),
         SizedBox(height: 10),
         Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
