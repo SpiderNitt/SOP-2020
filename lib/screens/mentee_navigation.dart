@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inductions_20/screens/views/navigation/widgets/custom_list_tile.dart';
+import 'package:inductions_20/screens/widgets/custom_list_tile.dart';
 
-class CustomDrawer extends StatelessWidget {
+class MenteeCustomDrawer extends StatelessWidget {
   final String _name;
   final String _username;
   final String _url;
 
-  CustomDrawer(this._name, this._username, this._url);
+  MenteeCustomDrawer(this._name, this._username, this._url);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class CustomDrawer extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.width * 0.50,
+              height: 200,
               child: UserAccountsDrawerHeader(
                 accountName: Text(
                   _name,
@@ -46,9 +46,8 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            CustomListTile(Icons.person, "Profile", () => {}),
-            CustomListTile(Icons.person_outline, "Mentor", () => {}),
-            CustomListTile(Icons.rate_review, "Review", () => {}),
+            CustomListTile(Icons.home, "Home Page", () => {}),
+            CustomListTile(Icons.announcement, "Announcements", () => {}),
             CustomListTile(Icons.exit_to_app, "Logout", () => {}),
           ],
         ),
