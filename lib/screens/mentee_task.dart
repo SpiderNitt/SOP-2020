@@ -5,8 +5,7 @@ import '../widgets/navigationbar.dart';
 import '../widgets/repodet.dart';
 import '../others/config.dart';
 import '../others/jwtparse.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MenteeTask extends StatefulWidget {
 
@@ -20,10 +19,9 @@ class _MenteeTaskState extends State<MenteeTask> {
   String jwt;
   
   void readstorage() async{
-  final prefs = await SharedPreferences.getInstance();  
-  print('////////////');
-  print(prefs.getString('jwt'));
-  print('////////////');
+  
+  final storage = new FlutterSecureStorage(); 
+  String value = await storage.read(key: 'jwt');
   }
 
   @override
