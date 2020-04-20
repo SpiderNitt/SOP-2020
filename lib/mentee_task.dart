@@ -30,6 +30,7 @@ class _MenteeTaskState extends State<MenteeTask> {
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: config.bgColor,
         title: Text('Mentee task'),

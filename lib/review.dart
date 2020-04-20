@@ -22,6 +22,7 @@ class _RequestState extends State<Request> {
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         elevation: 0,
         title: Text('Review Requests'),
         centerTitle: true,

@@ -34,6 +34,7 @@ String name, gitacc, jwt;
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         title: Text('Mentor Page'),
         centerTitle: true,

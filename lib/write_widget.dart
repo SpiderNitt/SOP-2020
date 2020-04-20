@@ -28,6 +28,7 @@ class _ReviewState extends State<Review> {
     backgroundColor: config.bgColor,
     resizeToAvoidBottomPadding: true,
     appBar: AppBar(
+       automaticallyImplyLeading: false,
       title: Text('Review'),
       centerTitle: true,
       elevation: 0,
