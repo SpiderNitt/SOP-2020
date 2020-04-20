@@ -113,7 +113,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
  
   final height = MediaQuery.of(context).size.height;
   final width = MediaQuery.of(context).size.width;
-  if (width <= 400) {
+  if (width <= 350) {
      submitedlinkswidth=265;
      submissionwidth=110;
      commentwidth=210;
@@ -131,7 +131,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
      submissionwidth=110;
      commentwidth=230;
      linkinputwidth=370;
-     leftpaddingwidth=5;
+     leftpaddingwidth=25;
      reviewpadding=10;
      previousfeedbackwidth=320;
      bottombarwidth=125;
@@ -143,7 +143,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
      submissionwidth=110;
      commentwidth=290;
      bottombarwidth=136;
-     leftpaddingwidth=5;
+     leftpaddingwidth=25;
      linkinputwidth=370;
      reviewpadding=10;
      previousfeedbackwidth=320;
