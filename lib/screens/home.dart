@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/graphqltemp.dart';
-import 'config.dart';
-import 'mentees_details.dart';
-import 'navigationbar.dart';
-import 'mentor_details.dart';
-import 'jwtparse.dart';
+import '../others/config.dart';
+import '../widgets/mentees_details.dart';
+import '../widgets/navigationbar.dart';
+import '../widgets/mentor_details.dart';
+import '../others/jwtparse.dart';
 
 class Home extends StatefulWidget {
 

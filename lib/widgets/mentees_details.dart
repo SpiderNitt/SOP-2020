@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'config.dart';
-import 'jwtparse.dart';
+import '../others/config.dart';
+import '../others/jwtparse.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 

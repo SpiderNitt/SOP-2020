@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'navigationbar.dart';
-import 'config.dart';
+import '../widgets/navigationbar.dart';
+import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:io';
 

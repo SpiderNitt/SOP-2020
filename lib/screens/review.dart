@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/requestreviewdis.dart';
-import 'config.dart';
-import 'navigationbar.dart';
+import '../widgets/requestreviewdis.dart';
+import '../others/config.dart';
+import '../widgets/navigationbar.dart';
 
 class Request extends StatefulWidget {
   @override

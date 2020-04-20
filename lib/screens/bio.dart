@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'config.dart';
-import 'navigationbar.dart';
+import '../others/config.dart';
+import '../widgets/navigationbar.dart';
 import 'package:http/http.dart';
 
 class Bio extends StatefulWidget {

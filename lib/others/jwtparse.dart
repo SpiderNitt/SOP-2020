@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 
 Map<String, dynamic> tryParseJwt(String token) {
 dynamic parts = token.split('.');

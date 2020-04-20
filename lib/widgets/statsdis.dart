@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'config.dart';
+import '../others/config.dart';
 
 class Statsdis extends StatelessWidget {
   

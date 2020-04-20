@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'commits.dart';
-import 'mentor_details.dart';
-import 'navigationbar.dart';
-import 'config.dart';
+import '../widgets/commits.dart';
+import '../widgets/mentor_details.dart';
+import '../widgets/navigationbar.dart';
+import '../others/config.dart';
 
 class CommitsFinal extends StatefulWidget {
   @override

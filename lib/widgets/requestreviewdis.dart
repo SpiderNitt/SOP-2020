@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
-import 'config.dart';
+import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/review.dart';
-import 'bio.dart';
-import 'commitsfinal.dart';
-import 'home.dart';
-import 'write_widget.dart';
-import 'mentee_task.dart';
-import 'graphqltemp.dart';
+import './screens/review.dart';
+import './screens/bio.dart';
+import './screens/commitsfinal.dart';
+import './screens/home.dart';
+import './screens/write_widget.dart';
+import './screens/mentee_task.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
       '/commits': (context)=> CommitsFinal(),
-      '/review': (context) => Graphqltemp(Request()) 
+      '/review': (context) => Request() 
     },
   );
   }

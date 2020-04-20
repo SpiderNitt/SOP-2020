@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/graphqltemp.dart';
-import 'package:inductions_20/stats.dart';
-import 'mentor_details.dart';
-import 'navigationbar.dart';
-import 'repodet.dart';
-import 'config.dart';
-import 'jwtparse.dart';
+import '../widgets/stats.dart';
+import '../widgets/mentor_details.dart';
+import '../widgets/navigationbar.dart';
+import '../widgets/repodet.dart';
+import '../others/config.dart';
+import '../others/jwtparse.dart';
 
 class MenteeTask extends StatefulWidget {
   @override

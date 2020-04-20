@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/statsdis.dart';
-import 'config.dart';
+import 'statsdis.dart';
+import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 

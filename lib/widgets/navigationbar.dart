@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'config.dart';
+import '../others/config.dart';
 
 class NavigationBar extends StatefulWidget {
   
