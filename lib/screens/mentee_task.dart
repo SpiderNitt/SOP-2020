@@ -5,17 +5,33 @@ import '../widgets/navigationbar.dart';
 import '../widgets/repodet.dart';
 import '../others/config.dart';
 import '../others/jwtparse.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MenteeTask extends StatefulWidget {
+
   @override
   _MenteeTaskState createState() => _MenteeTaskState();
 }
 
 class _MenteeTaskState extends State<MenteeTask> {
   
-  dynamic res;
+  dynamic res; 
   String jwt;
   
+  void readstorage() async{
+  final prefs = await SharedPreferences.getInstance();  
+  print('////////////');
+  print(prefs.getString('jwt'));
+  print('////////////');
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    readstorage();
+  }
+
   @override
   Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;

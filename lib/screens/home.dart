@@ -4,6 +4,7 @@ import '../widgets/mentees_details.dart';
 import '../widgets/navigationbar.dart';
 import '../widgets/mentor_details.dart';
 import '../others/jwtparse.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
 
@@ -26,6 +27,20 @@ String name, gitacc, jwt;
  
   _HomeState(this.name, this.gitacc, this.jwt);
  
+ void setdata() async{
+  final prefs = await SharedPreferences.getInstance();  
+  prefs.setString('jwt', 'hello');
+ }
+
+  @override
+   void initState(){
+   super.initState();
+   setdata();
+  }
+
+  
+
+
   @override
 
   Widget build(BuildContext context) {
