@@ -8,8 +8,9 @@ import 'dart:convert';
 class Data {
 
 List<String> commits, date;
+String status, errormsg;
 
-Data(this.commits, this.date);
+Data(this.commits, this.date, this.status);
 
 factory Data.getdata(List json){
     List<String> commitList = [], dateList = [];
@@ -17,8 +18,10 @@ factory Data.getdata(List json){
       commitList.add(element['commit']['message']);
       dateList.add(element['commit']['committer']['date']);
     });
-    return Data(commitList, dateList); 
+    return Data(commitList, dateList, '200 OK'); 
  }
+
+Data.error(this.errormsg, this.status);
 
 }
 
@@ -42,8 +45,12 @@ class _CommitsState extends State<Commits> {
 
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/repos/chakki1234/$repo_det/commits');
+
+  if(resp.headers['status'] == '200 OK')
   return Data.getdata(jsonDecode(resp.body));
-  }
+  else 
+  return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
+   }
 
 
   @override
@@ -61,6 +68,7 @@ class _CommitsState extends State<Commits> {
 
       if(snapshot.hasData){
       
+      if(snapshot.data.status == '200 OK')
       return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
@@ -92,8 +100,9 @@ class _CommitsState extends State<Commits> {
       }
     ),
     );
+    else 
+        return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
    }
-
        else if(snapshot.hasError)
        return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),); 
 

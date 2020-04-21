@@ -23,9 +23,7 @@ class _MenteeTaskState extends State<MenteeTask> {
   
   final storage = new FlutterSecureStorage(); 
   this.value = await storage.read(key: 'jwt');
-  print('//////////');
-  print(this.value);
-  print('//////////');
+
   }
 
   @override

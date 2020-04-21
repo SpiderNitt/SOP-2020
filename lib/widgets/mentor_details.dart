@@ -4,25 +4,15 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class Data {
-  String gitacc, avatar_url;
-  dynamic status;
+  String gitacc, avatar_url, errormsg, status;
 
-  Data(List json, dynamic stat){
+  Data(List json){
       this.gitacc = json[0]['owner']['login'];
       this.avatar_url = json[0]['owner']['avatar_url'];
-      this.status = stat;
+      this.status = '200 OK';
   }
 
- Data.for500(){
-     this.status = '500';
-}
- Data.for403(){
-      this.status = '403';
- }
-
- Data.for401(){
-     this.status = '401';
- }
+ Data.error(this.errormsg, this.status);
 }
 
 
@@ -46,15 +36,10 @@ _MenDetState(this.name, this.gitacc);
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
   
-  if(resp.headers['status'] == '500')
-   return  Data.for500();
-  else if(resp.headers['status'] == '403')
-   return Data.for403();
-  else if(resp.headers['status'] == '401')
-   return Data.for401();
-  else  
-  return Data(json.decode(resp.body), 200);
- 
+  if(resp.headers['status'] == '200 OK')
+   return  Data(json.decode(resp.body));
+  else 
+    return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
   }
   
   @override
@@ -75,18 +60,8 @@ _MenDetState(this.name, this.gitacc);
             builder: (context, snapshot){
               
             if(snapshot.hasData){
-          
-           if(snapshot.data.status == '500')
-              return Text("Server Error", style: TextStyle( color: config.fontColor ),);
-           
-
-          else if (snapshot.data.status == '401')
-              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor ),);
-          
-          else if (snapshot.data.status == '403')
-           return Text("Unauthorized", style: TextStyle( color: config.fontColor ),);
-
-          else 
+      
+         if(snapshot.data.status == '200 OK')
           return   Column(
            children : <Widget>[Container(
           decoration: BoxDecoration(
@@ -107,11 +82,13 @@ _MenDetState(this.name, this.gitacc);
         ) 
          ]
           );
-      
+        else
+        return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
        }
-     
-      else
-     
+      else if(snapshot.hasError){
+        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
+      }
+      else   
       return CircularProgressIndicator();
         }),
       ),

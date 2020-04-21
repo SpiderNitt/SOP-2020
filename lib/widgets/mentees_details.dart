@@ -20,7 +20,7 @@ class Data{
     return Data(temp, stat);
   }
 
- Data.for500(){
+Data.for500(){
      this.status = '500';
 }
  Data.for403(){
@@ -135,7 +135,9 @@ dynamic res;
     ),
     );
          }
-
+      else if(snapshot.hasError){
+        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
+      }
          else return CircularProgressIndicator();
 
        }); 

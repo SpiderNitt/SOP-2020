@@ -6,16 +6,20 @@ import 'dart:convert';
 class Data {
 
 List<String> repos;
+String status, errormsg;
 
-Data(this.repos);
+Data(this.repos, this.status);
 
 factory Data.getdata(List json){
     List<String> repoDetList = [];
     json.forEach((element){
       repoDetList.add(element['name']);
     });
-    return Data(repoDetList);
+    return Data(repoDetList, '200 OK');
   }
+
+Data.error(this.errormsg, this.status);
+
 }
 
 class RepoDet extends StatefulWidget {
@@ -37,7 +41,12 @@ class _RepoDetState extends State<RepoDet> {
 
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
+ 
+  if(resp.headers['status'] == '200 OK')
   return Data.getdata(jsonDecode(resp.body));
+  else 
+  return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
+ 
   }
   
   @override
@@ -53,9 +62,10 @@ class _RepoDetState extends State<RepoDet> {
       future: this.res, 
       builder: (context, snapshot){
 
-      if(snapshot.hasData)
-
-      return Container(
+      if(snapshot.hasData){
+      
+     if(snapshot.data.status == '200 OK')
+        return Container(
       
       constraints: BoxConstraints(
       minHeight: 5.0,
@@ -67,7 +77,7 @@ class _RepoDetState extends State<RepoDet> {
       itemBuilder: (context, index){
         
         if(snapshot.data.repos.length == 0)
-         return  Text('No commits yet', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor));
+         return  Text('No repos yet', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor));
        
         if(index == snapshot.data.repos.length)
           return null; 
@@ -97,10 +107,14 @@ class _RepoDetState extends State<RepoDet> {
       }
     ),
     );  
+             
+      else 
+       return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
+      }
+        else if(snapshot.hasError){
+        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
+      }
 
-      else if (snapshot.hasError)
-      return Text("${snapshot.error}", style: TextStyle(color: config.fontColor),);
-         
       else return CircularProgressIndicator();
 
     });

@@ -7,6 +7,7 @@ import 'dart:convert';
 class Data{
   
   List<String> menteenames;
+  String status;
   
   Data(this.menteenames);
  
@@ -18,6 +19,18 @@ class Data{
      });
     return Data(temp);
   }
+
+    Data.for500(){
+     this.status = '500';
+}
+ Data.for403(){
+      this.status = '403';
+ }
+
+ Data.for401(){
+     this.status = '401';
+ }
+
 
 }
 
@@ -40,6 +53,14 @@ class _StatsState extends State<Stats> {
   
   Future<Data>  getdata() async{
    Response resp = await get('https://jsonplaceholder.typicode.com/posts');
+
+   if(resp.headers['status'] == '500')
+   return  Data.for500();
+  else if(resp.headers['status'] == '403')
+   return Data.for403();
+  else if(resp.headers['status'] == '401')
+   return Data.for401();
+  else 
    return Data.model(jsonDecode(resp.body));
 }
    @override
@@ -58,6 +79,17 @@ class _StatsState extends State<Stats> {
       builder: (context, snapshot){
           
           if(snapshot.hasData){
+
+           if(snapshot.data.status == '500')
+              return Text("Server Error", style: TextStyle( color: config.fontColor ),);
+           
+          else if (snapshot.data.status == '401')
+              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor ),);
+          
+          else if (snapshot.data.status == '403')
+           return Text("Unauthorized", style: TextStyle( color: config.fontColor ),);
+
+          else 
           return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
