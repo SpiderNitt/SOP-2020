@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
@@ -7,9 +6,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // Files imported
 import 'package:inductions_20/screens/widgets/custom_button.dart';
 import 'package:inductions_20/screens/widgets/custom_input.dart';
+import 'package:inductions_20/theme/styling.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _github_username_controller = TextEditingController();
+final _contactno_controller = TextEditingController();
 
 class GetGithubUsernameView extends StatefulWidget {
   @override
@@ -62,8 +63,8 @@ class ViewState extends State<GetGithubUsernameView> {
         decoration: BoxDecoration(
           gradient: RadialGradient(
             colors: <Color>[
-              Color(0xFF003459),
-              Color(0xFF00171f),
+              theme.secondaryColor,
+              theme.primaryColor,
             ],
           ),
         ),
@@ -79,7 +80,7 @@ class ViewState extends State<GetGithubUsernameView> {
                   padding: EdgeInsets.all(padding),
                   child: Container(
                     width: containerwidth,
-                    color: Color(0xFF003459),
+                    color: theme.secondaryColor,
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -90,7 +91,7 @@ class ViewState extends State<GetGithubUsernameView> {
                             child: Text(
                               'Enter your github username',
                               style: TextStyle(
-                                color: Color(0xFFFFFFFF),
+                                color: theme.fontColor,
                                 fontSize: fontsize,
                               ),
                             ),
@@ -114,6 +115,24 @@ class ViewState extends State<GetGithubUsernameView> {
                             ),
                           ),
                           Padding(
+                            padding: EdgeInsets.all(padding),
+                            child: CustomInput(
+                              Icons.local_phone,
+                              "Contact number",
+                              (value) {
+                                if (value.isEmpty) {
+                                  return 'Enter your contact number';
+                                }
+                                return null;
+                              },
+                              false,
+                              TextInputType.number,
+                              inputfieldwidth,
+                              fontsize,
+                              _contactno_controller,
+                            ),
+                          ),
+                          Padding(
                             padding:
                                 EdgeInsets.fromLTRB(padding, 0.0, padding, 0.0),
                             child: CustomButton(
@@ -128,7 +147,6 @@ class ViewState extends State<GetGithubUsernameView> {
                                   Response response = await get(url);
                                   int statusCode = response.statusCode;
                                   if (statusCode == 200) {
-                                    print("Correct");
                                   } else {
                                     AlertDialog alert = AlertDialog(
                                       title: Text("Spider Orientation"),

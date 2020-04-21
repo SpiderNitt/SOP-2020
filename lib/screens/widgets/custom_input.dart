@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inductions_20/theme/styling.dart';
 
 class CustomInput extends StatelessWidget {
   final IconData _icon;
@@ -21,38 +22,38 @@ class CustomInput extends StatelessWidget {
         keyboardType: _type,
         obscureText: _obscureText,
         style: TextStyle(
-          color: Color(0xFFFFFFFF),
+          color: theme.fontColor,
           fontSize: _fontsize,
         ),
         decoration: InputDecoration(
           prefixIcon: Icon(
             _icon,
-            color: Color(0xFF00A8E8),
+            color: theme.tertiaryColor,
           ),
           hintText: _hintText,
           hintStyle: TextStyle(
-            color: Color(0xFFFFFFFF),
+            color: theme.fontColor,
             fontSize: _fontsize,
           ),
           errorStyle: TextStyle(
-            color: Color(0xFFFFFFFF),
+            color: theme.fontColor,
             fontSize: _fontsize - 5,
           ),
-          fillColor: Color(0xFF00A8E8).withOpacity(0.2),
+          fillColor: theme.tertiaryColor.withOpacity(0.2),
           filled: true,
           focusedErrorBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Color(0xFF00A8E8),
+              color: theme.tertiaryColor,
             ),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Color(0xFF00A8E8),
+              color: theme.tertiaryColor,
             ),
           ),
           errorBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Color(0xFF00A8E8),
+              color: theme.tertiaryColor,
             ),
           ),
         ),

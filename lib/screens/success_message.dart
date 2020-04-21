@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
+import 'package:inductions_20/theme/styling.dart';
+
 class Message extends StatefulWidget {
   @override
   MessageState createState() => MessageState();
@@ -16,8 +18,8 @@ class MessageState extends State<Message> {
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: <Color>[
-            Color(0xFF003459),
-            Color(0xFF00171f),
+            theme.secondaryColor,
+            theme.primaryColor,
           ],
         ),
       ),
@@ -30,7 +32,7 @@ class MessageState extends State<Message> {
               child: Text(
                 'SUCCESSFULLY REGISTERED',
                 style: TextStyle(
-                  color: Color(0xFFFFFFFF),
+                  color: theme.fontColor,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -57,8 +59,7 @@ class MessageState extends State<Message> {
                         ],
                         textStyle: TextStyle(
                           fontSize: 20,
-                          fontFamily: "Agne",
-                          color: Color(0xFFFFFFFF),
+                          color: theme.fontColor,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -77,7 +78,7 @@ class MessageState extends State<Message> {
                           child: Icon(
                             Icons.memory,
                             size: height / 25,
-                            color: Color(0xFF00A8E8),
+                            color: theme.tertiaryColor,
                           ),
                         ),
                         Padding(
@@ -85,7 +86,7 @@ class MessageState extends State<Message> {
                           child: Icon(
                             Icons.public,
                             size: height / 25,
-                            color: Color(0xFF00A8E8),
+                            color: theme.tertiaryColor,
                           ),
                         ),
                         Padding(
@@ -93,7 +94,7 @@ class MessageState extends State<Message> {
                           child: Icon(
                             Icons.android,
                             size: height / 25,
-                            color: Color(0xFF00A8E8),
+                            color: theme.tertiaryColor,
                           ),
                         ),
                         Padding(
@@ -101,7 +102,7 @@ class MessageState extends State<Message> {
                           child: Icon(
                             Icons.device_hub,
                             size: height / 25,
-                            color: Color(0xFF00A8E8),
+                            color: theme.tertiaryColor,
                           ),
                         )
                       ],

@@ -1,4 +1,4 @@
-import 'dart:html';
+//import 'dart:html';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -40,7 +40,7 @@ class LoginViewState extends State<LoginView> {
       imagesize = 190;
       containerheight = height / 3;
       containerwidth = 300;
-      inputfieldwidth = 200;
+      inputfieldwidth = 250;
       signinwidth = 200;
       signinheight = 60;
       padding = 15.0;
@@ -50,7 +50,7 @@ class LoginViewState extends State<LoginView> {
       imagesize = 190;
       containerheight = height / 3;
       containerwidth = 300;
-      inputfieldwidth = 200;
+      inputfieldwidth = 250;
       signinwidth = 200;
       signinheight = 60;
       padding = 15.0;
@@ -144,10 +144,11 @@ class LoginViewState extends State<LoginView> {
                             } else if (value.toString().length > 9 ||
                                 value.toString().length < 9) {
                               return 'Enter a valid roll number';
-                            } else if (value.toString()[0] != '1' ||
-                                value.toString()[5] != '9') {
-                              return 'Only  BTech first years can register';
                             }
+//                            else if (value.toString()[0] != '1' ||
+//                                value.toString()[5] != '9') {
+//                              return 'Only  BTech first years can register';
+//                            }
                             return null;
                           },
                           false,
@@ -219,10 +220,10 @@ class LoginViewState extends State<LoginView> {
                                   ),
                                 );
                               } else if (parsedJson["success"] == true) {
-                                final Storage _localStorage =
-                                    window.localStorage;
-
-                                _localStorage['jwt'] = parsedJson["token"];
+//                                final Storage _localStorage =
+//                                    window.localStorage;
+//
+//                                _localStorage['jwt'] = parsedJson["token"];
 
                                 await Navigator.push(
                                   context,

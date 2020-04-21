@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inductions_20/theme/styling.dart';
 
 class UploadButton extends StatelessWidget {
   Function function;
@@ -14,9 +15,9 @@ class UploadButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: function,
-      focusColor: Color(0xFF00171f),
-      highlightColor: Color(0xFF00171f),
-      splashColor: Color(0xFF00A8E8),
+      focusColor: theme.primaryColor,
+      highlightColor: theme.primaryColor,
+      splashColor: theme.tertiaryColor,
       borderRadius: BorderRadius.all(
         Radius.circular(25.0),
       ),
@@ -30,14 +31,14 @@ class UploadButton extends StatelessWidget {
           ),
           border: Border.all(
             width: 1.5,
-            color: Color(0xFF00A8E8),
+            color: theme.tertiaryColor,
           ),
         ),
         child: Center(
           child: Text(
             text,
             style: TextStyle(
-              color: Color(0xFFFFFFFF),
+              color: theme.fontColor,
               fontSize: _fontsize,
             ),
           ),

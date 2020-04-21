@@ -14,7 +14,7 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
-        '/login': (context) => LoginView(),
+        '/login': (context) => LoginScreen(),
         '/github_username': (context) => GetGithubUsernameView(),
       },
     ),

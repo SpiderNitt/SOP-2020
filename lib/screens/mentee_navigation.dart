@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:inductions_20/screens/widgets/custom_list_tile.dart';
+import 'package:inductions_20/theme/styling.dart';
 
 class MenteeCustomDrawer extends StatelessWidget {
   final String _name;
@@ -14,7 +15,7 @@ class MenteeCustomDrawer extends StatelessWidget {
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF00171f),
+          color: theme.primaryColor,
         ),
         child: ListView(
           children: <Widget>[
@@ -25,24 +26,24 @@ class MenteeCustomDrawer extends StatelessWidget {
                   _name,
                   style: TextStyle(
                     fontSize: 18.0,
-                    color: Color(0xFF00171f),
+                    color: theme.primaryColor,
                   ),
                 ),
                 accountEmail: Text(
                   _username,
                   style: TextStyle(
                     fontSize: 16.0,
-                    color: Color(0xFF00171f),
+                    color: theme.primaryColor,
                   ),
                 ),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: NetworkImage(
                     _url,
                   ),
-                  backgroundColor: Color(0xFFFFFFFF),
+                  backgroundColor: theme.fontColor,
                 ),
                 decoration: BoxDecoration(
-                  color: Color(0xFF00A8E8),
+                  color: theme.tertiaryColor,
                 ),
               ),
             ),
