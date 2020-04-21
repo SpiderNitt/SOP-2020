@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:inductions_20/Themes/styling.dart';
 import 'task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -30,11 +31,8 @@ class _MyHomePage extends State<homepage> {
 
 
   var username="VishalS99";
-  var primary=0xff00171f;
-  var secondary= 0xff003459;
-  var primary1= 0xff007ea7;
-  var secondary1= 0xff00a8e8;
-  var clickcolor=[0xff00a8e8,0xff007ea7,0xff007ea7,0xff007ea7];
+
+  List<Color> clickcolor=[theme.tertiaryColor,theme.primaryLightColor,theme.primaryLightColor,theme.primaryLightColor];
   var list = ["WEB", "APP", "ALGO", "TRONIX"];
   var task="WEB";
   var user;
@@ -64,7 +62,7 @@ class _MyHomePage extends State<homepage> {
 
   Widget build(BuildContext context) {
 
-    final height = MediaQuery.of(context).size.height;
+   
     final width = MediaQuery.of(context).size.width;
     if (width <= 400) {
       profilewidth=95;
@@ -77,20 +75,28 @@ class _MyHomePage extends State<homepage> {
     }
 
   return Scaffold(
-      backgroundColor:  Color(primary),
+      backgroundColor: theme.primaryColor,
       appBar: AppBar(
         leading: Icon(Icons.arrow_back_ios),
         title: Text("Profile"),
         elevation: 0,
-        backgroundColor: Color(0xff000000) ,
+        backgroundColor: theme.blackColor ,
         actions: <Widget>[
           Padding(padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.more_vert, color: Colors.white),
+                  child: Icon(Icons.more_vert, color: theme.fontColor),
           )],),
         body: SizedBox.expand(
         child: Stack(
         children: <Widget>[
-        Center(child: Column(children: <Widget>[
+        Container(
+       
+        height: 400,
+        decoration: BoxDecoration(
+        color: theme.blackColor,
+        borderRadius: BorderRadius.circular(10)
+          ),
+        margin: EdgeInsets.all(30),
+        child: Column(children: <Widget>[
         Row(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -102,7 +108,7 @@ class _MyHomePage extends State<homepage> {
                    style: TextStyle(
                    fontSize: 30,
                    fontWeight: FontWeight.bold,
-                   color: Colors.white),
+                   color: theme.fontColor),
                     )] ) )],
            ),
         Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -126,13 +132,13 @@ class _MyHomePage extends State<homepage> {
             Text('GitHub:  ',
             style: TextStyle(
                    fontSize: 24,
-                   color: Colors.white,
+                   color: theme.fontColor,
                    fontWeight: FontWeight.bold
                     ),),
             Text('${this.user["login"]}',
             style: TextStyle(
                    fontSize: 24,
-                   color: Color(secondary1),
+                   color: theme.tertiaryColor,
                    fontWeight: FontWeight.bold
                     ),)
              ] ) )
@@ -153,14 +159,14 @@ class _MyHomePage extends State<homepage> {
                                vertical: 10,
                                ),
                                decoration: BoxDecoration(
-                               color: Colors.black,
+                               color: theme.blackColor,
                                borderRadius: BorderRadius.only(
                                              topLeft: Radius.circular(20.0),
                                              topRight: Radius.circular(20.0)
                                ),
                                boxShadow: [
                                BoxShadow(
-                                 color: Colors.white,
+                                 color: theme.fontColor,
                                  blurRadius: 2.0
                                  )
                                ]),
@@ -176,7 +182,7 @@ class _MyHomePage extends State<homepage> {
                                    Container(
                                    height: 70, 
                                    width: 370, 
-                                   color:Color(primary),
+                                   color:theme.primaryColor,
                                    child: ListView(
                                           scrollDirection: Axis.horizontal ,
                                           children: <Widget>[
@@ -185,15 +191,15 @@ class _MyHomePage extends State<homepage> {
                                           setState(() {
                                             for(int j=0; j<list.length; j++){
                                                if(j==i) 
-                                               clickcolor[j]= secondary1;
+                                               clickcolor[j]= theme.tertiaryColor;
                                                else
-                                               clickcolor[j]= primary1;}
+                                               clickcolor[j]= theme.primaryLightColor;}
                                                task=list[i];});
                                                 },profilewidth,80,15,clickcolor[i],20,3,10),
                                           ], ),
                                     ),         
                                    new Divider(
-                                       color: Colors.white,
+                                       color: theme.fontColor,
                                        height: 50,
                                        thickness: 3,
                                         ),
@@ -222,7 +228,7 @@ class _MyHomePage extends State<homepage> {
                                             }
                                             )
                                             );
-                                          }, 320,60,15,secondary,20,3,10),
+                                          }, 320,60,15,theme.secondaryColor,20,3,10),
                                          
                               
                                       ],

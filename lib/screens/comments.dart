@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:inductions_20/Themes/styling.dart';
+
 import 'task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,13 +20,10 @@ class TASKcomments extends StatefulWidget{
 }
 class TASKcommentsState extends State<TASKcomments> with SingleTickerProviderStateMixin {
 
-  var primary=0xff00171f;
-  var secondary= 0xff003459;
-  var primary1= 0xff007ea7;
-  var secondary1= 0xff00a8e8;
-  var taskdes;
- var task; 
- List<String> _messages;
+
+var taskdes;
+var task; 
+List<String> _messages;
 TextEditingController textEditingController;
 ScrollController scrollController;
  
@@ -83,8 +82,7 @@ ScrollController scrollController;
               decoration: InputDecoration.collapsed(
                 hintText: "Type a comment",
                 hintStyle:(TextStyle(color: Colors.white12 )),
-                
-                fillColor: Colors.white
+                fillColor: theme.fontColor
               ),
               controller: textEditingController,
             ),
@@ -92,19 +90,19 @@ ScrollController scrollController;
         ),
         enableButton
             ? IconButton(
-                color: Color(secondary1),
+                color: theme.tertiaryColor,
                 icon: Icon(
                   Icons.send,
                 ),
-                disabledColor: Colors.white,
+                disabledColor: theme.fontColor,
                 onPressed: handleSendMessage,
               )
             : IconButton(
-                color: Color(secondary1),
+                color: theme.tertiaryColor,
                 icon: Icon(
                   Icons.send,
                 ),
-                disabledColor: Colors.white,
+                disabledColor: theme.fontColor,
                 onPressed: null,
               )
       ],
@@ -113,17 +111,17 @@ ScrollController scrollController;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-         backgroundColor:  Color(primary),
-        appBar: AppBar(
+         backgroundColor:  theme.primaryColor,
+         appBar: AppBar(
 
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+         leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
                Navigator.push(context, 
               MaterialPageRoute(builder: (context) =>TASK(task: task)),);
                  
         },), 
         title: Text('${task[0]} TASK ${task[1]}'),
         
-        backgroundColor: Color(0xff000000) ,
+        backgroundColor: theme.blackColor,
         ),
         
               body: Column(
@@ -140,8 +138,7 @@ ScrollController scrollController;
                 }
 
                 var avatar = Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
                   child: CircleAvatar(
                     child: Text("A"),
                   ),
@@ -152,7 +149,7 @@ ScrollController scrollController;
                 );
                 
                 var messagebody = 
-                Comment_box(_messages[index], secondary1, 0xff000000,commentwidth);
+                Comment_box(_messages[index], theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''');
              
 
                 Widget message;
@@ -165,7 +162,7 @@ ScrollController scrollController;
                     ],
                   );
                 } else {
-                  message = Stack(
+                  message =Stack(
                     children: <Widget>[
                       Positioned(left: 0, bottom: 0, child: triangle),
                       messagebody,

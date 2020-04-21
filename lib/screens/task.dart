@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
+import 'package:inductions_20/Themes/styling.dart';
 import 'widgets/custom_comment.dart';
 import 'task_description.dart';
 class TASK extends StatefulWidget{
@@ -24,12 +25,9 @@ class TASK extends StatefulWidget{
 }
 class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
 
-  var primary=0xff00171f;
-  var secondary= 0xff003459;
-  var primary1= 0xff007ea7;
-  var secondary1= 0xff00a8e8;
+
   var taskdes;
-  var submitbarcolor=0xffffffff;
+  var submitbarcolor=theme.fontColor;
   var user;
   var basic_per = 1.0;
   var advance_per=0.30;
@@ -63,9 +61,9 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     )..addListener(() {
         setState(() {
           if(_tabController.index==1)
-           submitbarcolor=secondary1;
+           submitbarcolor=theme.tertiaryColor;
           else
-           submitbarcolor=0xffffffff;
+           submitbarcolor=theme.fontColor;
         });
       });
 
@@ -114,9 +112,9 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   final height = MediaQuery.of(context).size.height;
   final width = MediaQuery.of(context).size.width;
   if (width <= 350) {
-     submitedlinkswidth=265;
+     submitedlinkswidth=4*(width/5);
      submissionwidth=110;
-     commentwidth=210;
+     commentwidth=3*(width/4);
      reviewpadding=10;
      linkinputwidth=370;
      bottombarwidth=105;
@@ -127,22 +125,22 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
      decadvance_barper= this.advance_per*percentbarwidth;
 
   } else if (width <= 600) {
-     submitedlinkswidth=300;
+     submitedlinkswidth=4*(width/5);
      submissionwidth=110;
-     commentwidth=230;
+     commentwidth=3*(width/4);
      linkinputwidth=370;
      leftpaddingwidth=25;
      reviewpadding=10;
      previousfeedbackwidth=320;
-     bottombarwidth=125;
+     bottombarwidth=width/3;
      percentbarwidth=130;
      decbasic_barper=this.basic_per*percentbarwidth;
      decadvance_barper= this.advance_per*percentbarwidth;
   } else if (width <= 900) {
-     submitedlinkswidth=350;
+     submitedlinkswidth=4*(width/5);
      submissionwidth=110;
-     commentwidth=290;
-     bottombarwidth=136;
+     commentwidth=3*(width/4);
+     bottombarwidth=width/3;
      leftpaddingwidth=25;
      linkinputwidth=370;
      reviewpadding=10;
@@ -151,7 +149,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
      decbasic_barper=this.basic_per*percentbarwidth;
      decadvance_barper= this.advance_per*percentbarwidth;
   } else {
-     submitedlinkswidth=600;
+     submitedlinkswidth=4*(width/5);
      submissionwidth=110;
      commentwidth=390;
      leftpaddingwidth=180;
@@ -167,25 +165,25 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-            backgroundColor:  Color(primary),
+            backgroundColor:  theme.primaryColor,
             appBar: AppBar(
                     leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
                              Navigator.push(context, 
                              MaterialPageRoute(builder: (context) =>homepage()),);
                              },), 
                     title: Text('${task[0]} TASK ${task[1]}'),
-                    backgroundColor: Color(0xff000000) ,
+                    backgroundColor: theme.blackColor ,
                     bottom: TabBar(
                     controller: _tabController,
                     tabs: myTabs  ),),
 
             floatingActionButton: _tabController.index ==0 ? 
             FloatingActionButton(
-            backgroundColor: Color(0xffffffff),
+            backgroundColor: theme.fontColor,
             child: ListView(
             children: <Widget>[
             Padding(padding: const EdgeInsets.only(bottom:0),),
-            Circular_percentage(48, 8, this.overall_per, Text("$decoverall_per"), 0xff80c904),
+            Circular_percentage(48, 8, this.overall_per, Text("$decoverall_per"), theme.advancetaskColor),
             ]
             )
             ): null,
@@ -193,7 +191,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                 height: 50, 
                 width: 370, 
                 child: Material(
-                  color: Colors.black,
+                  color: theme.blackColor,
                   elevation: 10.0,
                   child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -214,14 +212,14 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                    textAlign: TextAlign.center,
                    style: TextStyle(
                    fontWeight: FontWeight.bold,
-                   color: Color(secondary1)
+                   color: theme.tertiaryColor,
                    ) )),])),
                    
                    Custom_box('Submit',(){
                    _tabController.animateTo((_tabController.index+1));
                    double width = MediaQuery.of(context).size.width;
                    print(width);
-                   },bottombarwidth,50,15,0xff000000,15,0,0),
+                   },bottombarwidth,50,15,theme.blackColor,15,0,0),
                    Custom_box('Comments',(){
                                    List a=task;
                                    Navigator.push(context, 
@@ -242,14 +240,14 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                               );
                             }
                             )
-                            ); },bottombarwidth,50,15, 0xff000000,15,0,0)
+                            ); },bottombarwidth,50,15,theme.blackColor,15,0,0)
            ] ),), ),  
         body: TabBarView(
               controller: _tabController,
               children: myTabs.map((Tab tab){
               final String label = tab.text.toLowerCase();
               if(label!='progress')
-                  return Task_description(primary);
+                  return Task_description(theme.primaryColor);
               else {
         return ListView(
         children: <Widget>[
@@ -262,49 +260,50 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                            height: 30, 
                            width: 370, 
                            child: Material(
-                                  color: Color(primary),
+                                  color: theme.primaryColor,
                                   child: Row(
                                          mainAxisAlignment: MainAxisAlignment.start,
                                          crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                    Custom_box('Contact Thrishik ',(){},150,50,16,primary,0,0,0),
-                    Custom_box('(992993922)',(){ launch("tel://21213123");},95,50,16,primary,0,0,0),
+                    Custom_box('Contact Thrishik ',(){},150,50,16,theme.primaryColor,0,0,0),
+                    Custom_box('(992993922)',(){ launch("tel://21213123");},95,50,16,theme.primaryColor,0,0,0),
                     ],),), )),
                     Container(
                     margin:  const EdgeInsets.all( 10.0),
                     padding: const EdgeInsets.only(left:18.0),
                     width:linkinputwidth ,
                     decoration: BoxDecoration(
-                                color: Color(secondary),
+                                color: theme.secondaryColor,
                                 borderRadius: BorderRadius.circular(10)
                             ),
                     child: TextField(
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                    color: Colors.white,
+                    color: theme.fontColor,
                     ),
                     decoration: InputDecoration.collapsed(
                     hintText: "Submit the Link of the task",
                     
                     hintStyle:(TextStyle(color: Colors.white24 )),
-                    fillColor: Colors.white
+                    fillColor: theme.fontColor
               ),
              controller: textEditingController,
             ),
           ),
           Custom_box('Submit',()async{  
                               var text = textEditingController.value.text;
-                              final response =
+                               try {
+                              var response =
                                  await http.head(text);
-
-                              if (response.statusCode == 200) {
-                              textEditingController.clear();
-                              setState(() {
-                              taskSubmitted.add(text);
+                                      textEditingController.clear();
+                                      setState(() {
+                                      taskSubmitted.add(text);
                                });
-                              }else {
-                              
-                             }},68,38,14,secondary1,10,3,10),
+                                } catch (e) {
+                                         showAlertDialog(context);
+                                  }
+                         
+                              },68,38,14,theme.tertiaryColor,10,3,10),
           Container(
           child: Column(
                  children: <Widget>[
@@ -314,7 +313,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                    children: <Widget>[
                    Padding( 
                    padding:const EdgeInsets.all(15.0),
-                   child:Text("Submited Links:", style: TextStyle(color: Colors.white,
+                   child:Text("Submited Links:", style: TextStyle(color: theme.fontColor,
                    fontWeight: FontWeight.bold),)),]
                  ),
                 for(int i=0; i<taskSubmitted.length; i++)
@@ -323,10 +322,10 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Custom_box('''${taskSubmitted[i]}''',(){  
-                  launch('${taskSubmitted[i]}');},submitedlinkswidth,38,15,primary1,10,3,0),
+                  launch('${taskSubmitted[i]}');},submitedlinkswidth,38,15,theme.primaryLightColor,10,3,0),
                   IconButton(
                       icon: Icon( Icons.clear ,
-                      color: Colors.white,
+                      color: theme.fontColor,
                       size: 20,), onPressed:(){
                                           setState(() {
                                           taskSubmitted.remove(taskSubmitted[i]);
@@ -335,7 +334,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                 ]
     ),],), ) ],)),
     new Divider(
-    color: Colors.white,
+    color: theme.fontColor,
     height: 50,
     thickness: 1,),
     Row(
@@ -349,7 +348,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             ),
             Padding(padding: const EdgeInsets.only(left:12.0),
             child: CustomPaint(painter: Triangle(),)),
-            Comment_box('''you got to change some features,  add extra features and commit''', secondary1,0xffffffff, commentwidth),
+            Comment_box('''you got to change some features,  add extra features and commit''', theme.tertiaryColor,theme.fontColor, commentwidth,'''Thrishk'''),
             ]),
             Custom_box('Previous feedbacks',(){
                             List a=task;
@@ -374,39 +373,39 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                             }
                             )
   
-                            );},previousfeedbackwidth,50,14.5,0xff000000,15,10,0)    ,  
+                            );},previousfeedbackwidth,50,14.5,theme.blackColor,15,10,0)    ,  
          
     Container(
   
     margin:  EdgeInsets.only(top:30.0, left:reviewpadding, right: reviewpadding),
     padding: const EdgeInsets.all(20.0),
     
-    color: Colors.black,
+    color: theme.blackColor,
     child: Column(
     children: <Widget>[
     TextFormField(
     textAlign: TextAlign.center,
     style: TextStyle(
-           color: Colors.white
+           color: theme.fontColor
            ),
     decoration: InputDecoration(
     hintText:'add a comment with the request',
     hintStyle: TextStyle(
-    color: Colors.white,
+    color: theme.fontColor,
     fontSize: 15
     ) ),   ),
-    Custom_box('Send Request to Review',(){},420,50,14.5,secondary1,15,8,10),
+    Custom_box('Send Request to Review',(){},420,50,14.5,theme.tertiaryColor,15,8,10),
     ],)),
 
     Padding(padding: const EdgeInsets.only(bottom:40),),
 
     Circular_percentage(180.0,15.0, this.advance_per, 
-            Circular_percentage(130.0, 15.0,this.basic_per,Text("$decoverall_per", style: TextStyle(color: Colors.white),),secondary1)
-            , 0xff80c904),
+            Circular_percentage(130.0, 15.0,this.basic_per,Text("$decoverall_per", style: TextStyle(color: theme.fontColor),),theme.tertiaryColor)
+            , theme.advancetaskColor),
     Container(
     margin: const EdgeInsets.only(bottom:20, top:20,left:10, right: 10),
     padding: const EdgeInsets.all(20.0),
-    color: Colors.black,
+    color: theme.blackColor,
     child: Table(
     children:[
           TableRow(
@@ -414,7 +413,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           Padding( padding:const EdgeInsets.only(bottom:15.0, top:2),
             child:Text("Completion",
                   style: TextStyle(
-                  color: Colors.white,
+                  color: theme.fontColor,
                   fontWeight: FontWeight.bold),)),
             Padding( padding:const EdgeInsets.only(bottom:15.0, top:2),
             child:Text(" ")),
@@ -424,10 +423,10 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           Row(
             children:<Widget>[
             Container(width: decbasic_barper, height: 15, 
-                      color: Colors.blue,),]),
+                      color: theme.tertiaryColor,),]),
             Container(width: percentbarwidth, height: 40, 
                       padding: const EdgeInsets.only (top:0, left:10),
-                      child: Text('Basic Task : ${decbasic_per} %', style: TextStyle(color: Colors.white, ),),
+                      child: Text('Basic Task : ${decbasic_per} %', style: TextStyle(color: theme.fontColor, ),),
                       )
                     ]
           ),
@@ -436,11 +435,11 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           Row(
             children:<Widget>[
             Container(width: decadvance_barper, height: 15, 
-                      color: Colors.green,
+                      color: theme.advancetaskColor,
                       ) ]),
             Container(width: percentbarwidth, height: 40, 
                       padding: const EdgeInsets.only (top:0, left:10),
-                      child: Text('Advance Task : ${decadvance_per} %', style: TextStyle(color: Colors.white, ),),
+                      child: Text('Advance Task : ${decadvance_per} %', style: TextStyle(color: theme.fontColor, ),),
                       )
                     ]
                  )
@@ -452,6 +451,24 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
         ), ),
     );
   }
+  showAlertDialog(BuildContext context) {
+
+
+ // set up the AlertDialog
+ AlertDialog alert = AlertDialog(
+    
+    content: Text("Enter a valid link"),
+
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
   @override
   State<StatefulWidget> createState() {

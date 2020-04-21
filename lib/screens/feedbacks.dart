@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:inductions_20/Themes/styling.dart';
+
 import 'task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,10 +21,7 @@ class TASKfeedback extends StatefulWidget{
 }
 class TASKfeedbackState extends State<TASKfeedback> with SingleTickerProviderStateMixin {
 
-  var primary=0xff00171f;
-  var secondary= 0xff003459;
-  var primary1= 0xff007ea7;
-  var secondary1= 0xff00a8e8;
+
   var taskdes;
  var task; 
  List<String> _messages;
@@ -57,7 +56,7 @@ ScrollController scrollController;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-         backgroundColor:  Color(primary),
+         backgroundColor: theme.primaryColor,
         appBar: AppBar(
 
         leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
@@ -67,7 +66,7 @@ ScrollController scrollController;
         },), 
         title: Text('${task[0]} TASK ${task[1]}'),
         
-        backgroundColor: Color(0xff000000) ,
+        backgroundColor: theme.blackColor ,
         ),
         
               body: Column(
@@ -90,7 +89,7 @@ ScrollController scrollController;
                   painter: Triangle(),
                 );
 
-                var messagebody = Comment_box(_messages[index], secondary1, 0xff000000,commentwidth);
+                var messagebody = Comment_box(_messages[index],theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''');
                 Widget message;
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inductions_20/Themes/styling.dart';
 
 class Custom_box extends StatelessWidget{
 
@@ -26,15 +27,15 @@ Widget build(BuildContext context) {
       height:_height,
       width: _width,
 
-      decoration: BoxDecoration(
-        color: Color(_backgroundcolor),
+         decoration: BoxDecoration(
+        color: _backgroundcolor,
         borderRadius: BorderRadius.circular(_borderRadius)
-      ),
-    child: Text('${_text}',
+          ),
+            child: Text('${_text}',
             textAlign: TextAlign.center,
             style:TextStyle(
             fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: theme.fontColor,
               fontSize:_fontsize 
             ),
     

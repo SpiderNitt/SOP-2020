@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:inductions_20/Themes/styling.dart';
 import 'widgets/custom_box.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,7 +21,7 @@ return ListView(
    
     width: 370, 
     child: Material(
-           color: Color(primary),
+           color: primary,
            elevation: 10.0,
            borderRadius: BorderRadius.circular(10.0),
            child: Column(
@@ -30,7 +31,7 @@ return ListView(
                     Text("Description:", style: TextStyle(
                                fontSize: 20,
                                fontWeight: FontWeight.bold,
-                               color: Colors.blue
+                               color: theme.tertiaryColor,
                         )),
                     Text('''  
                     
@@ -71,7 +72,7 @@ and efficiency of the algorithm will be evaluated).
 memory footprint in the browser.
 ➢ Extra points if it could be implemented as a Progressive Web App. (PWA) ''', style: TextStyle(
                                fontSize: 17,
-                               color: Colors.white
+                               color: theme.fontColor
                         ))
 
                         
@@ -82,7 +83,7 @@ memory footprint in the browser.
    child: Container(
    width: 370, 
    child: Material(
-          color: Color(primary),
+          color: primary,
           elevation: 10.0,
           borderRadius: BorderRadius.circular(10.0),
           child: Column(
@@ -94,7 +95,7 @@ memory footprint in the browser.
                       child:Text(' Resources:', style: TextStyle(
                                fontSize: 20,
                                fontWeight: FontWeight.bold,
-                               color: Colors.blue
+                               color: theme.tertiaryColor
                              ))), 
                       for(int i=0; i<4; i++)
                       Padding(
@@ -106,7 +107,7 @@ memory footprint in the browser.
                       children:<Widget>[
                       Text('link description', style: TextStyle(
                                fontSize: 17,
-                               color: Colors.white)       
+                               color: theme.fontColor)       
                       ),
                       Custom_box('''https://github.com/thrishik7/ML-algos''',(){  
                       launch('https://github.com/thrishik7/ML-algos');},370,38,15,primary,0,0,0),

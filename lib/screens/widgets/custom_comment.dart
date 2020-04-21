@@ -8,26 +8,41 @@ final String _text;
 final _backgroundColor;
 final _textcolor;
 final double _width;
+final _username;
 
-Comment_box(this._text, this._backgroundColor, this._textcolor, this._width);
+Comment_box(this._text, this._backgroundColor, this._textcolor,this._width, this._username);
 
 Widget build(BuildContext context) {
   return  Container(
-                  width: _width,
+                   constraints: BoxConstraints(
+          minWidth: 0,
+          maxWidth: _width,
+          ),
+                  //constraints: BoxConstraints(minWidth: 10, maxWidth: _width),
                   decoration: BoxDecoration(
-                    color: Color(_backgroundColor) ,
-                    
+                    color: _backgroundColor ,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
+
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      
-                      child: Text(_text, 
-                      style: TextStyle(color: Color(_textcolor)),),
+                      child:Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:<Widget>[
+                       Text(_username, 
+                      style: TextStyle(fontSize:16,fontWeight: FontWeight.bold, color: _textcolor),),
+                      Text(_text, 
+                      style: TextStyle(color: _textcolor),),
+                      Padding(
+                        padding: EdgeInsets.only(top:5),
+                      child:Text('12/3/2019 5:30pm', 
+                      style: TextStyle(fontSize:10,fontWeight: FontWeight.bold,color: _textcolor),),
+                      )]
+                      )
+
+
                     ),
-                  ),
+              
                 );
 }
 

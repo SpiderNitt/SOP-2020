@@ -1,23 +1,27 @@
 
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 
-
 // Files imported
-
+import 'package:inductions_20/screens/announcement.dart';
+import 'package:inductions_20/screens/comments.dart';
 import 'package:inductions_20/screens/mentee_home.dart';
+import 'package:inductions_20/screens/task.dart';
+import 'package:inductions_20/screens/feedbacks.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-     
+void main() {
+  runApp(
+    MaterialApp(
+      title: 'Spider Orientation',
       debugShowCheckedModeBanner: false,
-      home: homepage()
-       );
-  }
+      initialRoute: '/mentee/',
+      routes: {
+        '/mentee/': (context) => homepage(),
+        '/mentee/task/': (context) => TASK(),
+        '/mentee/task_feedback/':(context)=> TASKfeedback(),
+        '/mentee/announcement/':(context) => Announcement(),
+        '/mentee/task_comments/': (context) => TASKcomments()
+      },
+    ),
+  );
 }
