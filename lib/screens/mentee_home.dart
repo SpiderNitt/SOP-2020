@@ -6,30 +6,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:inductions_20/screens/widgets/custom_box.dart';
+//import 'mentee_navigation.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-     
-      debugShowCheckedModeBanner: false,
-      home: homepage()
-       );
-  }
-}
+
 class homepage extends StatefulWidget{
+
+
+  var username;
+  homepage(this.username);  
   @override 
-  _MyHomePage createState() => _MyHomePage();
+  _MyHomePage createState() => _MyHomePage(username);
 }
 
 class _MyHomePage extends State<homepage> {
 
+var username;
+_MyHomePage(this.username);
 
 
-  var username="VishalS99";
 
   List<Color> clickcolor=[theme.tertiaryColor,theme.primaryLightColor,theme.primaryLightColor,theme.primaryLightColor];
   var list = ["WEB", "APP", "ALGO", "TRONIX"];
@@ -45,6 +40,7 @@ class _MyHomePage extends State<homepage> {
     makeRequest();
     }
   String url='https://api.github.com/users/'; 
+
   Future<String> makeRequest() async{
   http.Response response =await http.get(Uri.encodeFull(url+username), 
   headers: {"Accept":"application/json"});
@@ -61,7 +57,11 @@ class _MyHomePage extends State<homepage> {
 
   Widget build(BuildContext context) {
 
-   
+    var username= widget.username;
+
+
+
+
     final width = MediaQuery.of(context).size.width;
     if (width <= 400) {
       profilewidth=95;
@@ -75,8 +75,9 @@ class _MyHomePage extends State<homepage> {
 
   return Scaffold(
       backgroundColor: theme.primaryColor,
+    //  drawer: MenteeCustomDrawer('${this.user["name"]}', username,'${this.user["avatar_url"]}') ,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios),
+        
         title: Text("Profile"),
         elevation: 0,
         backgroundColor: theme.blackColor ,

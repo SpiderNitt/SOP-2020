@@ -1,18 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:inductions_20/Themes/styling.dart';
 import 'package:inductions_20/screens/widgets/Announcementbox.dart';
-class   Announcement extends StatefulWidget{
+//import 'package:inductions_20/screens/widgets/mentee_navigation.dart';
+
+class Announcement extends StatefulWidget{
   
+var username;
+var name;
+var url;
 
-
-  AnnouncementState createState() => AnnouncementState();
+Announcement(this.username, this.name, this.url);
+  
+AnnouncementState createState() => AnnouncementState();
 
 
 }
 class AnnouncementState extends State<Announcement> with SingleTickerProviderStateMixin {
 
- 
+
 
   @override
   void initState() {
@@ -36,6 +41,8 @@ class AnnouncementState extends State<Announcement> with SingleTickerProviderSta
       debugShowCheckedModeBanner: false,
       home: Scaffold(
          backgroundColor:theme.primaryColor,
+      //drawer: MenteeCustomDrawer('${widget.name}', '${widget.username}','${widget.url}') ,
+     
         appBar: AppBar(
         title: Text('''Announcement'''),
         backgroundColor: theme.blackColor ,
