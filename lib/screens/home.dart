@@ -38,8 +38,6 @@ String name, gitacc, jwt;
    setdata();
   }
 
-  
-
 
   @override
 

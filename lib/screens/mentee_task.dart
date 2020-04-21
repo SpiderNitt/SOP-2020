@@ -65,7 +65,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SingleChildScrollView(
         child: Column(
         children: <Widget>[
-        MenDet(this.value, data['git']),
+        MenDet(data['name'], data['git']),
         SizedBox(height: 10),
         Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),

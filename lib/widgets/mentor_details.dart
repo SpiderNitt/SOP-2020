@@ -5,15 +5,24 @@ import 'dart:convert';
 
 class Data {
   String gitacc, avatar_url;
+  dynamic status;
 
-  Data({this.gitacc, this.avatar_url});
-
-  factory Data.fromJson(List json) {
-    return Data(
-      gitacc: json[0]['owner']['login'],
-      avatar_url: json[0]['owner']['avatar_url']
-    );
+  Data(List json, dynamic stat){
+      this.gitacc = json[0]['owner']['login'];
+      this.avatar_url = json[0]['owner']['avatar_url'];
+      this.status = stat;
   }
+
+ Data.for500(){
+     this.status = '500';
+}
+ Data.for403(){
+      this.status = '403';
+ }
+
+ Data.for401(){
+     this.status = '401';
+ }
 }
 
 
@@ -36,11 +45,20 @@ _MenDetState(this.name, this.gitacc);
   
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
-  return Data.fromJson(json.decode(resp.body));
+  
+  if(resp.headers['status'] == '500')
+   return  Data.for500();
+  else if(resp.headers['status'] == '403')
+   return Data.for403();
+  else if(resp.headers['status'] == '401')
+   return Data.for401();
+  else  
+  return Data(json.decode(resp.body), 200);
+ 
   }
   
   @override
-  
+
   void initState() {
   super.initState();
   this.res = getdata();
@@ -49,14 +67,6 @@ _MenDetState(this.name, this.gitacc);
   @override
   Widget build(BuildContext context) {
     return Container(
-      // decoration: BoxDecoration(
-      //   color: config.conColor,
-      //   border: Border.all(
-      //     color: config.bordColor,
-      //     width: config.bordWid,
-      //   ),
-      //   borderRadius: BorderRadius.circular(config.borRadi),
-      // ),
       margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Center(
@@ -64,8 +74,19 @@ _MenDetState(this.name, this.gitacc);
             future: this.res,
             builder: (context, snapshot){
               
-            if(snapshot.hasData)
+            if(snapshot.hasData){
           
+           if(snapshot.data.status == '500')
+              return Text("Server Error", style: TextStyle( color: config.fontColor ),);
+           
+
+          else if (snapshot.data.status == '401')
+              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor ),);
+          
+          else if (snapshot.data.status == '403')
+           return Text("Unauthorized", style: TextStyle( color: config.fontColor ),);
+
+          else 
           return   Column(
            children : <Widget>[Container(
           decoration: BoxDecoration(
@@ -86,9 +107,9 @@ _MenDetState(this.name, this.gitacc);
         ) 
          ]
           );
-       else if (snapshot.hasError) {
-       return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
-      }
+      
+       }
+     
       else
      
       return CircularProgressIndicator();
