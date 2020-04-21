@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inductions_20/Themes/styling.dart';
-import 'widgets/Announcementbox.dart';
+import 'package:inductions_20/screens/widgets/Announcementbox.dart';
 class   Announcement extends StatefulWidget{
   
 

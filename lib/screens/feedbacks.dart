@@ -1,14 +1,8 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:inductions_20/Themes/styling.dart';
 
-import 'task.dart';
+import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/screens/task.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:like_button/like_button.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'mentee_home.dart';
-import 'widgets/custom_comment.dart';
+import 'package:inductions_20/screens/widgets/custom_comment.dart';
 
 class TASKfeedback extends StatefulWidget{
   

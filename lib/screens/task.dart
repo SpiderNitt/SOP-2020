@@ -1,19 +1,15 @@
-import 'dart:async';
-import 'dart:io';
-import 'widgets/custom_box.dart';
+import 'package:inductions_20/screens/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:like_button/like_button.dart';
-import 'widgets/custom_graph.dart';
-import 'mentee_home.dart';
-import 'comments.dart';
+import 'package:inductions_20/screens/widgets/custom_graph.dart';
+import 'package:inductions_20/screens/mentee_home.dart';
+import 'package:inductions_20/screens/comments.dart';
 import 'package:http/http.dart' as http;
-import 'feedbacks.dart';
+import 'package:inductions_20/screens/feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
 import 'package:inductions_20/Themes/styling.dart';
-import 'widgets/custom_comment.dart';
-import 'task_description.dart';
+import 'package:inductions_20/screens/widgets/custom_comment.dart';
+import 'package:inductions_20/screens/task_description.dart';
 class TASK extends StatefulWidget{
   
   List task;

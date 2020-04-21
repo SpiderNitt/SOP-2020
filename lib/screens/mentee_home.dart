@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:inductions_20/Themes/styling.dart';
-import 'task.dart';
+import 'package:inductions_20/screens/task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'widgets/custom_box.dart';
+import 'package:inductions_20/screens/widgets/custom_box.dart';
 
 void main() => runApp(MyApp());
 

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inductions_20/Themes/styling.dart';
-import 'widgets/custom_box.dart';
+import 'package:inductions_20/screens/widgets/custom_box.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Task_description extends StatelessWidget{
