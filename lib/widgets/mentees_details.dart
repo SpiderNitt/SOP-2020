@@ -74,11 +74,11 @@ dynamic res;
      HttpHeaders.authorizationHeader: 'Bearer ${this.jwttoken}'
    });
   
-  if(resp.headers['status'].contains('500'))
+  if(resp.headers['status'] == '500')
    return  Data.for500();
-  else if(resp.headers['status'].contains('403'))
+  else if(resp.headers['status'] == '403')
    return Data.for403();
-  else if(resp.headers['status'].contains('401'))
+  else if(resp.headers['status'] == '401')
    return Data.for401();
   else 
    return Data.model(jsonDecode(resp.body), resp.headers['status']);
