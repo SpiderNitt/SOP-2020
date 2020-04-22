@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../others/config.dart';
 import '../others/jwtparse.dart';
@@ -6,17 +8,28 @@ import 'dart:convert';
 
 class Data{
   
-  List<String> menteenames;
+  List<Map> menteenames;
   dynamic status;
   
   Data(this.menteenames, this.status);
  
-  factory Data.model(List res, dynamic stat) {
+  factory Data.model(dynamic res, dynamic stat) {
     
-    List<String> temp = [];
-    res.forEach((element){
-      temp.add(element['title']);
-    });
+    List<Map> temp = [];
+    for(int i = 0; i < res['mentee_list'].length; ++i){
+      temp.add({
+            "mentee_name": res['mentee_list']['${i}']['mentee_name'],
+            "mentee_roll": res['mentee_list']['${i}']['mentee_roll'],
+            "mentee_laptop_access": res['mentee_list']['${i}']['mentee_laptop_access'],
+            "github_username": res['mentee_list']['${i}']['github_username'],
+            "profiles_no": res['mentee_list']['${i}']['profiles_no'],
+            "profiles": res['mentee_list']['${i}']['profiles']
+      });
+    }
+
+    // res.forEach((element){
+    //   temp.add(element['title']);
+    // });
     return Data(temp, stat);
   }
 
@@ -36,11 +49,10 @@ Data.for500(){
 class MenteeDet extends StatefulWidget {
 
 String jwttoken;  
-dynamic rollno;
 
-MenteeDet(this.jwttoken){
-   this.rollno = tryParseJwt(this.jwttoken); //add fieldname
-}
+
+MenteeDet(this.jwttoken);
+
   @override
   _MenteeDetState createState() => _MenteeDetState(this.jwttoken);
 }
@@ -52,12 +64,15 @@ dynamic rollno;
 dynamic res;
 
  _MenteeDetState(this.jwttoken){
-   this.rollno = tryParseJwt(this.jwttoken); //add fieldname
+   this.rollno = tryParseJwt(this.jwttoken)['roll']; 
 }
 
 
   Future<Data>  getdata() async{
-   Response resp = await get('https://jsonplaceholder.typicode.com/posts');
+   Response resp = await get('https://spider.nitt.edu/inductions20test/api/mentor/${this.rollno}/menteeList',
+   headers: {
+     HttpHeaders.authorizationHeader: 'Bearer ${this.jwttoken}'
+   });
   
   if(resp.headers['status'] == '500')
    return  Data.for500();
@@ -123,7 +138,7 @@ dynamic res;
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
-          title: Text('${snapshot.data.menteenames[index]}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text('${snapshot.data.menteenames[index]['mentee_name']}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         ),
         Divider(
           color: config.fontColor,

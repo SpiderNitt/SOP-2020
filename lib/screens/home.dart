@@ -13,7 +13,7 @@ dynamic res;
 
   Home(this.jwt){
    this.res = tryParseJwt(this.jwt);
-   this.name = this.res['name'];
+   this.name = this.res['username'];
    this.gitacc = 'chakki1234';
   }
 
@@ -27,16 +27,16 @@ String name, gitacc, jwt;
  
   _HomeState(this.name, this.gitacc, this.jwt);
  
- void setdata() async{
-  final storage = new FlutterSecureStorage();
-  storage.write(key: 'jwt', value: 'you');
- }
+//  void setdata() async{
+//   final storage = new FlutterSecureStorage();
+//   storage.write(key: 'jwt', value: 'you');
+//  }
 
-  @override
-   void initState(){
-   super.initState();
-   setdata();
-  }
+//   @override
+//    void initState(){
+//    super.initState();
+//    setdata();
+//   }
 
 
   @override

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
     routes: {
-      '/': (context) => Home('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ'),
+      '/': (context) => Home('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc2NDUzODQsImZ1bGxuYW1lIjoiIiwiZ2l0aHViX3VzZXJuYW1lIjoiYW5pc2giLCJpc19tZW50b3IiOnRydWUsInJvbGwiOiIxMDcxMTgwMTUiLCJ1c2VybmFtZSI6ImFuaXNoIn0.lNAUYuv3prlzvqgiQpoOofYB7OOG8Kku3DL83qIKThQ'),
       '/menteetask' : (context) => MenteeTask(),
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
