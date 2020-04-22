@@ -7,7 +7,10 @@ class Statsdis extends StatelessWidget {
   String taskname;
   double adv_percent, beg_percent;
 
-  Statsdis(this.taskname, this.adv_percent, this.beg_percent);
+  Statsdis(this.taskname, double beg ,double adv){
+    this.adv_percent = adv/100;
+    this.beg_percent = beg/100;
+  }
 
   @override
 

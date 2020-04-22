@@ -76,8 +76,7 @@ class _MenteeTaskState extends State<MenteeTask> {
       SingleChildScrollView(
         child: Column(
         children: <Widget>[
-        MenDet(data['name'], data['git']),
-        SizedBox(height: 10),
+        SizedBox(height: 20),  
         Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
         Stats(data['name'], data['git'], this.jwt, this.menteeroll), //remove unnecessary

@@ -18,12 +18,14 @@ class Data{
     List<Map> temp = [];
     for(int i = 0; i < res['submissions'].length; ++i){
       temp.add({
-           'title': res['submissions']['${i}']['task_title'],
-           'basic': (res['submissions']['${i}']['basic_task_status'])? '1.0' : '0.0',
-           'adv': '${res['submissions']['${i}']['advanced_task_percent']}.0'
+           'title': res['submissions']['$i']['task_title'],
+           'basic': (res['submissions']['$i']['basic_task_status'])? '100.0' : '0.0',
+           'adv': '${res['submissions']['$i']['advanced_task_percent']}'
       });
     }
+    print('//////////////////////');
     print(temp);  
+    print('//////////////////////');
     return Data(temp);
   }
 
@@ -64,6 +66,9 @@ class _StatsState extends State<Stats> {
     headers: {
      HttpHeaders.authorizationHeader: 'Bearer ${this.jwt}'
      });
+   print('11111111111111111111111111');
+   print(resp.headers['status']);
+   print('11111111111111111111111111');
 
    if(resp.headers['status'] == '500')
    return  Data.for500();
@@ -95,41 +100,42 @@ class _StatsState extends State<Stats> {
       builder: (context, snapshot){
           
           if(snapshot.hasData){
-            print(this.res);
            if(snapshot.data.status == '500')
-              return Text("Server Error", style: TextStyle( color: config.fontColor ),);
+              return Text("Server Error", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
            
           else if (snapshot.data.status == '401')
-              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor ),);
+              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
           
           else if (snapshot.data.status == '403')
-           return Text("Unauthorized", style: TextStyle( color: config.fontColor ),);
+           return Text("Unauthorized", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
 
           else 
           return Container(
       constraints: BoxConstraints(
       minHeight: 5.0,
-      maxHeight: 390.0,
+      maxHeight: 500.0,
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
         itemCount: snapshot.data.menteenames.length + 1,
       itemBuilder: (context, index){
          if(snapshot.data.menteenames.length == 0)
-         return Text("No data found", style: TextStyle( color: config.fontColor ),);
+         return Text("No data found", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
          else 
          if(index == snapshot.data.menteenames.length)
          return null;
-         else
-        return Statsdis(snapshot.data.menteenames[index]['title'], double.tryParse(snapshot.data.menteenames[index]['basic']) ,  double.tryParse(snapshot.data.menteenames[index]['adv'])) ;
+         else{
+        return Statsdis(snapshot.data.menteenames[index]['title'], double.tryParse(snapshot.data.menteenames[index]['basic']), double.tryParse(snapshot.data.menteenames[index]['adv'])) ;
+         }
       }
     ),
     );
     }
 
-      else if (snapshot.hasError)
-      return Text("add", style: TextStyle(color: config.fontColor),);
-         
+      else if (snapshot.hasError){
+      print('america');
+      return Text('${snapshot.error}', style: TextStyle(color: config.fontColor, fontFamily: config.fontFamily),);
+      }   
       else return CircularProgressIndicator();
 
       });
