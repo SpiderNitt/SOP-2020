@@ -4,15 +4,15 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class Data {
-  String gitacc, avatar_url, errormsg, status;
+  String gitacc, avatar_url, errormsg; 
+  dynamic status;
 
   Data(List json){
       this.gitacc = json[0]['owner']['login'];
       this.avatar_url = json[0]['owner']['avatar_url'];
-      this.status = '200 OK';
   }
 
- Data.error(this.errormsg, this.status);
+//  Data.error(this.errormsg, this.status);
 }
 
 
@@ -36,10 +36,11 @@ _MenDetState(this.name, this.gitacc);
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
   
-  if(resp.headers['status'] == '200 OK')
-   return  Data(json.decode(resp.body));
-  else 
-    return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
+  return Data(json.decode(resp.body));
+  // if(resp.headers['status'] == '200 OK')
+  //  return  Data(json.decode(resp.body));
+  // else 
+  //   return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
   }
   
   @override
@@ -61,7 +62,7 @@ _MenDetState(this.name, this.gitacc);
               
             if(snapshot.hasData){
       
-         if(snapshot.data.status == '200 OK')
+        //  if(snapshot.data.status == '200 OK')
           return   Column(
            children : <Widget>[Container(
           decoration: BoxDecoration(
@@ -82,10 +83,11 @@ _MenDetState(this.name, this.gitacc);
         ) 
          ]
           );
-        else
-        return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
+        // else
+        // return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
        }
       else if(snapshot.hasError){
+        print('amercia');
         return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
       }
       else   

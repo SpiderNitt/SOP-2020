@@ -1,21 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+import '../others/jwtparse.dart';
 
 class Data{
   
-  List<String> menteenames;
+  List<Map> menteenames;
   String status;
   
   Data(this.menteenames);
  
-  factory Data.model(List res) {
+  factory Data.model(dynamic res) {
     
-    List<String> temp = [];
-    res.forEach((element) {
-      temp.add(element['title']);
-    });
+    List<Map> temp = [];
+   for(int i = 0; i < res["review_list"].length; ++i){
+     temp.add({
+           "menteename": res['review_list']['$i']['mentee_name'],
+           "title": res['review_list']['$i']["task_title"],
+           "link": res['review_list']['$i']["submission_links"],
+           'des':  res['review_list']['$i'][ "submission_description"]
+     });
+   }
+    
     return Data(temp);
   }
 
@@ -49,13 +58,19 @@ class _RequestlistState extends State<Requestlist> {
 
   final _formkey = GlobalKey<FormState>();
 
-  dynamic resultobt, res; 
+  dynamic resultobt, res, mentorroll; 
 
-  _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt);
+  _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt){
+   this.mentorroll = tryParseJwt(this.jwt)['roll'];
+  }
  
 
   Future<Data>  getdata() async{
-   Response resp = await get('https://jsonplaceholder.typicode.com/posts');
+   Response resp = await get('https://spider.nitt.edu/inductions20test/api/mentor/$mentorroll/reviewList', 
+   headers: {
+     HttpHeaders.authorizationHeader: 'Bearer ${this.jwt}'
+     } 
+   );
 
    if(resp.headers['status'] == '500')
    return  Data.for500();
@@ -78,7 +93,7 @@ List<Widget> finallist = [];
 
 this.resultobt.forEach((element){
 
-  if(element.contains(this.searchword) || this.searchword == ''){
+  if(element['menteename'].contains(this.searchword) || this.searchword == ''){
     finallist.add(
       Column(
           children: <Widget>[
@@ -88,18 +103,22 @@ this.resultobt.forEach((element){
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
-          title: Text('${element}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text('${element['menteename']}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(
                     height:5,
                   ),
-                  Text('${element}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${element['title']}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                   SizedBox(
                     height:5,
                   ),
-                  Text('Repo link: http://github.com/chakki/dfgh/dsafgdhf/sdafghj/dfshk/dfshk/dfhjkl/dfshk/dsfhj',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${element['link']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                   SizedBox(
+                    height:5,
+                  ),
+                   Text('${element['des']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                    SizedBox(
                     height:5,
                   ),
@@ -129,6 +148,10 @@ this.resultobt.forEach((element){
   }
 
 });
+if(finallist.length == 0)
+finallist.add(Center(
+      child: Text("No matching results", style: TextStyle(color: config.fontColor, fontSize: 20),)
+      )); 
 
 return finallist;
 }
