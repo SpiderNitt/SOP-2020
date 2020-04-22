@@ -74,11 +74,11 @@ dynamic res;
      HttpHeaders.authorizationHeader: 'Bearer ${this.jwttoken}'
    });
   
-  if(resp.headers['status'] == '500')
+  if(resp.headers['status'].contains('500'))
    return  Data.for500();
-  else if(resp.headers['status'] == '403')
+  else if(resp.headers['status'].contains('403'))
    return Data.for403();
-  else if(resp.headers['status'] == '401')
+  else if(resp.headers['status'].contains('401'))
    return Data.for401();
   else 
    return Data.model(jsonDecode(resp.body), resp.headers['status']);
@@ -127,11 +127,10 @@ dynamic res;
           contentPadding: EdgeInsets.all(3),
           onTap: (){
             Navigator.pushNamed(context, '/menteetask', arguments: {
-              'name': snapshot.data.menteenames[index],
-              'git': snapshot.data.menteenames[index],
+              'name': snapshot.data.menteenames[index]['mentee_name'],
+              'git': 'chakki1234',//snapshot.data.menteenames[index]['github_username']
               'jwt': this.jwttoken,
-              'menteeroll': 107718015,
-              //change here
+              'menteeroll': snapshot.data.menteenames[index]['mentee_roll'],
             });
           },
           leading: CircleAvatar(

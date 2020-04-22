@@ -16,27 +16,28 @@ class MenteeTask extends StatefulWidget {
 class _MenteeTaskState extends State<MenteeTask> {
   
   dynamic res; 
-  String jwt;
+  String jwt, menteeroll;
 
-  String value;
-  void readstorage() async{
+  // String value;
+  // void readstorage() async{
   
-  final storage = new FlutterSecureStorage(); 
-  this.value = await storage.read(key: 'jwt');
+  // final storage = new FlutterSecureStorage(); 
+  // this.value = await storage.read(key: 'jwt');
 
-  }
+  // }
 
-  @override
-  void initState(){
-    super.initState();
-    readstorage();
-  }
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   readstorage();
+  // }
 
   @override
   Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
    this.res = tryParseJwt(data['jwt']);
    this.jwt = data['jwt'];
+   this.menteeroll = data['menteeroll'];
 
     return DefaultTabController(
       length: 2,
@@ -79,7 +80,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 10),
         Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        Stats(data['name'], data['git'], this.jwt, data['menteeroll']), //remove unnecessary
+        Stats(data['name'], data['git'], this.jwt, this.menteeroll), //remove unnecessary
         ]
        ),
       ),

@@ -40,7 +40,7 @@ class _RepoDetState extends State<RepoDet> {
   _RepoDetState(this.gitacc, this.menteename, this.jwt);
 
   Future<Data> getdata() async{
-  Response resp = await get('https://api.github.com/users/chakki1234/repos');
+  Response resp = await get('https://api.github.com/users/${this.gitacc}/repos');
  
   if(resp.headers['status'] == '200 OK')
   return Data.getdata(jsonDecode(resp.body));
