@@ -77,9 +77,7 @@ class _ReviewState extends State<Review> {
             if(value.isEmpty)
             return 'Please write your review';
             else{
-              this.setState((){
-              this.review = value;
-              });
+            this.review = value;
             return null;
             }
           },
@@ -107,16 +105,12 @@ class _ReviewState extends State<Review> {
             if(value.isEmpty)
             return 'Please enter true or false';
             if (value.toLowerCase() == 'true'){
-              this.setState((){
               this.basic = true;
-              });
               return null;
             }
             if(value.toLowerCase() == 'false'){
-              this.setState((){
               this.basic = false;
-              });
-            return null;
+              return null;
             }
             else return 'Please enter true or false';
           },
@@ -145,9 +139,7 @@ class _ReviewState extends State<Review> {
             else if(int.tryParse(value) > 100)
             return 'Please enter a valid percentage';
             else{
-              this.setState((){
               this.adv_percent = int.tryParse(value);
-              });
             return null;
             }
           },

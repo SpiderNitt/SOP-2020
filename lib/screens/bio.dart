@@ -63,9 +63,7 @@ class _BioState extends State<Bio> {
                 if(value.isEmpty)
                 return 'Please enter your username';
                 else{
-                  this.setState((){
-                    this.name = value;
-                  });
+                  this.name = value;
                   return null;
                 }
               },
