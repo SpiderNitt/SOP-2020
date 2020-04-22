@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../widgets/navigationbar.dart';
 import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:io';
+import '../others/jwtparse.dart';
 
 class Review extends StatefulWidget {
   @override
@@ -11,8 +14,10 @@ class Review extends StatefulWidget {
 
 class _ReviewState extends State<Review> {
   
-  double adv_percent, beg_percent;
+  int adv_percent;
+  bool basic;
   String review, jwt;
+  dynamic id, mentorroll;
   final _formkey = GlobalKey<FormState>();
   
   
@@ -23,6 +28,8 @@ class _ReviewState extends State<Review> {
 
   Map data = ModalRoute.of(context).settings.arguments;
   this.jwt = data['jwt'];
+  this.id = data['id'];
+  this.mentorroll = tryParseJwt(this.jwt)['roll'];
 
     return Scaffold(
     backgroundColor: config.bgColor,
@@ -80,7 +87,6 @@ class _ReviewState extends State<Review> {
         SizedBox(height: 10),
 
         TextFormField(
-       keyboardType: TextInputType.number,
           cursorColor: config.fontColor,
           style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
           maxLines: null,
@@ -96,17 +102,23 @@ class _ReviewState extends State<Review> {
              hintText: '',
           ),
           validator: (String value){
-            print(int.tryParse(value));
+            print(value);
+            print(value.toLowerCase());
             if(value.isEmpty)
-            return 'Please enter a pecentage';
-            else if(int.tryParse(value)> 100)
-            return 'Please enter a valid percentage';
-            else{
+            return 'Please enter true or false';
+            if (value.toLowerCase() == 'true'){
               this.setState((){
-              this.adv_percent = double.tryParse(value);
+              this.basic = true;
+              });
+              return null;
+            }
+            if(value.toLowerCase() == 'false'){
+              this.setState((){
+              this.basic = false;
               });
             return null;
             }
+            else return 'Please enter true or false';
           },
           ),   
           SizedBox(height: 10),
@@ -128,14 +140,13 @@ class _ReviewState extends State<Review> {
              hintText: '',
           ),
           validator: (String value){
-            print(int.tryParse(value));
             if(value.isEmpty)
             return 'Please enter a pecentage';
             else if(int.tryParse(value) > 100)
             return 'Please enter a valid percentage';
             else{
               this.setState((){
-              this.beg_percent = double.tryParse(value);
+              this.adv_percent = int.tryParse(value);
               });
             return null;
             }
@@ -143,22 +154,35 @@ class _ReviewState extends State<Review> {
           ), 
            SizedBox(height: 10),
          FlatButton(
-          onPressed: (){
+          onPressed: ()async{
             if(_formkey.currentState.validate())
             {
-               post('', 
+               post('https://spider.nitt.edu/inductions20test/api/mentor/submissionFeedback', 
                   headers: {
-                    HttpHeaders.authorizationHeader: ''
+                    HttpHeaders.authorizationHeader: 'Bearer ${this.jwt}'
                   },
-                  body: {
-                    "rollno": ""
-                  });
-              Scaffold.of(context).showSnackBar(
-                   SnackBar(
+                  body: jsonEncode({ 
+                    "mentor_rollno": this.mentorroll,
+                    "submission_id": this.id,
+                    "review_message" : this.review,
+                      "basic_task_status" : this.basic,
+                      "advanced_task_status" : this.adv_percent
+                  })).then((Response resp){
+                    print(resp.statusCode);
+                    Scaffold.of(context).showSnackBar(
+                    SnackBar(
                     backgroundColor: config.success,
                     content: Text('Submitted', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
                  )
                  );
+                }).catchError((error){
+                    Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                    backgroundColor: config.danger,
+                    content: Text('Error', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+                 )
+                 );
+                });
             }
             else
             print('failure');

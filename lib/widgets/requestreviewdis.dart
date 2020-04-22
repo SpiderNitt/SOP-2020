@@ -21,7 +21,8 @@ class Data{
            "menteename": res['review_list']['$i']['mentee_name'],
            "title": res['review_list']['$i']["task_title"],
            "link": res['review_list']['$i']["submission_links"],
-           'des':  res['review_list']['$i'][ "submission_description"]
+           'des':  res['review_list']['$i'][ "submission_description"],
+           'id':  res['review_list']['$i'][ "submission_id"]
      });
    }
     
@@ -129,7 +130,8 @@ this.resultobt.forEach((element){
                   FlatButton(
                   onPressed: (){
                   Navigator.pushNamed(contxt, '/writereview', arguments: {
-                  'repo_det': element,
+                  'repo_det': element['title'],
+                  'id': element['id'],
                   'jwt': this.jwt
                    });
           }, 
