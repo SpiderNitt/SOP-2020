@@ -47,7 +47,7 @@ class _NavigationBarState extends State<NavigationBar> {
           ),
           BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          title: Text('Update Gitacc', style: TextStyle( fontSize: 15, fontFamily: config.fontFamily, color: config.fontColor))
+          title: Text('Git', style: TextStyle( fontSize: 15, fontFamily: config.fontFamily, color: config.fontColor))
           )
       ],
       onTap: (index){

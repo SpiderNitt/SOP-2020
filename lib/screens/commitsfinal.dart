@@ -12,11 +12,8 @@ class CommitsFinal extends StatefulWidget {
 class _CommitsFinal extends State<CommitsFinal> {
   @override
    
-   String jwt;
-   
    Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
-   this.jwt = data['jwt'];
     
     return Scaffold(
       backgroundColor: config.bgColor,
@@ -43,7 +40,7 @@ class _CommitsFinal extends State<CommitsFinal> {
         ]
       ),
       ),
-      bottomNavigationBar: NavigationBar(0, this.jwt),
+      bottomNavigationBar: NavigationBar(0, data['jwt']),
     );
   }
 }

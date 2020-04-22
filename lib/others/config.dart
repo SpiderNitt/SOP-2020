@@ -14,6 +14,7 @@ class Config{
   Color danger = Colors.red;
   Color success = Colors.green;
   Color appbarcolor = Colors.black;
+  Color tab = Color.fromRGBO(24, 82, 39, 1);
 }
 
 Config config =  Config();

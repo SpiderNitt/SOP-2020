@@ -43,8 +43,8 @@ class Data{
 
 class Stats extends StatefulWidget {
  
- String menteename, gitacc, jwt;
- dynamic menteeroll;
+ String menteename, gitacc, jwt, menteeroll;
+
  Stats(this.menteename, this.gitacc, this.jwt, this.menteeroll);
 
   @override
@@ -53,9 +53,12 @@ class Stats extends StatefulWidget {
 
 class _StatsState extends State<Stats> {
 
-  String menteename, gitacc, jwt;
-  dynamic menteeroll, res, mentorroll;
+  String menteename, gitacc, jwt, menteeroll, mentorroll;
+  dynamic  res;
 
+    _StatsState(this.menteename, this.gitacc, this.jwt, this.menteeroll){
+     this.mentorroll = tryParseJwt(this.jwt)['roll'];
+  }
   
   Future<Data>  getdata() async{
 
@@ -78,11 +81,6 @@ class _StatsState extends State<Stats> {
 }
 
 
-  _StatsState(this.menteename, this.gitacc, this.jwt, this.menteeroll){
-     this.mentorroll = tryParseJwt(this.jwt)['roll'];
-  }
-
-
    @override
   void initState(){
   super.initState();
@@ -98,13 +96,13 @@ class _StatsState extends State<Stats> {
           
           if(snapshot.hasData){
            if(snapshot.data.status == '500')
-              return Text("Server Error", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
+              return Text("Server Error", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily, fontSize: 18),);
            
           else if (snapshot.data.status == '401')
-              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
+              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily, fontSize: 18 ),);
           
           else if (snapshot.data.status == '403')
-           return Text("Unauthorized", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
+           return Text("Unauthorized", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily, fontSize: 18 ),);
 
           else 
           return Container(

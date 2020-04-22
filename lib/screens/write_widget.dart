@@ -16,8 +16,8 @@ class _ReviewState extends State<Review> {
   
   int adv_percent;
   bool basic;
-  String review, jwt;
-  dynamic id, mentorroll;
+  String review, jwt, mentorroll;
+  dynamic id;
   final _formkey = GlobalKey<FormState>();
   
   

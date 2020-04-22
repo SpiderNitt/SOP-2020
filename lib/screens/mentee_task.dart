@@ -14,14 +14,12 @@ class MenteeTask extends StatefulWidget {
 class _MenteeTaskState extends State<MenteeTask> {
   
   dynamic res; 
-  String jwt, menteeroll;
+
 
   @override
   Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
-   this.jwt = data['jwt'];
-   this.menteeroll = data['menteeroll'];
-
+ 
     return DefaultTabController(
       length: 2,
       initialIndex: 0,
@@ -30,16 +28,22 @@ class _MenteeTaskState extends State<MenteeTask> {
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
          automaticallyImplyLeading: false,
-        elevation: 0,
+          elevation: 0,
            backgroundColor: config.appbarcolor,
         title: Text('Mentee task'),
         centerTitle: true,
         bottom: TabBar(
-          indicatorColor: config.fontColor,
-          indicatorPadding: EdgeInsets.fromLTRB(35, 0, 35, 0),
+          indicatorColor: config.tab,
           tabs: [
-            Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
-            Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+            ), 
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+            ), 
+            
           ]),
       ),
       body: TabBarView(
@@ -51,7 +55,7 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 10),
         Text('Repositories',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        RepoDet(data['git'], data['name'], this.jwt),
+        RepoDet(data['git'], data['name'], data['jwt']),
         ]
        ),
       ),
@@ -62,12 +66,12 @@ class _MenteeTaskState extends State<MenteeTask> {
         SizedBox(height: 20),  
         Text('Task details',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
         SizedBox(height: 10),
-        Stats(data['name'], data['git'], this.jwt, this.menteeroll), //remove unnecessary
+        Stats(data['name'], data['git'], data['jwt'], data['menteeroll']), //remove unnecessary
         ]
        ),
       ),
         ]), 
-      bottomNavigationBar: NavigationBar(0, this.jwt),
+      bottomNavigationBar: NavigationBar(0, data['jwt']),
     ));
   }
 }

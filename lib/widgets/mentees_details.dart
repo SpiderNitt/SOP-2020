@@ -49,8 +49,7 @@ MenteeDet(this.jwttoken);
 
 class _MenteeDetState extends State<MenteeDet> {
 
-String jwttoken;  
-dynamic rollno;
+String jwttoken, rollno;
 dynamic res;
 
  _MenteeDetState(this.jwttoken){
@@ -89,13 +88,13 @@ dynamic res;
            
 
            if(snapshot.data.status == '500')
-              return Text("Server Error", style: TextStyle( color: config.fontColor ),);
+              return Text("Server Error", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily, fontSize: 18 ),);
            
           else if (snapshot.data.status == '401')
-              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor ),);
+              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily, fontSize: 18 ),);
           
           else if (snapshot.data.status == '403')
-           return Text("Unauthorized", style: TextStyle( color: config.fontColor ),);
+           return Text("Unauthorized", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily, fontSize: 18 ),);
 
           else 
 

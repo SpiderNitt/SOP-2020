@@ -15,8 +15,7 @@ class _BioState extends State<Bio> {
   
    
   final _formkey  = GlobalKey<FormState>();
-  String name, githubacc, year =  '', dept, jwt;
-  dynamic mentorroll;
+  String name, githubacc, year =  '', dept, jwt, mentorroll;
   
   @override
 
@@ -32,7 +31,7 @@ class _BioState extends State<Bio> {
       appBar: AppBar(
          automaticallyImplyLeading: false,
         elevation: 0,
-        title: Text('Update Gitacc'),
+        title: Text('Update Github username'),
         centerTitle: true,
            backgroundColor: config.appbarcolor,
       ),

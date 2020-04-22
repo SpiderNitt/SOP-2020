@@ -109,10 +109,10 @@ class _RepoDetState extends State<RepoDet> {
     );  
              
       else 
-       return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
+       return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor,fontSize: 18, fontFamily: config.fontFamily ),);
       }
         else if(snapshot.hasError){
-        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
+        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor, fontSize: 18, fontFamily: config.fontFamily ),);
       }
 
       else return CircularProgressIndicator();
