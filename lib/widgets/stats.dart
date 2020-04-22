@@ -23,9 +23,6 @@ class Data{
            'adv': '${res['submissions']['$i']['advanced_task_percent']}'
       });
     }
-    print('//////////////////////');
-    print(temp);  
-    print('//////////////////////');
     return Data(temp);
   }
 
@@ -119,21 +116,22 @@ class _StatsState extends State<Stats> {
       child: ListView.builder(
         itemCount: snapshot.data.menteenames.length + 1,
       itemBuilder: (context, index){
+
          if(snapshot.data.menteenames.length == 0)
          return Text("No data found", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
+
          else 
          if(index == snapshot.data.menteenames.length)
          return null;
-         else{
-        return Statsdis(snapshot.data.menteenames[index]['title'], double.tryParse(snapshot.data.menteenames[index]['basic']), double.tryParse(snapshot.data.menteenames[index]['adv'])) ;
-         }
+
+         else
+         return Statsdis(snapshot.data.menteenames[index]['title'], double.tryParse(snapshot.data.menteenames[index]['basic']), double.tryParse(snapshot.data.menteenames[index]['adv'])) ;
       }
     ),
     );
     }
 
       else if (snapshot.hasError){
-      print('america');
       return Text('${snapshot.error}', style: TextStyle(color: config.fontColor, fontFamily: config.fontFamily),);
       }   
       else return CircularProgressIndicator();

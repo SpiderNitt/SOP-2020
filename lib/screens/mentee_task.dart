@@ -4,8 +4,6 @@ import '../widgets/mentor_details.dart';
 import '../widgets/navigationbar.dart';
 import '../widgets/repodet.dart';
 import '../others/config.dart';
-import '../others/jwtparse.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MenteeTask extends StatefulWidget {
 
@@ -18,24 +16,9 @@ class _MenteeTaskState extends State<MenteeTask> {
   dynamic res; 
   String jwt, menteeroll;
 
-  // String value;
-  // void readstorage() async{
-  
-  // final storage = new FlutterSecureStorage(); 
-  // this.value = await storage.read(key: 'jwt');
-
-  // }
-
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   readstorage();
-  // }
-
   @override
   Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
-   this.res = tryParseJwt(data['jwt']);
    this.jwt = data['jwt'];
    this.menteeroll = data['menteeroll'];
 

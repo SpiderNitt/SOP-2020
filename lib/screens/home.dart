@@ -4,7 +4,6 @@ import '../widgets/mentees_details.dart';
 import '../widgets/navigationbar.dart';
 import '../widgets/mentor_details.dart';
 import '../others/jwtparse.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Home extends StatefulWidget {
 
@@ -27,18 +26,6 @@ String name, gitacc, jwt;
  
   _HomeState(this.name, this.gitacc, this.jwt);
  
-//  void setdata() async{
-//   final storage = new FlutterSecureStorage();
-//   storage.write(key: 'jwt', value: 'you');
-//  }
-
-//   @override
-//    void initState(){
-//    super.initState();
-//    setdata();
-//   }
-
-
   @override
 
   Widget build(BuildContext context) {

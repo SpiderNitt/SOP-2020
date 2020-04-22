@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import '../others/config.dart';
 import '../others/jwtparse.dart';
@@ -18,15 +17,11 @@ class Data{
     List<Map> temp = [];
     for(int i = 0; i < res['mentee_list'].length; ++i){
       temp.add({
-            "mentee_name": res['mentee_list']['${i}']['mentee_name'],
-            "mentee_roll": res['mentee_list']['${i}']['mentee_roll'],
-            "github_username": res['mentee_list']['${i}']['github_username'],
+            "mentee_name": res['mentee_list']['$i']['mentee_name'],
+            "mentee_roll": res['mentee_list']['$i']['mentee_roll'],
+            "github_username": res['mentee_list']['$i']['github_username'],
       });
     }
-
-    // res.forEach((element){
-    //   temp.add(element['title']);
-    // });
     return Data(temp, stat);
   }
 
@@ -46,8 +41,6 @@ Data.for500(){
 class MenteeDet extends StatefulWidget {
 
 String jwttoken;  
-
-
 MenteeDet(this.jwttoken);
 
   @override
