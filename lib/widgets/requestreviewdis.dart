@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import '../others/config.dart';
 import 'package:http/http.dart';
@@ -8,10 +7,10 @@ import '../others/jwtparse.dart';
 
 class Data{
   
-  List<Map> menteenames;
+  List<Map> sublist;
   String status;
   
-  Data(this.menteenames);
+  Data(this.sublist);
  
   factory Data.model(dynamic res) {
     
@@ -88,17 +87,28 @@ class _RequestlistState extends State<Requestlist> {
    this.res = getdata();
   }
 
-Widget submitlinks(dynamic check){
+Widget submitlinks(dynamic checklinks, dynamic cont){
   
-  List<Widget> tempstore = [];
-  for(int j = 0; j< check.length; ++j){
-     tempstore.add( Text(check['$j'],  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),);
+  List<Widget> tempstore = [Text('Repo Links', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor))];
+  for(int j = 0; j< checklinks['link'].length; ++j){
+     tempstore.add( Text(checklinks['link']['$j'],  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.links)),);
      tempstore.add(SizedBox(
                     height:5,
                   ));
       }
      tempstore.add( Text('Not reviewed', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)));
+     tempstore.add(FlatButton(
+                  onPressed: (){
+                  Navigator.pushNamed(cont, '/writereview', arguments: {
+                  'repo_det': checklinks['title'],
+                  'id': checklinks['id'],
+                  'jwt': this.jwt
+                   });
+          }, 
+         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+         ));
      return Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
         children: tempstore,
      );          
 }
@@ -135,17 +145,7 @@ this.resultobt.forEach((element){
                    SizedBox(
                     height:5,
                   ),
-                  submitlinks(element['link']),
-                  FlatButton(
-                  onPressed: (){
-                  Navigator.pushNamed(contxt, '/writereview', arguments: {
-                  'repo_det': element['title'],
-                  'id': element['id'],
-                  'jwt': this.jwt
-                   });
-          }, 
-         child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-         ),
+                  submitlinks(element, contxt),
                 ],
               ),
         ),
@@ -186,7 +186,7 @@ return finallist;
 
           else {
 
-      this.resultobt = snapshot.data.menteenames;
+      this.resultobt = snapshot.data.sublist;
       return
       Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 0),

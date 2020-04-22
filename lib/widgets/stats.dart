@@ -8,10 +8,10 @@ import '../others/jwtparse.dart';
 
 class Data{
   
-  List<Map> menteenames;
+  List<Map> submission;
   String status;
   
-  Data(this.menteenames);
+  Data(this.submission);
  
   factory Data.model(dynamic res) {
     
@@ -112,18 +112,18 @@ class _StatsState extends State<Stats> {
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       child: ListView.builder(
-        itemCount: snapshot.data.menteenames.length + 1,
+        itemCount: snapshot.data.submission.length + 1,
       itemBuilder: (context, index){
 
-         if(snapshot.data.menteenames.length == 0)
+         if(snapshot.data.submission.length == 0)
          return Text("No data found", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
 
          else 
-         if(index == snapshot.data.menteenames.length)
+         if(index == snapshot.data.submission.length)
          return null;
 
          else
-         return Statsdis(snapshot.data.menteenames[index]['title'], double.tryParse(snapshot.data.menteenames[index]['basic']), double.tryParse(snapshot.data.menteenames[index]['adv'])) ;
+         return Statsdis(snapshot.data.submission[index]['title'], double.tryParse(snapshot.data.submission[index]['basic']), double.tryParse(snapshot.data.submission[index]['adv'])) ;
       }
     ),
     );
