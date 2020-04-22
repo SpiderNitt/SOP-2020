@@ -175,7 +175,7 @@ class _ReviewState extends State<Review> {
                     content: Text('Submitted', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
                  )
                  );
-                }).catchError((error){
+                }).catchError((Response error){
                     Scaffold.of(context).showSnackBar(
                     SnackBar(
                     backgroundColor: config.danger,

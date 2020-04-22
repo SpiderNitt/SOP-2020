@@ -18,7 +18,7 @@ factory Data.getdata(List json){
     return Data(repoDetList, '200 OK');
   }
 
-// Data.error(this.errormsg, this.status);
+Data.error(this.status, this.errormsg);
 
 }
 
@@ -41,13 +41,11 @@ class _RepoDetState extends State<RepoDet> {
 
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/${this.gitacc}/repos');
- 
-  return Data.getdata(jsonDecode(resp.body));
   
-  // if(resp.headers['status'] == '200 OK')
-  // return Data.getdata(jsonDecode(resp.body));
-  // else 
-  // return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
+  if(resp.headers['status'] == '200 OK' || resp.headers['status'] == '304 Not Modified')
+  return Data.getdata(jsonDecode(resp.body));
+  else 
+  return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
  
   }
   
@@ -66,7 +64,7 @@ class _RepoDetState extends State<RepoDet> {
 
       if(snapshot.hasData){
       
-    //  if(snapshot.data.status == '200 OK')
+     if(snapshot.data.status == '200 OK')
         return Container(
       
       constraints: BoxConstraints(
@@ -110,8 +108,8 @@ class _RepoDetState extends State<RepoDet> {
     ),
     );  
              
-      // else 
-      //  return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
+      else 
+       return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
       }
         else if(snapshot.hasError){
         return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);

@@ -20,7 +20,7 @@ class Data{
      temp.add({
            "menteename": res['review_list']['$i']['mentee_name'],
            "title": res['review_list']['$i']["task_title"],
-           "link": res['review_list']['$i']["submission_links"],
+           "link": jsonDecode(res['review_list']['$i']["submission_links"]),
            'des':  res['review_list']['$i'][ "submission_description"],
            'id':  res['review_list']['$i'][ "submission_id"]
      });
@@ -88,6 +88,22 @@ class _RequestlistState extends State<Requestlist> {
    this.res = getdata();
   }
 
+Widget submitlinks(dynamic check){
+  
+  List<Widget> tempstore = [];
+  for(int j = 0; j< check.length; ++j){
+     tempstore.add( Text(check['$j'],  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),);
+     tempstore.add(SizedBox(
+                    height:5,
+                  ));
+      }
+     tempstore.add( Text('Not reviewed', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)));
+     return Column(
+        children: tempstore,
+     );          
+}
+
+
 List<Widget> listmaker(dynamic contxt){
 
 List<Widget> finallist = [];
@@ -115,18 +131,11 @@ this.resultobt.forEach((element){
                   SizedBox(
                     height:5,
                   ),
-                  Text('${element['link']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${element['des']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                    SizedBox(
                     height:5,
                   ),
-                   Text('${element['des']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
-                   SizedBox(
-                    height:5,
-                  ),
-                  Text('Not reviewed', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)),
-                  SizedBox(
-                    height:5,
-                  ),
+                  submitlinks(element['link']),
                   FlatButton(
                   onPressed: (){
                   Navigator.pushNamed(contxt, '/writereview', arguments: {
@@ -152,7 +161,7 @@ this.resultobt.forEach((element){
 });
 if(finallist.length == 0)
 finallist.add(Center(
-      child: Text("No matching results", style: TextStyle(color: config.fontColor, fontSize: 20),)
+      child: Text("No matching results", style: TextStyle(color: config.fontColor, fontSize: 20,  fontFamily: config.fontFamily))
       )); 
 
 return finallist;
@@ -167,13 +176,13 @@ return finallist;
       if(snapshot.hasData){
 
            if(snapshot.data.status == '500')
-              return Text("Server Error", style: TextStyle( color: config.fontColor ),);
+              return Text("Server Error", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily));
            
           else if (snapshot.data.status == '401')
-              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor ),);
+              return Text("Forbidden not enough rights", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily));
           
           else if (snapshot.data.status == '403')
-           return Text("Unauthorized", style: TextStyle( color: config.fontColor ),);
+           return Text("Unauthorized", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily));
 
           else {
 

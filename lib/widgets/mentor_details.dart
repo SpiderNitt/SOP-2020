@@ -10,9 +10,10 @@ class Data {
   Data(List json){
       this.gitacc = json[0]['owner']['login'];
       this.avatar_url = json[0]['owner']['avatar_url'];
+      this.status = '200 OK';
   }
 
-//  Data.error(this.errormsg, this.status);
+ Data.error(this.errormsg, this.status);
 }
 
 
@@ -35,12 +36,10 @@ _MenDetState(this.name, this.gitacc);
   
   Future<Data> getdata() async{
   Response resp = await get('https://api.github.com/users/chakki1234/repos');
-  
-  return Data(json.decode(resp.body));
-  // if(resp.headers['status'] == '200 OK')
-  //  return  Data(json.decode(resp.body));
-  // else 
-  //   return Data.error(resp.headers['status'], json.decode(resp.body)['message']);
+  if(resp.headers['status'] == '200 OK' || resp.headers['status'] == '304 Not Modified')
+   return  Data(json.decode(resp.body));
+  else 
+    return Data.error(json.decode(resp.body)['message'], resp.headers['status']);
   }
   
   @override
@@ -62,7 +61,7 @@ _MenDetState(this.name, this.gitacc);
               
             if(snapshot.hasData){
       
-        //  if(snapshot.data.status == '200 OK')
+         if(snapshot.data.status == '200 OK' )
           return   Column(
            children : <Widget>[Container(
           decoration: BoxDecoration(
@@ -83,11 +82,10 @@ _MenDetState(this.name, this.gitacc);
         ) 
          ]
           );
-        // else
-        // return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
+        else
+        return Text("${snapshot.data.errormsg}", style: TextStyle( color: config.fontColor ),);
        }
-      else if(snapshot.hasError){
-        print('amercia');
+        else if(snapshot.hasError){
         return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
       }
       else   

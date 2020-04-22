@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import '../others/jwtparse.dart';
 import '../others/config.dart';
 import '../widgets/navigationbar.dart';
 import 'package:http/http.dart';
@@ -14,6 +16,7 @@ class _BioState extends State<Bio> {
    
   final _formkey  = GlobalKey<FormState>();
   String name, githubacc, year =  '', dept, jwt;
+  dynamic mentorroll;
   
   @override
 
@@ -21,6 +24,7 @@ class _BioState extends State<Bio> {
 
    Map data = ModalRoute.of(context).settings.arguments;
    this.jwt = data['jwt'];
+   this.mentorroll = tryParseJwt(this.jwt)['roll'];
     return 
     Scaffold(
       backgroundColor: config.bgColor,
@@ -67,7 +71,7 @@ class _BioState extends State<Bio> {
                 }
               },
             ),
-            SizedBox(height: 15),
+            // SizedBox(height: 15),
             // TextFormField(
             //   style: TextStyle(
             //     color: config.fontColor,
@@ -161,19 +165,30 @@ class _BioState extends State<Bio> {
               onPressed: (){
             if(_formkey.currentState.validate())
                {
-                  put('', 
+                  post('https://spider.nitt.edu/inductions20test/api/mentee/usernameUpdate', 
                   headers: {
-                    HttpHeaders.authorizationHeader: ''
+                    HttpHeaders.authorizationHeader: 'Bearer ${this.jwt}'
                   },
-                  body: {
-                    "rollno": ""
-                  });
-                 Scaffold.of(context).showSnackBar(
+                  body: jsonEncode({
+                    "rollno": '${this.mentorroll}',
+                    "github_username" : this.name
+                  }
+                  )).then((Response value){
+                   print(value.statusCode);
+                   Scaffold.of(context).showSnackBar(
                    SnackBar(
                     backgroundColor: config.success,
                     content: Text('Submitted', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
                  )
                  );
+                  }).catchError((Response error){
+                    Scaffold.of(context).showSnackBar(
+                   SnackBar(
+                    backgroundColor: config.danger,
+                    content: Text('Server Error', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+                 )
+                 );
+                  });
                }
                else 
                print('failure'); 
