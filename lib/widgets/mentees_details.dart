@@ -20,10 +20,7 @@ class Data{
       temp.add({
             "mentee_name": res['mentee_list']['${i}']['mentee_name'],
             "mentee_roll": res['mentee_list']['${i}']['mentee_roll'],
-            "mentee_laptop_access": res['mentee_list']['${i}']['mentee_laptop_access'],
             "github_username": res['mentee_list']['${i}']['github_username'],
-            "profiles_no": res['mentee_list']['${i}']['profiles_no'],
-            "profiles": res['mentee_list']['${i}']['profiles']
       });
     }
 
