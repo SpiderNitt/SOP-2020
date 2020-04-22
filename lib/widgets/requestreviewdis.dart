@@ -113,16 +113,8 @@ Widget submitlinks(dynamic checklinks, dynamic cont){
      );          
 }
 
-
-List<Widget> listmaker(dynamic contxt){
-
-List<Widget> finallist = [];
-
-this.resultobt.forEach((element){
-
-  if(element['menteename'].contains(this.searchword) || this.searchword == ''){
-    finallist.add(
-      Column(
+Widget filter(dynamic contst, dynamic item){
+  return Column(
           children: <Widget>[
             ListTile(
           contentPadding: EdgeInsets.all(3),
@@ -130,22 +122,22 @@ this.resultobt.forEach((element){
             radius: 30,
             backgroundImage: AssetImage('assets/images/android.png'),
           ),
-          title: Text('${element['menteename']}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
+          title: Text('${item['menteename']}', softWrap: true, style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)),
           subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                    SizedBox(
                     height:5,
                   ),
-                  Text('${element['title']}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${item['title']}', softWrap: true,  style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                   SizedBox(
                     height:5,
                   ),
-                  Text('${element['des']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
+                  Text('${item['des']}',  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor)),
                    SizedBox(
                     height:5,
                   ),
-                  submitlinks(element, contxt),
+                  submitlinks(item, contst),
                 ],
               ),
         ),
@@ -154,9 +146,18 @@ this.resultobt.forEach((element){
           indent: 70,
         ),
         ],
-        )
-    );
-  }
+        );
+}
+
+List<Widget> listmaker(dynamic contxt){
+
+List<Widget> finallist = [];
+
+this.resultobt.forEach((element){
+
+  if(element['menteename'].contains(this.searchword) || this.searchword == '')
+    finallist.add(filter(contxt, element));
+  
 
 });
 if(finallist.length == 0)
