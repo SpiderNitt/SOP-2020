@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+
+import '../../../theme/mentor.dart';
 
 class TaskDet extends StatefulWidget {
   final String _jwttoken;
@@ -47,11 +48,14 @@ class _TaskDetState extends State<TaskDet> {
                               child: Column(
                             children: <Widget>[
                               SizedBox(height: 10),
-                              Text(temp['tasks']['$j']['profile_task_count'],
-                                  style: TextStyle(
-                                      fontSize: 23,
-                                      fontFamily: config.fontFamily,
-                                      color: config.links)),
+                              Text(
+                                temp['tasks']['$j']['profile_task_count'],
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontFamily: config.fontFamily,
+                                  color: Color(0xFF00A8E8),
+                                ),
+                              ),
                               SizedBox(height: 5),
                               Text(temp['tasks']['$j']['task_title'],
                                   style: TextStyle(

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import '../widgets/navigationbar.dart';
-import '../others/config.dart';
+import '../../theme/mentor.dart';
 import 'package:http/http.dart';
 import 'dart:io';
-import '../others/jwtparse.dart';
+import '../../others/jwtparse.dart';
 
 class Review extends StatefulWidget {
   @override
@@ -202,7 +201,6 @@ class _ReviewState extends State<Review> {
           ]),
         ),
       ),
-      bottomNavigationBar: NavigationBar(0, this.jwt),
     );
   }
 }

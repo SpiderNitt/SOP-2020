@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inductions_20/others/jwtparse.dart';
-import 'package:inductions_20/screens/mentor_navigation.dart';
-import '../widgets/requestreviewdis.dart';
-import '../others/config.dart';
+import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
+import 'widgets/requestreviewdis.dart';
+import '../../theme/mentor.dart';
 
 class Request extends StatefulWidget {
   @override

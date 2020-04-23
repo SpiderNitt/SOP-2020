@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:inductions_20/screens/widgets/custom_list_tile.dart';
-import 'package:inductions_20/theme/styling.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_list_tile.dart';
+import '../../theme/navigation.dart';
 
 class MenteeCustomDrawer extends StatelessWidget {
   final String _name;

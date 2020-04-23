@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../others/config.dart';
 import 'package:http/http.dart';
+import '../../../theme/mentor.dart';
 import 'dart:convert';
-import '../others/jwtparse.dart';
+
+import 'package:inductions_20/others/jwtparse.dart';
 
 class Data {
   List<Map> sublist;
@@ -41,7 +42,7 @@ class Data {
 }
 
 class Requestlist extends StatefulWidget {
-  String mentorname, mentorgitacc, jwt;
+  final String mentorname, mentorgitacc, jwt;
 
   Requestlist(this.mentorname, this.mentorgitacc, this.jwt);
 
@@ -146,10 +147,10 @@ class _RequestlistState extends State<Requestlist> {
       children: <Widget>[
         ListTile(
           contentPadding: EdgeInsets.all(3),
-          leading: CircleAvatar(
-            radius: 30,
-            backgroundImage: AssetImage('assets/images/android.png'),
-          ),
+          // leading: CircleAvatar(
+          //   radius: 30,
+          //   backgroundImage: AssetImage('assets/images/android.png'),
+          // ),
           title: Text('${item['menteename']}',
               softWrap: true,
               style: TextStyle(

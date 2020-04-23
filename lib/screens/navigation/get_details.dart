@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:inductions_20/screens/mentor/mentor_home.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_button.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_input.dart';
 
 // Files imported
-import 'package:inductions_20/screens/widgets/custom_button.dart';
-import 'package:inductions_20/screens/widgets/custom_input.dart';
-import 'package:inductions_20/theme/styling.dart';
-
-import 'mentor_home.dart';
+import '../../theme/navigation.dart';
 
 class GetDetails extends StatefulWidget {
   @override

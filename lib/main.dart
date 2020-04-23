@@ -1,14 +1,14 @@
 // Files imported
-import 'package:inductions_20/screens/splash_screen.dart';
-import 'package:inductions_20/screens/login.dart';
-import 'package:inductions_20/screens/get_details.dart';
+import 'package:inductions_20/screens/mentor/Taskdetails.dart';
+import 'package:inductions_20/screens/mentor/bio.dart';
+import 'package:inductions_20/screens/mentor/commitsfinal.dart';
+import 'package:inductions_20/screens/mentor/mentee_task.dart';
+import 'package:inductions_20/screens/mentor/review.dart';
+import 'package:inductions_20/screens/mentor/write_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:inductions_20/screens/Taskdetails.dart';
-import 'package:inductions_20/screens/review.dart';
-import 'package:inductions_20/screens/bio.dart';
-import 'package:inductions_20/screens/commitsfinal.dart';
-import 'package:inductions_20/screens/write_widget.dart';
-import 'package:inductions_20/screens/mentee_task.dart';
+import 'package:inductions_20/screens/navigation/get_details.dart';
+import 'package:inductions_20/screens/navigation/login.dart';
+import 'package:inductions_20/screens/navigation/splash_screen.dart';
 
 void main() {
   runApp(Spider());

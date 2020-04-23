@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import '../others/config.dart';
-import '../others/jwtparse.dart';
 import 'package:http/http.dart';
+import '../../../theme/mentor.dart';
 import 'dart:convert';
+
+import 'package:inductions_20/others/jwtparse.dart';
 
 class Data {
   List<Map> menteenames;
@@ -132,11 +134,11 @@ class _MenteeDetState extends State<MenteeDet> {
                                         .data.menteenames[index]['mentee_roll'],
                                   });
                             },
-                            leading: CircleAvatar(
-                              radius: 30,
-                              backgroundImage:
-                                  AssetImage('assets/images/android.png'),
-                            ),
+                            // leading: CircleAvatar(
+                            //   radius: 30,
+                            //   backgroundImage:
+                            //       AssetImage('assets/images/android.png'),
+                            // ),
                             title: Text(
                                 '${snapshot.data.menteenames[index]['mentee_name']}',
                                 style: TextStyle(
@@ -144,10 +146,13 @@ class _MenteeDetState extends State<MenteeDet> {
                                     fontFamily: config.fontFamily,
                                     color: config.fontColor)),
                           ),
-                          Divider(
-                            color: config.fontColor,
-                            indent: 70,
-                          ),
+                          Opacity(
+                              opacity: 0.5,
+                              child: Divider(
+                                color: config.fontColor,
+                                indent: 0,
+                                thickness: sqrt1_2,
+                              )),
                         ],
                       );
                     }),

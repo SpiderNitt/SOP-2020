@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../theme/mentor.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import '../others/config.dart';
 
 class Statsdis extends StatelessWidget {
   final String taskname;

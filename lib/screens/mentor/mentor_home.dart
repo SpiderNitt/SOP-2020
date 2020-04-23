@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../others/config.dart';
-import '../widgets/mentees_details.dart';
-// import '../widgets/navigationbar.dart';
-import '../widgets/mentor_details.dart';
-import '../others/jwtparse.dart';
-import 'mentor_navigation.dart';
+import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
+import '../../theme/mentor.dart';
+import 'widgets/mentees_details.dart';
+import 'widgets/mentor_details.dart';
+import '../../others/jwtparse.dart';
 
 class Mentor extends StatelessWidget {
   String name, gitacc, jwt;
@@ -77,7 +76,6 @@ class _MentorHomeState extends State<MentorHome> {
         ),
         // ),
       ),
-      // bottomNavigationBar: NavigationBar(0, this.jwt),
     );
   }
 }

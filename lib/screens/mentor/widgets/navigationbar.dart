@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/screens/mentor_home.dart';
-import '../others/config.dart';
+import '../../../theme/mentor.dart';
 
 class NavigationBar extends StatefulWidget {
   final int value;

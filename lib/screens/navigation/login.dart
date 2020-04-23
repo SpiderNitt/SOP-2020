@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
-import 'package:inductions_20/screens/mentor_home.dart';
+import 'package:inductions_20/screens/mentor/mentor_home.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_button.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_input.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // Files imported
-import 'package:inductions_20/screens/widgets/custom_button.dart';
-import 'package:inductions_20/screens/widgets/custom_input.dart';
-import 'package:inductions_20/theme/styling.dart';
+import '../../theme/navigation.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

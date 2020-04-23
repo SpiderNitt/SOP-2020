@@ -4,11 +4,11 @@ import 'package:flutter/rendering.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:inductions_20/others/jwtparse.dart';
-import 'package:inductions_20/screens/mentor_home.dart';
+import 'package:inductions_20/screens/mentor/mentor_home.dart';
 import 'dart:async';
 
 // Files imported
-import 'package:inductions_20/theme/styling.dart';
+import '../../theme/navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

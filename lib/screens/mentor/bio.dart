@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:inductions_20/screens/mentor_navigation.dart';
-import '../others/jwtparse.dart';
-import '../others/config.dart';
-import '../widgets/navigationbar.dart';
+import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
+import '../../others/jwtparse.dart';
+import '../../theme/mentor.dart';
 import 'package:http/http.dart';
 
 class Bio extends StatefulWidget {
@@ -206,7 +205,6 @@ class _BioState extends State<Bio> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(2, this.jwt),
     );
   }
 }

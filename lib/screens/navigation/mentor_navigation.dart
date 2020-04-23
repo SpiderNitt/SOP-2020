@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:inductions_20/screens/mentor_home.dart';
+import 'package:inductions_20/screens/mentor/mentor_home.dart';
+import 'package:inductions_20/screens/navigation/widgets/custom_list_tile.dart';
 
-import 'package:inductions_20/screens/widgets/custom_list_tile.dart';
-import 'package:inductions_20/theme/styling.dart';
+import '../../theme/navigation.dart';
 
 class MentorCustomDrawer extends StatelessWidget {
   final String _name;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/theme/styling.dart';
+import '../../../theme/navigation.dart';
 
 class UploadButton extends StatelessWidget {
-  Function function;
-  String text;
-  double _width;
-  double _height;
-  double _fontsize;
+  final Function function;
+  final String text;
+  final double _width;
+  final double _height;
+  final double _fontsize;
 
   UploadButton(
       this.function, this.text, this._width, this._height, this._fontsize);

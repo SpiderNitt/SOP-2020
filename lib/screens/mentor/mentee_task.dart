@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/screens/mentor_navigation.dart';
-import '../widgets/stats.dart';
-import '../widgets/mentor_details.dart';
-import '../widgets/navigationbar.dart';
-import '../widgets/repodet.dart';
-import '../others/config.dart';
-import '../others/jwtparse.dart';
+import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
+import 'widgets/stats.dart';
+import 'widgets/mentor_details.dart';
+import 'widgets/repodet.dart';
+import '../../theme/mentor.dart';
+import '../../others/jwtparse.dart';
 
 class MenteeTask extends StatefulWidget {
   @override
@@ -36,7 +35,6 @@ class _MenteeTaskState extends State<MenteeTask> {
                     fontSize: 18,
                     fontFamily: config.fontFamily,
                     color: config.fontColor))),
-        bottomNavigationBar: NavigationBar(0, data['jwt']),
       );
     else
       return DefaultTabController(

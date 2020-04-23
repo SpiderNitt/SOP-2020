@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../others/config.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+
+import '../../../theme/mentor.dart';
 
 class Data {
   String gitacc, avatarUrl, errormsg;
