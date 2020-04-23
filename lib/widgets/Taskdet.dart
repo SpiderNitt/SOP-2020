@@ -22,6 +22,7 @@ List<dynamic> profiles;
 
  _TaskDetState(this.jwttoken, this.profiles);
 
+  
 
   @override
    Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ List<dynamic> profiles;
                             SizedBox(
                                height: 10
                              ),
-                             Text(temp['tasks']['$j']['profile_task_count'],  style: TextStyle( fontSize: 23, fontFamily: config.fontFamily, color: config.links)),
+                             Text(temp['tasks']['$j']['profile_task_count'],  style: TextStyle( fontSize: 23, fontFamily: config.fontFamily, color: config.headtask)),
                              SizedBox(
                                height: 5
                              ),
@@ -67,9 +68,34 @@ List<dynamic> profiles;
                               HttpHeaders.authorizationHeader: 'Bearer ${this.jwttoken}'
                                 }),
                               builder: (context, snapst){
+                                 
+                                 
                                  if(snapst.hasData){
-                                   dynamic tempdes = jsonDecode(snapst.data.body);
-                                  return Text(tempdes['task_description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor));
+
+                                 List<Widget> listlink = [];
+                                 dynamic tempdes = jsonDecode(snapst.data.body);
+                                 
+                                 listlink.add(Text(tempdes['task_description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
+                                 
+                                 listlink.add(SizedBox(
+                                   height: 10
+                                 ));
+                                 
+                                 if(tempdes['resources'].length != 0)
+                                 listlink.add(Text('Resources',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.head)));
+                                  
+                                 for(int k = 0; k < tempdes['resources'].length; ++k){
+                                   listlink.add(Text(tempdes['resources']['$k']['link'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.links)));
+
+                                   listlink.add(Text(tempdes['resources']['$k']['description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
+                                   listlink.add(SizedBox(
+                                   height: 5
+                                 ));
+                                 } 
+
+                                  return Column(
+                                    children: listlink
+                                  );
                                  }
 
                                  if(snapst.hasError){

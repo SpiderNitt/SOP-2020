@@ -17,6 +17,7 @@ class Config{
   Color tab = Color.fromRGBO(24, 82, 39, 1);
   Color links = Color.fromRGBO(250, 200, 62, 1);
   Color head = Color.fromRGBO(250, 144, 102, 1);
+  Color headtask = Color.fromRGBO(84, 153, 78, 1);
 }
 
 Config config =  Config();
