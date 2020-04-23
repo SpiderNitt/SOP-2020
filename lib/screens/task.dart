@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+
 import 'package:inductions_20/screens/data/task_description.dart';
 import 'package:inductions_20/screens/data/mentee_profile.dart';
 import 'package:inductions_20/screens/widgets/custom_box.dart';
@@ -13,6 +16,13 @@ import 'package:inductions_20/Themes/styling.dart';
 import 'package:inductions_20/screens/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/task_description.dart';
 import 'package:inductions_20/screens/data/mentee_progress.dart';
+
+
+
+
+import 'config/jwtparse.dart';
+import 'config/extractjwt.dart';
+import 'package:http/http.dart';
 class TASK extends StatefulWidget{
   
   List task;
@@ -45,12 +55,12 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   var feed_time="5:30";
   var recent_time;
   var recent_date;
-  Map  feedbacks={
-    "5:30":"you got to change this"
-  };
+  Map  feedbacks={};
   var mentorname;
   var mentorcontact;
-  TextEditingController textEditingController;
+  int hr=0, min=0, sec=0;
+  TextEditingController textEditingController, textEditingController1;
+  
   List taskSubmitted=[];
  List<Tab> myTabs = <Tab>[
     Tab(text: 'Description'),
@@ -83,6 +93,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     Tab(text: 'Progress'),
   ];
   textEditingController = TextEditingController();
+  textEditingController1= TextEditingController();
    this.overall_per=((this.basic_per+ this.advance_per)/2);
    this.decoverall_per=this.overall_per*100 ;
    decbasic_per=this.basic_per*100;
@@ -116,12 +127,12 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   advance_per= mentee_progress.advance_per/100;
   feed_time=mentee_progress.recent_feedback;
   feedbacks=mentee_progress.previous_feedbacks;
-
-  String date=  feed_time.substring(0, 10);
-
-   int hr =int.parse(feed_time.substring(11,13))-12+5;
-   int min =int.parse(feed_time.substring(14,16))+30;
-   int sec= int.parse(feed_time.substring(17,19));
+  print(feedbacks);
+  if(feedbacks!={}){
+    String date=  feed_time.substring(0, 10);
+    hr =int.parse(feed_time.substring(11,13))-12+5;
+    min =int.parse(feed_time.substring(14,16))+30;
+    sec= int.parse(feed_time.substring(17,19));
   if(min>=60)
   { hr++;
     min=min-60;
@@ -130,8 +141,10 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
    this.recent_date=date;
 
    this.recent_time="$hr:$min:$sec";
-  this.taskSubmitted= mentee_progress.submitted_links;
+  
 
+  }
+   this.taskSubmitted= mentee_progress.submitted_links;
    this.overall_per=((this.basic_per+ this.advance_per)/2);
    this.decoverall_per=this.overall_per*100 ;
    decbasic_per=this.basic_per*100;
@@ -280,27 +293,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                    double width = MediaQuery.of(context).size.width;
                    print(width);
                    },bottombarwidth,50,15,theme.blackColor,15,0,0),
-                   Custom_box('Comments',(){
-                                   List a=task;
-                                   Navigator.push(context, 
-                                   PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKcomments(task: a),
-                                   transitionsBuilder: (context, animation, secondaryAnimation, child){
-                                   return SlideTransition(
-                                     position: Tween<Offset>(
-                                     begin: const Offset(0.0, 1.0),
-                                     end: Offset.zero,
-                                     ).animate(animation),
-                                child: SlideTransition(
-                                     position: Tween<Offset>(
-                                     end: const Offset(0.0, 1.0),
-                                     begin: Offset.zero,
-                                     ).animate(secondaryAnimation),
-                                     child: child,
-                                ),
-                              );
-                            }
-                            )
-                            ); },bottombarwidth,50,15,theme.blackColor,15,0,0)
+                
            ] ),), ),  
         body: TabBarView(
               controller: _tabController,
@@ -389,6 +382,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     color: theme.fontColor,
     height: 50,
     thickness: 1,),
+    if(feed_time!="5:30")
     Row(
     children:<Widget>[
             Padding(
@@ -403,7 +397,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             Comment_box('''${feedbacks[feed_time]}''', theme.tertiaryColor,theme.fontColor, commentwidth,'''$mentorname''','''$recent_date''','''$recent_time'''),
             ]),
             Custom_box('Previous feedbacks',(){
-                            print(mentorname);
+                            
                             Navigator.push(context, 
                             PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKfeedback(feedbacks, task[0], mentorname),
                             transitionsBuilder: (context, animation, secondaryAnimation, child){
@@ -445,8 +439,56 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     hintStyle: TextStyle(
     color: theme.fontColor,
     fontSize: 15
-    ) ),   ),
-    Custom_box('Send Request to Review',(){},420,50,14.5,theme.tertiaryColor,15,8,10),
+    ) ),
+       controller: textEditingController1,   ),
+    Custom_box('Send Request to Review',() async{
+
+                                  var text = textEditingController1.value.text;
+                                  String jwt= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc3NDIzMTcsImZ1bGxuYW1lIjoiVGhyaXNoaWsgU2VudGhpbGt1bWFyIiwiZ2l0aHViX3VzZXJuYW1lIjoidGhyaXNoaWs3IiwiaXNfbWVudG9yIjpmYWxzZSwicm9sbCI6IjExMDExODA5MiIsInVzZXJuYW1lIjoiVGhyaXNoaWsgU2VudGhpbGt1bWFyIn0.mGC_haK5mPRpt6eZ4C6DA3F0bmCgEyMTjoFvPTf6aOg";
+                                  var res= tryParseJwt(jwt);
+                                  var rollno= res["roll"];
+                                
+                                  String url = "https://spider.nitt.edu/inductions20test/api/mentee/new_task_submission";
+                                  Map<String, String> headers =  
+                                  {   'Content-Type': 'application/json',
+                                      'Accept': 'application/json',
+                                      'Authorization': 'Bearer ${jwt}',};
+                                   Map<String, String> list1={};
+                                   for( int i=0; i<taskSubmitted.length; i++)
+                                   list1["$i"]="${taskSubmitted[i]}";
+                                   
+                                  
+                                   var sublinks= (jsonEncode(list1));
+                                   print(sublinks);
+                            
+                                  
+                                   var Json1 = jsonEncode( {"rollno" :"$rollno", 
+                                   "task_id": task[1], 
+                                   "profile_id": task[3],
+                                   "submission_links_no": taskSubmitted.length,
+                                   "submission_links":sublinks,
+                                   "submission_description":"$text"}
+                                 
+                                   );
+                                 
+                                  Response response = await post(url,
+                                      headers: headers, body: Json1);
+                                  int statusCode = response.statusCode;
+                                
+                                  if(statusCode==200)
+                                  {
+                                     showAlertDialog(context, "Submitted");
+                                  }
+                                  else if(statusCode==400){
+                                    showAlertDialog(context, "bad request");
+                                  }
+                                   else
+                                  {
+                                    showAlertDialog(context, "Server error");
+                                  }
+
+
+    },420,50,14.5,theme.tertiaryColor,15,8,10),
     ],)),
 
     Padding(padding: const EdgeInsets.only(bottom:40),),

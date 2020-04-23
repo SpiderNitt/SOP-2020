@@ -19,7 +19,7 @@ void main() {
         '/mentee/': (context) => homepage(),
         '/mentee/task/': (context) => TASK(),
     
-     //   '/mentee/announcement/':(context) => Announcement(),
+       '/mentee/announcement/':(context) => Announcement(),
         '/mentee/task_comments/': (context) => TASKcomments()
       },
     ),
