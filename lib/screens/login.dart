@@ -29,7 +29,6 @@ class LoginViewState extends State<LoginScreen> {
   double containerwidth;
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
     if (width <= 400) {
@@ -89,10 +88,10 @@ class LoginViewState extends State<LoginScreen> {
                 ),
                 Image(
                   image: AssetImage(
-                    'assets/images/SpiderLogo.webp',
+                    'assets/images/spiderIcon.webp',
                   ),
-                  height: imagesize,
-                  width: imagesize,
+                  height: imagesize * 0.7,
+                  width: imagesize * 0.7,
                 ),
                 Container(
                   height: 50,
@@ -192,11 +191,11 @@ class LoginViewState extends State<LoginScreen> {
                                   String rollno =
                                       _rollnocontroller.text.toString();
                                   String password = _passwordcontroller.text;
-                                  String Json =
+                                  String jsonToken =
                                       '{"rollno": "$rollno", "password": "$password"}';
                                   Response response = await post(url,
-                                      headers: headers, body: Json);
-                                  int statusCode = response.statusCode;
+                                      headers: headers, body: jsonToken);
+                                  // int statusCode = response.statusCode;
                                   var parsedJson =
                                       await json.decode(response.body);
                                   print(response.body);
@@ -219,7 +218,8 @@ class LoginViewState extends State<LoginScreen> {
                                           context, '/get_details');
                                     } else {
                                       if (payloadMap["is_mentor"]) {
-                                        Navigator.pushNamed(context, '/',
+                                        Navigator.pushNamed(
+                                            context, '/splash_screen',
                                             arguments: {'jwt': "$token"});
                                       } else {
                                         Navigator.pushNamed(

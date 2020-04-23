@@ -14,6 +14,7 @@ class Spider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Spider Orientation',
+      debugShowCheckedModeBanner: false,
       initialRoute: '/splash_screen',
       routes: {
         '/splash_screen': (context) => SplashScreen(),

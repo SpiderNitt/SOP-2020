@@ -16,7 +16,7 @@ class GetDetails extends StatefulWidget {
 
 class ViewState extends State<GetDetails> {
   final _detailsFormKey = GlobalKey<FormState>();
-  final _github_username_controller = TextEditingController();
+  final _githubUsernameController = TextEditingController();
   double inputfieldwidth;
   double submitwidth;
   double submitheight;
@@ -25,7 +25,6 @@ class ViewState extends State<GetDetails> {
   double containerwidth;
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
     if (width <= 400) {
@@ -109,7 +108,7 @@ class ViewState extends State<GetDetails> {
                               TextInputType.text,
                               inputfieldwidth,
                               fontsize,
-                              _github_username_controller,
+                              _githubUsernameController,
                             ),
                           ),
                           Padding(
@@ -119,13 +118,12 @@ class ViewState extends State<GetDetails> {
                               'Submit',
                               () async {
                                 if (_detailsFormKey.currentState.validate()) {
-                                  String github_username =
-                                      _github_username_controller.text
-                                          .toString();
+                                  String githubUsername =
+                                      _githubUsernameController.text.toString();
                                   String url =
-                                      "https://api.github.com/users/$github_username";
-                                  Response api_response = await get(url);
-                                  if (api_response.statusCode == 200) {
+                                      "https://api.github.com/users/$githubUsername";
+                                  Response apiResponse = await get(url);
+                                  if (apiResponse.statusCode == 200) {
                                     final storage = new FlutterSecureStorage();
                                     String token =
                                         await storage.read(key: "jwt");
@@ -144,10 +142,10 @@ class ViewState extends State<GetDetails> {
                                     };
                                     String roll = payloadMap["roll"];
                                     print(roll);
-                                    String Json =
-                                        '{"rollno" : "$roll", "github_username": "$github_username"}';
+                                    String jsonToken =
+                                        '{"rollno" : "$roll", "github_username": "$githubUsername"}';
                                     Response response = await post(url,
-                                        headers: headers, body: Json);
+                                        headers: headers, body: jsonToken);
                                     if (response.statusCode == 200) {
                                       AlertDialog alert = AlertDialog(
                                         title: Text("Spider Orientation"),

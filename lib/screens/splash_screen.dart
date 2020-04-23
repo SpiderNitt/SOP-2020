@@ -66,10 +66,10 @@ class _SplashScreenState extends State<SplashScreen> {
                             print("Tap Event");
                           },
                           text: [
+                            "ALGOS",
+                            "APP DEV",
                             "TRONIX",
                             "WEB DEV",
-                            "APP DEV",
-                            "ALGOS",
                           ],
                           textStyle: TextStyle(
                             fontSize: 20,
