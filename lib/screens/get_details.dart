@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
@@ -8,16 +9,14 @@ import 'package:inductions_20/screens/widgets/custom_button.dart';
 import 'package:inductions_20/screens/widgets/custom_input.dart';
 import 'package:inductions_20/theme/styling.dart';
 
-final _formKey = GlobalKey<FormState>();
-final _github_username_controller = TextEditingController();
-final _contactno_controller = TextEditingController();
-
-class GetGithubUsernameView extends StatefulWidget {
+class GetDetails extends StatefulWidget {
   @override
   ViewState createState() => ViewState();
 }
 
-class ViewState extends State<GetGithubUsernameView> {
+class ViewState extends State<GetDetails> {
+  final _detailsFormKey = GlobalKey<FormState>();
+  final _github_username_controller = TextEditingController();
   double inputfieldwidth;
   double submitwidth;
   double submitheight;
@@ -80,9 +79,8 @@ class ViewState extends State<GetGithubUsernameView> {
                   padding: EdgeInsets.all(padding),
                   child: Container(
                     width: containerwidth,
-                    color: theme.secondaryColor,
                     child: Form(
-                      key: _formKey,
+                      key: _detailsFormKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -108,28 +106,10 @@ class ViewState extends State<GetGithubUsernameView> {
                                 return null;
                               },
                               false,
-                              TextInputType.number,
+                              TextInputType.text,
                               inputfieldwidth,
                               fontsize,
                               _github_username_controller,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(padding),
-                            child: CustomInput(
-                              Icons.local_phone,
-                              "Contact number",
-                              (value) {
-                                if (value.isEmpty) {
-                                  return 'Enter your contact number';
-                                }
-                                return null;
-                              },
-                              false,
-                              TextInputType.number,
-                              inputfieldwidth,
-                              fontsize,
-                              _contactno_controller,
                             ),
                           ),
                           Padding(
@@ -138,15 +118,87 @@ class ViewState extends State<GetGithubUsernameView> {
                             child: CustomButton(
                               'Submit',
                               () async {
-                                if (_formKey.currentState.validate()) {
-                                  String username = _github_username_controller
-                                      .text
-                                      .toString();
+                                if (_detailsFormKey.currentState.validate()) {
+                                  String github_username =
+                                      _github_username_controller.text
+                                          .toString();
                                   String url =
-                                      "https://api.github.com/users/$username";
-                                  Response response = await get(url);
-                                  int statusCode = response.statusCode;
-                                  if (statusCode == 200) {
+                                      "https://api.github.com/users/$github_username";
+                                  Response api_response = await get(url);
+                                  if (api_response.statusCode == 200) {
+                                    final storage = new FlutterSecureStorage();
+                                    String token =
+                                        await storage.read(key: "jwt");
+                                    final parts = token.split('.');
+                                    final payload = parts[1];
+                                    var normalized =
+                                        base64Url.normalize(payload);
+                                    var resp = utf8
+                                        .decode(base64Url.decode(normalized));
+                                    final payloadMap = json.decode(resp);
+                                    String url =
+                                        "https://spider.nitt.edu/inductions20test/api/update_github_username";
+                                    Map<String, String> headers = {
+                                      "Content-type": "application/json",
+                                      "Authorization": "Bearer $token"
+                                    };
+                                    String roll = payloadMap["roll"];
+                                    print(roll);
+                                    String Json =
+                                        '{"rollno" : "$roll", "github_username": "$github_username"}';
+                                    Response response = await post(url,
+                                        headers: headers, body: Json);
+                                    if (response.statusCode == 200) {
+                                      AlertDialog alert = AlertDialog(
+                                        title: Text("Spider Orientation"),
+                                        content: Text("Github username saved"),
+                                        actions: [
+                                          FlatButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop('dialog');
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                      await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                      if (payloadMap["is_mentor"]) {
+                                        Navigator.pushNamed(context, '/',
+                                            arguments: {'jwt': "$token"});
+                                      } else {
+                                        Navigator.pushNamed(
+                                            context, '/mentee/');
+                                      }
+                                    } else {
+                                      AlertDialog alert = AlertDialog(
+                                        title: Text("Spider Orientation"),
+                                        content:
+                                            Text("Failed to connect to server"),
+                                        actions: [
+                                          FlatButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop('dialog');
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                      await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    }
                                   } else {
                                     AlertDialog alert = AlertDialog(
                                       title: Text("Spider Orientation"),

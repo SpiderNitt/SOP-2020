@@ -10,16 +10,15 @@ import 'package:inductions_20/screens/widgets/custom_button.dart';
 import 'package:inductions_20/screens/widgets/custom_input.dart';
 import 'package:inductions_20/theme/styling.dart';
 
-final _formKey = GlobalKey<FormState>();
-final _rollnocontroller = TextEditingController();
-final _passwordcontroller = TextEditingController();
-
 class LoginScreen extends StatefulWidget {
   @override
   LoginViewState createState() => LoginViewState();
 }
 
 class LoginViewState extends State<LoginScreen> {
+  final _loginFormKey = GlobalKey<FormState>();
+  final _rollnocontroller = TextEditingController();
+  final _passwordcontroller = TextEditingController();
   double headingfontsize;
   double inputfieldwidth;
   double signinwidth;
@@ -103,7 +102,7 @@ class LoginViewState extends State<LoginScreen> {
                   child: Container(
                     width: containerwidth,
                     child: Form(
-                      key: _formKey,
+                      key: _loginFormKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -184,10 +183,9 @@ class LoginViewState extends State<LoginScreen> {
                             child: CustomButton(
                               'Sign In',
                               () async {
-                                if (_formKey.currentState.validate()) {
-                                  // set up POST request arguments
+                                if (_loginFormKey.currentState.validate()) {
                                   String url =
-                                      "https://spider.nitt.edu/inductions20/login";
+                                      "https://spider.nitt.edu/inductions20test/login/";
                                   Map<String, String> headers = {
                                     "Content-type": "application/json",
                                   };
@@ -199,22 +197,34 @@ class LoginViewState extends State<LoginScreen> {
                                   Response response = await post(url,
                                       headers: headers, body: Json);
                                   int statusCode = response.statusCode;
-                                  var parsedJson = json.decode(response.body);
+                                  var parsedJson =
+                                      await json.decode(response.body);
+                                  print(response.body);
                                   if (parsedJson["success"] == true) {
-                                    // direct to mentor page or mentee page based on jwt
-                                    final String jwt = parsedJson["token"];
+                                    final String jwt = parsedJson["jwt"];
                                     final storage = new FlutterSecureStorage();
                                     await storage.write(
                                         key: "jwt", value: "$jwt");
+                                    String token =
+                                        await storage.read(key: "jwt");
+                                    final parts = token.split('.');
+                                    final payload = parts[1];
+                                    var normalized =
+                                        base64Url.normalize(payload);
+                                    var resp = utf8
+                                        .decode(base64Url.decode(normalized));
+                                    final payloadMap = json.decode(resp);
                                     if (parsedJson["is_first_time"] == true) {
                                       Navigator.pushNamed(
-                                          context, '/github_username');
+                                          context, '/get_details');
                                     } else {
-                                      String stored_jwt =
-                                          await storage.read(key: "jwt");
-                                      final decoded_jwt =
-                                          base64.decode(stored_jwt);
-                                      print(decoded_jwt);
+                                      if (payloadMap["is_mentor"]) {
+                                        Navigator.pushNamed(context, '/',
+                                            arguments: {'jwt': "$token"});
+                                      } else {
+                                        Navigator.pushNamed(
+                                            context, '/mentee/');
+                                      }
                                     }
                                   } else {
                                     AlertDialog alert = AlertDialog(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inductions_20/screens/widgets/custom_list_tile.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'package:inductions_20/screens/widgets/custom_list_tile.dart';
 import 'package:inductions_20/theme/styling.dart';
 
 class MentorCustomDrawer extends StatelessWidget {
@@ -48,11 +49,22 @@ class MentorCustomDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            CustomListTile(Icons.home, "Home Page", () => {}),
-            CustomListTile(Icons.rate_review, "Reviews", () => {}),
-            CustomListTile(Icons.announcement, "Announcements", () => {}),
-            CustomListTile(Icons.person_outline, "Change Github", () => {}),
-            CustomListTile(Icons.exit_to_app, "Logout", () => {}),
+            CustomListTile(Icons.home, "Home Page", () async {
+              final storage = new FlutterSecureStorage();
+              String token = await storage.read(key: "jwt");
+              Navigator.pushNamed(context, '/', arguments: {'jwt': "$token"});
+            }),
+            CustomListTile(Icons.rate_review, "Reviews", () {
+              Navigator.pushNamed(context, '/reviews');
+            }),
+            CustomListTile(Icons.person_outline, "Change Github", () {
+              Navigator.pushNamed(context, '/bio');
+            }),
+            CustomListTile(Icons.exit_to_app, "Logout", () async {
+              final storage = new FlutterSecureStorage();
+              await storage.delete(key: "jwt");
+              Navigator.pushNamed(context, '/login');
+            }),
           ],
         ),
       ),

@@ -8,7 +8,7 @@ import 'package:inductions_20/screens/widgets/custom_button.dart';
 import 'package:inductions_20/screens/widgets/custom_input.dart';
 import 'package:inductions_20/screens/success_message.dart';
 
-final _formKey1 = GlobalKey<FormState>();
+final _registerFormKey = GlobalKey<FormState>();
 final _key = GlobalKey<FormState>();
 final _namecontroller = TextEditingController();
 final _usernamecontroller = TextEditingController();
@@ -158,7 +158,7 @@ class _RegisterScreenState extends State<RegisterView> {
               ),
             ),
             Form(
-              key: _formKey1,
+              key: _registerFormKey,
               child: Column(
                 children: <Widget>[
                   Padding(
@@ -464,7 +464,7 @@ class _RegisterScreenState extends State<RegisterView> {
                     child: CustomButton(
                       'Register',
                       () async {
-                        if (_formKey1.currentState.validate() &&
+                        if (_registerFormKey.currentState.validate() &&
                             _dropDownError == '') {
                           // set up POST request arguments
                           String url =
