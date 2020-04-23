@@ -1,15 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
 
 // Files imported
 import 'package:inductions_20/screens/splash_screen.dart';
 import 'package:inductions_20/screens/login.dart';
-import 'package:inductions_20/screens/mentor_navigation.dart';
-import 'package:inductions_20/screens/mentee_navigation.dart';
 import 'package:inductions_20/screens/get_details.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
+  runApp(Spider());
+}
+
+class Spider extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
       title: 'Spider Orientation',
       initialRoute: '/splash_screen',
       routes: {
@@ -17,6 +20,6 @@ void main() {
         '/login': (context) => LoginScreen(),
         '/get_details': (context) => GetDetails(),
       },
-    ),
-  );
+    );
+  }
 }
