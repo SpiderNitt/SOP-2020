@@ -55,6 +55,10 @@ class MentorCustomDrawer extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => Mentor(token)),
               );
             }),
+            CustomListTile(Icons.pages, "Tasks", () async {
+              String token = await storage.read(key: "jwt");
+              Navigator.pushNamed(context, '/task', arguments: {'jwt': token});
+            }),
             CustomListTile(Icons.rate_review, "Reviews", () async {
               String token = await storage.read(key: "jwt");
               Navigator.pushNamed(context, '/review',
@@ -62,7 +66,6 @@ class MentorCustomDrawer extends StatelessWidget {
             }),
             CustomListTile(Icons.person_outline, "Change Github", () async {
               String token = await storage.read(key: "jwt");
-              print("Idhu Odddddudhu");
               Navigator.pushNamed(context, '/bio', arguments: {'jwt': token});
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
