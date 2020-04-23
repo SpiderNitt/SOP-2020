@@ -13,7 +13,7 @@ dynamic res;
   Home(this.jwt){
    this.res = tryParseJwt(this.jwt);
    this.name = this.res['username'];
-   this.gitacc = 'chakki1234';
+   this.gitacc = this.res['github_username'];
   }
 
   @override
@@ -29,6 +29,12 @@ String name, gitacc, jwt;
   @override
 
   Widget build(BuildContext context) {
+//      Map data = ModalRoute.of(context).settings.arguments;
+//      this.jwt = data['jwt'];
+//      this.res =  tryParseJwt(this.jwt);
+//      this.name = this.res['username'];
+//      this.gitacc = this.res['github_username'];
+//
     return Scaffold(
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,

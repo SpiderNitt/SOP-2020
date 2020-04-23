@@ -116,7 +116,8 @@ class _StatsState extends State<Stats> {
       itemBuilder: (context, index){
 
          if(snapshot.data.submission.length == 0)
-         return Text("No data found", style: TextStyle( color: config.fontColor, fontFamily: config.fontFamily ),);
+         return Center(
+           child:Text("No data found", style: TextStyle(fontSize: 20, color: config.fontColor, fontFamily: config.fontFamily ),));
 
          else 
          if(index == snapshot.data.submission.length)

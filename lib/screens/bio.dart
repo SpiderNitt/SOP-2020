@@ -162,7 +162,7 @@ class _BioState extends State<Bio> {
               onPressed: (){
             if(_formkey.currentState.validate())
                {
-                  post('https://spider.nitt.edu/inductions20test/api/mentee/usernameUpdate', 
+                  post('https://spider.nitt.edu/inductions20test/api/update_github_username', 
                   headers: {
                     HttpHeaders.authorizationHeader: 'Bearer ${this.jwt}'
                   },

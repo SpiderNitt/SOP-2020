@@ -19,7 +19,23 @@ class _MenteeTaskState extends State<MenteeTask> {
   @override
   Widget build(BuildContext context) {
    Map data = ModalRoute.of(context).settings.arguments;
- 
+    
+    if(data['git'] == '')
+    return Scaffold(
+      backgroundColor: config.bgColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        title: Text('Mentee Task'),
+        centerTitle: true,
+        backgroundColor: config.appbarcolor,
+      ),
+      body: Center(
+        child: Text('Mentee Github account not found',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor))),
+      bottomNavigationBar: NavigationBar(0, data['jwt']),
+    );
+    
+    else
     return DefaultTabController(
       length: 2,
       initialIndex: 0,

@@ -35,7 +35,7 @@ dynamic res;
 _MenDetState(this.name, this.gitacc);
   
   Future<Data> getdata() async{
-  Response resp = await get('https://api.github.com/users/chakki1234/repos');
+  Response resp = await get('https://api.github.com/users/${this.gitacc}/repos');
   if(resp.headers['status'] == '200 OK' || resp.headers['status'] == '304 Not Modified')
    return  Data(json.decode(resp.body));
   else 

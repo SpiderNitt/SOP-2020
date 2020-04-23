@@ -117,7 +117,7 @@ dynamic res;
           onTap: (){
             Navigator.pushNamed(context, '/menteetask', arguments: {
               'name': snapshot.data.menteenames[index]['mentee_name'],
-              'git': 'chakki1234',//snapshot.data.menteenames[index]['github_username']
+              'git':  snapshot.data.menteenames[index]['github_username'],
               'jwt': this.jwttoken,
               'menteeroll': snapshot.data.menteenames[index]['mentee_roll'],
             });
