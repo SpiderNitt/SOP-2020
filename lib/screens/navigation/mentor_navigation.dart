@@ -41,7 +41,7 @@ class MentorCustomDrawer extends StatelessWidget {
                   ),
                 ),
                 currentAccountPicture: Image(
-                  image: AssetImage("assets/images/spiderIcon.webp"),
+                  image: AssetImage("assets/images/spiderIcon.png"),
                 ),
                 decoration: BoxDecoration(
                   color: theme.tertiaryColor,
