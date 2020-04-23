@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:inductions_20/others/jwtparse.dart';
+import 'package:inductions_20/screens/mentor_home.dart';
 import 'dart:async';
 
 // Files imported
-import 'package:inductions_20/screens/login.dart';
 import 'package:inductions_20/theme/styling.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,9 +21,23 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      Duration(seconds: 3),
-      () {
-        Navigator.pushNamed(context, '/login');
+      Duration(seconds: 5),
+      () async {
+        dynamic storage = new FlutterSecureStorage();
+        var jwtToken = await storage.read(key: "jwt");
+        if (jwtToken == null)
+          Navigator.pushNamed(context, '/login');
+        else {
+          var res = tryParseJwt(jwtToken);
+          if (res["is_mentor"]) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Mentor(jwtToken)),
+            );
+          } else {
+            Navigator.pushNamed(context, '/mentee/');
+          }
+        }
       },
     );
   }
