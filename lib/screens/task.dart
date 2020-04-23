@@ -1,3 +1,4 @@
+import 'package:inductions_20/screens/data/task_description.dart';
 import 'package:inductions_20/screens/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/widgets/custom_graph.dart';
@@ -15,7 +16,7 @@ class TASK extends StatefulWidget{
   List task;
   TASK({this.task});
 
-  TASKState createState() => TASKState();
+  TASKState createState() => TASKState(task);
 
 
 }
@@ -23,22 +24,25 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
 
 
   var taskdes;
+  List res_desc=[];
+  List res_link=[];
+
   var submitbarcolor=theme.fontColor;
   var user;
   var basic_per = 1.0;
   var advance_per=0.30;
   var overall_per;
   var decoverall_per;
-  var view_count=56;
+  var sub_count=56;
   List task;
+  TASKState(this.task);
   var decbasic_per;
   var decadvance_per;
   var decbasic_barper;
   var decadvance_barper;
-   TextEditingController textEditingController;
-  List taskSubmitted=['https://github.com/thrishik7/ML-algos','https://github.com/thrishik7/Networking-Kss'];
- 
-   List<Tab> myTabs = <Tab>[
+  TextEditingController textEditingController;
+  List taskSubmitted=[];
+ List<Tab> myTabs = <Tab>[
     Tab(text: 'Description'),
     Tab(text: 'Progress'),
   ];
@@ -49,9 +53,11 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     
+    
     super.initState();
+   
       _tabController = TabController(
-      length: 2,
+      length: 2, 
       vsync: this,
       initialIndex: 0,
     )..addListener(() {
@@ -62,8 +68,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
            submitbarcolor=theme.fontColor;
         });
       });
-
-     this.myTabs = <Tab>[
+ this.myTabs = <Tab>[
     Tab(text: 'Description'),
     Tab(text: 'Progress'),
   ];
@@ -73,24 +78,26 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
    decbasic_per=this.basic_per*100;
    decadvance_per= this.advance_per*100;
 
+  task_desc();
+    
+    }
 
-    this.taskdes = "Description"; }
-  @override
+
+  Future<void> task_desc() async{
+  print('${task[1]}');
+  Task_details task_details= Task_details(task[1]);
+  await task_details.extractTaskDetails();
+  setState(() {
+    this.taskdes=task_details.task_description;
+    this.res_desc=task_details.task_resources_desc;
+    this.res_link=task_details.task_resources_link;
+    this.sub_count=task_details.no_submissions;
+   });
+  }  
+    @override
   void dispose() {
   _tabController.dispose();
   super.dispose();
-  }
-  createAlertDialog(BuildContext context){
-
-    TextEditingController customController = TextEditingController();
-    return showDialog(context: context, builder: (context){
-    return AlertDialog(
-          content:  TextField(
-          controller: customController,
-          ),
-
-      );
-    });
   }
   
   double bottombarwidth;
@@ -104,8 +111,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   double leftpaddingwidth;
   @override
   Widget build(BuildContext context) {
- 
-  final height = MediaQuery.of(context).size.height;
+
   final width = MediaQuery.of(context).size.width;
   if (width <= 350) {
      submitedlinkswidth=4*(width/5);
@@ -204,7 +210,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                 
                    Padding(padding: EdgeInsets.only(top:16, left:leftpaddingwidth, right: 0),
                    
-                   child:  Text("${view_count} submission",
+                   child:  Text("${sub_count} submission",
                    textAlign: TextAlign.center,
                    style: TextStyle(
                    fontWeight: FontWeight.bold,
@@ -243,7 +249,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
               children: myTabs.map((Tab tab){
               final String label = tab.text.toLowerCase();
               if(label!='progress')
-                  return Task_description(theme.primaryColor);
+                  return Task_description(theme.primaryColor,taskdes, res_link, res_desc);
               else {
         return ListView(
         children: <Widget>[

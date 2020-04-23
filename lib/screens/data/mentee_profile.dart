@@ -22,7 +22,7 @@ Future<void> ExtractResponse()async{
     'WEB'
   ];
  profnolist=[];
-  String jwt= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc2OTQ0NjYsImZ1bGxuYW1lIjoidGhyaXNoaWsgZ2F3ZCIsImdpdGh1Yl91c2VybmFtZSI6InRocmlzaGlrMTEwMTEiLCJpc19tZW50b3IiOmZhbHNlLCJyb2xsIjoiMTEwMTE4MDkyIiwidXNlcm5hbWUiOiJ0aHJpc2hpayBhbm5hIn0.iPt31uRT8zNBd1YC4ZAX2bCdDubGKvjMi8UhSgP5qAU";
+  String jwt= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc3NDIzMTcsImZ1bGxuYW1lIjoiVGhyaXNoaWsgU2VudGhpbGt1bWFyIiwiZ2l0aHViX3VzZXJuYW1lIjoidGhyaXNoaWs3IiwiaXNfbWVudG9yIjpmYWxzZSwicm9sbCI6IjExMDExODA5MiIsInVzZXJuYW1lIjoiVGhyaXNoaWsgU2VudGhpbGt1bWFyIn0.mGC_haK5mPRpt6eZ4C6DA3F0bmCgEyMTjoFvPTf6aOg";
   var res= tryParseJwt(jwt);
   var rollno= res["roll"];
   String url= "https://spider.nitt.edu/inductions20test/api/mentee/${rollno}/profile";
@@ -41,7 +41,7 @@ Future<void> ExtractResponse()async{
   int prof_id_no = parsedJson["profiles_ids_no"];
   for(int i=0; i<prof_id_no; i++ )
   {
-     proflist.add(_profiles[profids["$i"]]);
+     proflist.add(_profiles[profids["$i"]-1]);
      this.profnolist.add(profids["$i"]);
   }
    this.profilelist= proflist;
@@ -63,13 +63,14 @@ class Profile_task {
   String mentor_contact;
   
   List prof_task_title;
+  List taskno_list;
 
   Profile_task(this.profno);
   
  Future<void> tasks()async{
   
-  String jwt= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc2OTQ0NjYsImZ1bGxuYW1lIjoidGhyaXNoaWsgZ2F3ZCIsImdpdGh1Yl91c2VybmFtZSI6InRocmlzaGlrMTEwMTEiLCJpc19tZW50b3IiOmZhbHNlLCJyb2xsIjoiMTEwMTE4MDkyIiwidXNlcm5hbWUiOiJ0aHJpc2hpayBhbm5hIn0.iPt31uRT8zNBd1YC4ZAX2bCdDubGKvjMi8UhSgP5qAU";
-  String url= "https://spider.nitt.edu/inductions20test/api/profile/$profno/";
+  String jwt= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc3NDIzMTcsImZ1bGxuYW1lIjoiVGhyaXNoaWsgU2VudGhpbGt1bWFyIiwiZ2l0aHViX3VzZXJuYW1lIjoidGhyaXNoaWs3IiwiaXNfbWVudG9yIjpmYWxzZSwicm9sbCI6IjExMDExODA5MiIsInVzZXJuYW1lIjoiVGhyaXNoaWsgU2VudGhpbGt1bWFyIn0.mGC_haK5mPRpt6eZ4C6DA3F0bmCgEyMTjoFvPTf6aOg";
+  String url= "https://spider.nitt.edu/inductions20test/api/profile/$profno";
   Map<String, String> headers =  
   {   'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -82,12 +83,15 @@ class Profile_task {
   this.mentor_name=parsedJson["mentor_name"];
   this.mentor_contact=parsedJson["mentor_contact"];
   List return_task=[];
+  List task_no_list=[];
   int task_no= parsedJson["tasks_no"];
   for(int i=0; i<task_no; i++)
   {
     return_task.add(_tasks["$i"]["task_title"]);
+    task_no_list.add(_tasks["$i"]["task_id"]);
   }
   this.prof_task_title= return_task;
+  this.taskno_list= task_no_list;
   }
    else{
     print("failed to load");

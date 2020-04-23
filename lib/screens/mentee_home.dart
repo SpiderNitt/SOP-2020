@@ -51,8 +51,10 @@ class _MyHomePage extends State<homepage> {
    theme.primaryLightColor,
   theme.primaryLightColor,];
   List list = ["WEB", "APP", "ALGO", "TRONIX"];
-  List task_list=[];
-  List profile_no_list=[];
+  List task_list=["task1", "task2", "task3"];
+  List profile_no_list=[0,1,2,3];
+  List taskno_list=[];
+  var current_profile_no;
   
   var task="WEB";
   var user;
@@ -84,13 +86,13 @@ String url='https://api.github.com/users/';
    });
   
   Mentee_profile mentee_profile= Mentee_profile();
- await mentee_profile.ExtractResponse();
- setState(() {
+  await mentee_profile.ExtractResponse();
+  setState(() {
    
-   this.list=mentee_profile.profilelist;
+  this.list=mentee_profile.profilelist;
    this.profile_no_list= mentee_profile.profnolist;
    this.task=list[0];
-
+   this.current_profile_no= profile_no_list[0];
 
  });
 
@@ -98,6 +100,7 @@ String url='https://api.github.com/users/';
 await profile_task.tasks();
 setState(() {
   task_list= profile_task.prof_task_title;
+  taskno_list=profile_task.taskno_list;
 
 });
  
@@ -244,14 +247,17 @@ setState(() {
                                                clickcolor[j]= theme.tertiaryColor;
                                                else
                                                clickcolor[j]= theme.primaryLightColor;}
-                                               task=list[i];});
-
-
-                               Profile_task profile_task = Profile_task(profile_no_list[i]);
+                                               task=list[i];
+                                               current_profile_no=profile_no_list[i];
+                                               
+                                               });
+                                  
+                                     
+                             Profile_task profile_task = Profile_task(profile_no_list[i]);
                               await profile_task.tasks();
                               setState(() {
                                task_list= profile_task.prof_task_title;
-
+                               taskno_list=profile_task.taskno_list;
                                    });
                              },profilewidth,100,12,clickcolor[i],20,3,10),
                                           ], ),
@@ -263,7 +269,8 @@ setState(() {
                                         ),
                                    for(int i=0; i<task_list.length; i++)
                                    Custom_box(task_list[i],(){
-                                            List a=[task,i,this.user];
+                                            print(taskno_list[i]);
+                                            List a=[task,taskno_list[i],this.user];
                                             Navigator.push(context, 
                                             PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASK(task: a),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child){
