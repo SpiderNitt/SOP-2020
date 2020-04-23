@@ -251,19 +251,6 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
              padding: const EdgeInsets.all(0.0),
              child: Column(      
                     children: <Widget>[
-                    Padding(padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                           height: 30, 
-                           width: 370, 
-                           child: Material(
-                                  color: theme.primaryColor,
-                                  child: Row(
-                                         mainAxisAlignment: MainAxisAlignment.start,
-                                         crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                    Custom_box('Contact Thrishik ',(){},150,50,16,theme.primaryColor,0,0,0),
-                    Custom_box('(992993922)',(){ launch("tel://21213123");},95,50,16,theme.primaryColor,0,0,0),
-                    ],),), )),
                     Container(
                     margin:  const EdgeInsets.all( 10.0),
                     padding: const EdgeInsets.only(left:18.0),
@@ -288,17 +275,22 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           ),
           Custom_box('Submit',()async{  
                               var text = textEditingController.value.text;
+                               if(taskSubmitted.length>5)
+                               {
+                                     showAlertDialog(context,"submitted links should not be above 5");
+                               }
+                               else{
                                try {
-                              var response =
+                              var response = 
                                  await http.head(text);
                                       textEditingController.clear();
                                       setState(() {
                                       taskSubmitted.add(text);
                                });
                                 } catch (e) {
-                                         showAlertDialog(context);
+                                         showAlertDialog(context, "Invalid link");
                                   }
-                         
+                               }
                               },68,38,14,theme.tertiaryColor,10,3,10),
           Container(
           child: Column(
@@ -447,13 +439,13 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
         ), ),
     );
   }
-  showAlertDialog(BuildContext context) {
+  showAlertDialog(BuildContext context, text) {
 
 
  // set up the AlertDialog
  AlertDialog alert = AlertDialog(
     
-    content: Text("Enter a valid link"),
+    content: Text(text),
 
   );
 
