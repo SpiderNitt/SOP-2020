@@ -55,18 +55,17 @@ class _NavigationBarState extends State<NavigationBar> {
                         fontSize: 15,
                         fontFamily: config.fontFamily,
                         color: config.fontColor))),
-
-            // BottomNavigationBarItem(
-            // icon: Icon(Icons.event),
-            // title: Text('Task', style: TextStyle( fontSize: 15, fontFamily: config.fontFamily, color: config.fontColor))
-            // )
+            BottomNavigationBarItem(
+                icon: Icon(Icons.event),
+                title: Text('Task',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: config.fontFamily,
+                        color: config.fontColor)))
           ],
           onTap: (index) {
             if (index == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MentorHome("$jwt")),
-              );
+              Navigator.pushNamed(context, '/');
             }
             if (index == 2) {
               Navigator.pushNamed(context, '/bio',
@@ -76,11 +75,10 @@ class _NavigationBarState extends State<NavigationBar> {
               Navigator.pushNamed(context, '/review',
                   arguments: {'jwt': this.jwt});
             }
-            //  if (index == 3 ){
-            //   Navigator.pushNamed(context, '/task', arguments: {
-            //     'jwt': this.jwt
-            //   });
-            // }
+            if (index == 3) {
+              Navigator.pushNamed(context, '/task',
+                  arguments: {'jwt': this.jwt});
+            }
             setState(() {
               this.currindex = index;
             });
