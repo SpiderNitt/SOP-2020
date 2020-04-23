@@ -165,7 +165,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             appBar: AppBar(
                     leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
                              Navigator.push(context, 
-                             MaterialPageRoute(builder: (context) =>homepage(task[2]["login"])),);
+                             MaterialPageRoute(builder: (context) =>homepage()),);
                              },), 
                     title: Text('${task[0]} TASK ${task[1]}'),
                     backgroundColor: theme.blackColor ,

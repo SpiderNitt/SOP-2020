@@ -16,7 +16,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       initialRoute: '/mentee/',
       routes: {
-        '/mentee/': (context) => homepage("VishalS99"),
+        '/mentee/': (context) => homepage(),
         '/mentee/task/': (context) => TASK(),
         '/mentee/task_feedback/':(context)=> TASKfeedback(),
      //   '/mentee/announcement/':(context) => Announcement(),

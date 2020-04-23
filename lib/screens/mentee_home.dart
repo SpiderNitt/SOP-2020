@@ -6,28 +6,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:inductions_20/screens/widgets/custom_box.dart';
+import 'config/jwtparse.dart';
+import 'config/extractjwt.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
+
+
+
 //import 'mentee_navigation.dart';
+
+import 'package:inductions_20/screens/data/mentee_profile.dart';
 
 
 
 class homepage extends StatefulWidget{
 
+   String name, usernamee, jwt;
+   dynamic res;
+   homepage()
+   {
+    // this.jwt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODc2OTQ0NjYsImZ1bGxuYW1lIjoidGhyaXNoaWsgZ2F3ZCIsImdpdGh1Yl91c2VybmFtZSI6InRocmlzaGlrMTEwMTEiLCJpc19tZW50b3IiOmZhbHNlLCJyb2xsIjoiMTEwMTE4MDkyIiwidXNlcm5hbWUiOiJ0aHJpc2hpayBhbm5hIn0.iPt31uRT8zNBd1YC4ZAX2bCdDubGKvjMi8UhSgP5qAU";
+     //this.res= tryParseJwt(this.jwt);
+     //this.name= this.res['github_username'];
+     this.name="thrishik7";
+   }
 
-  var username;
-  homepage(this.username);  
+
   @override 
-  _MyHomePage createState() => _MyHomePage(username);
+  _MyHomePage createState() => _MyHomePage(this.name);
 }
 
 class _MyHomePage extends State<homepage> {
 
-var username;
-_MyHomePage(this.username);
-
-
-
-  List<Color> clickcolor=[theme.tertiaryColor,theme.primaryLightColor,theme.primaryLightColor,theme.primaryLightColor];
-  var list = ["WEB", "APP", "ALGO", "TRONIX"];
+  
+  String username;
+  _MyHomePage(this.username);
+  List<Color> clickcolor=[theme.tertiaryColor,
+  theme.primaryLightColor,
+  theme.primaryLightColor,
+  theme.primaryLightColor,
+   theme.primaryLightColor,
+  theme.primaryLightColor,
+   theme.primaryLightColor,
+  theme.primaryLightColor,];
+  List list = ["WEB", "APP", "ALGO", "TRONIX"];
+  List task_list=[];
+  List profile_no_list=[];
+  
   var task="WEB";
   var user;
   void initState() {
@@ -37,17 +63,45 @@ _MyHomePage(this.username);
      "avatar_url":" ",
      "login":" "
     };
-    makeRequest();
-    }
-  String url='https://api.github.com/users/'; 
+   makeRequest();
+ }
+  
 
+
+
+  
   Future<String> makeRequest() async{
+
+
+
+
+String url='https://api.github.com/users/'; 
   http.Response response =await http.get(Uri.encodeFull(url+username), 
   headers: {"Accept":"application/json"});
   var user1= await json.decode(response.body);
   setState(() {
     this.user= user1;
    });
+  
+  Mentee_profile mentee_profile= Mentee_profile();
+ await mentee_profile.ExtractResponse();
+ setState(() {
+   
+   this.list=mentee_profile.profilelist;
+   this.profile_no_list= mentee_profile.profnolist;
+   this.task=list[0];
+
+
+ });
+
+ Profile_task profile_task = Profile_task(profile_no_list[0]);
+await profile_task.tasks();
+setState(() {
+  task_list= profile_task.prof_task_title;
+
+});
+ 
+  
   }
   @override 
  
@@ -56,11 +110,6 @@ _MyHomePage(this.username);
   double profilewidth;
 
   Widget build(BuildContext context) {
-
-    var username= widget.username;
-
-
-
 
     final width = MediaQuery.of(context).size.width;
     if (width <= 400) {
@@ -97,19 +146,20 @@ _MyHomePage(this.username);
           ),
         margin: EdgeInsets.all(30),
         child: Column(children: <Widget>[
-        Row(mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-            Padding(
+     
+              Padding(
             padding: const EdgeInsets.only(top:15),
-            child: Column(
-                   children:<Widget>[
-                   Text('${this.user["name"]}',
+            child: Container(
+                   width: width,
+                   height: 40,
+                   child:Text('${this.user["name"]}',
+                   textAlign: TextAlign.center,
                    style: TextStyle(
+
                    fontSize: 30,
                    fontWeight: FontWeight.bold,
                    color: theme.fontColor),
-                    )] ) )],
+                     ))
            ),
         Row(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,14 +230,14 @@ _MyHomePage(this.username);
                                           decoration: boxDecoration,),),
                                    SizedBox(height: 50,),
                                    Container(
-                                   height: 70, 
+                                   height: 80, 
                                    width: 370, 
                                    color:theme.primaryColor,
                                    child: ListView(
                                           scrollDirection: Axis.horizontal ,
                                           children: <Widget>[
                                           for(int i=0; i<list.length; i++)
-                                          Custom_box(list[i],(){
+                                          Custom_box(list[i],() async{
                                           setState(() {
                                             for(int j=0; j<list.length; j++){
                                                if(j==i) 
@@ -195,7 +245,15 @@ _MyHomePage(this.username);
                                                else
                                                clickcolor[j]= theme.primaryLightColor;}
                                                task=list[i];});
-                                                },profilewidth,80,15,clickcolor[i],20,3,10),
+
+
+                               Profile_task profile_task = Profile_task(profile_no_list[i]);
+                              await profile_task.tasks();
+                              setState(() {
+                               task_list= profile_task.prof_task_title;
+
+                                   });
+                             },profilewidth,100,12,clickcolor[i],20,3,10),
                                           ], ),
                                     ),         
                                    new Divider(
@@ -203,8 +261,8 @@ _MyHomePage(this.username);
                                        height: 50,
                                        thickness: 3,
                                         ),
-                                   for(int i=0; i<4; i++)
-                                   Custom_box('${task} TASK ${i}',(){
+                                   for(int i=0; i<task_list.length; i++)
+                                   Custom_box(task_list[i],(){
                                             List a=[task,i,this.user];
                                             Navigator.push(context, 
                                             PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASK(task: a),
