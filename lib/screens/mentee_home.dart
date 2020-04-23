@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 import 'package:inductions_20/screens/task.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 
 class Custom_box extends StatelessWidget{
 

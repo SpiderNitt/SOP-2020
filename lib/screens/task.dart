@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:inductions_20/screens/feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 import 'package:inductions_20/screens/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/task_description.dart';
 import 'package:inductions_20/screens/data/mentee_progress.dart';
@@ -56,12 +56,13 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   var recent_time;
   var recent_date;
   Map  feedbacks={};
+  List taskSubmitted;
   var mentorname;
   var mentorcontact;
   int hr=0, min=0, sec=0;
   TextEditingController textEditingController, textEditingController1;
   
-  List taskSubmitted=[];
+  
  List<Tab> myTabs = <Tab>[
     Tab(text: 'Description'),
     Tab(text: 'Progress'),
@@ -98,7 +99,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
    this.decoverall_per=this.overall_per*100 ;
    decbasic_per=this.basic_per*100;
    decadvance_per= this.advance_per*100;
-
+   taskSubmitted=[];
    task_desc();
     
     }
@@ -128,21 +129,30 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   feed_time=mentee_progress.recent_feedback;
   feedbacks=mentee_progress.previous_feedbacks;
   print(feedbacks);
-  if(feedbacks!={}){
+  if(feed_time!="5:30"){
+
     String date=  feed_time.substring(0, 10);
-    hr =int.parse(feed_time.substring(11,13))-12+5;
+    hr =int.parse(feed_time.substring(11,13))+5;
     min =int.parse(feed_time.substring(14,16))+30;
     sec= int.parse(feed_time.substring(17,19));
   if(min>=60)
   { hr++;
     min=min-60;
    }
+   if(hr>=24)
+   {
+     hr= hr-24;
+   }
+
 
    this.recent_date=date;
 
    this.recent_time="$hr:$min:$sec";
   
 
+  }
+  else{
+   String date="2020-04-24T09:27:01+05:30";
   }
    this.taskSubmitted= mentee_progress.submitted_links;
    this.overall_per=((this.basic_per+ this.advance_per)/2);
@@ -256,7 +266,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             child: ListView(
             children: <Widget>[
             Padding(padding: const EdgeInsets.only(bottom:0),),
-            Circular_percentage(48, 8, this.overall_per, Text("$decoverall_per"), theme.advancetaskColor),
+            Circular_percentage(48, 8, this.overall_per, Text("${decoverall_per.toStringAsFixed(0)}"), theme.advancetaskColor),
             ]
             )
             ): null,
@@ -291,7 +301,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                    Custom_box('Submit',(){
                    _tabController.animateTo((_tabController.index+1));
                    double width = MediaQuery.of(context).size.width;
-                   print(width);
+                   print(feed_time);
                    },bottombarwidth,50,15,theme.blackColor,15,0,0),
                 
            ] ),), ),  
@@ -494,7 +504,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     Padding(padding: const EdgeInsets.only(bottom:40),),
 
     Circular_percentage(180.0,15.0, this.advance_per, 
-            Circular_percentage(130.0, 15.0,this.basic_per,Text("$decoverall_per", style: TextStyle(color: theme.fontColor),),theme.tertiaryColor)
+            Circular_percentage(130.0, 15.0,this.basic_per,Text("${decoverall_per.toStringAsFixed(0)} %", style: TextStyle(color: theme.fontColor),),theme.tertiaryColor)
             , theme.advancetaskColor),
     Container(
     margin: const EdgeInsets.only(bottom:20, top:20,left:10, right: 10),

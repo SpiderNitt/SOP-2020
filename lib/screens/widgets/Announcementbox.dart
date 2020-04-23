@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'custom_box.dart';
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 
 
 class Announcementbox extends StatelessWidget{

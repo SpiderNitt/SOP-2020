@@ -14,7 +14,7 @@ void main() {
     MaterialApp(
       title: 'Spider Orientation',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/mentee/',
+      initialRoute: '/mentee/announcement/',
       routes: {
         '/mentee/': (context) => homepage(),
         '/mentee/task/': (context) => TASK(),

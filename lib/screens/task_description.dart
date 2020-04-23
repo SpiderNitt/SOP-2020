@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 import 'package:inductions_20/screens/widgets/custom_box.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:inductions_20/screens/data/task_description.dart';

@@ -39,8 +39,8 @@ Mentee_progress(this.task_no);
    int no_links= submissions["$sub_no"]["submission_links_no"];
    Map submission_links={};
    previous_feedbacks={};
-   submission_links= jsonDecode(submissions["$sub_no"]["submission_links"]);
-  
+   var submlinks= submissions["$sub_no"]["submission_links"];
+   submission_links=jsonDecode(submlinks);
 
    submitted_links=[];
    for (int i=0; i<no_links; i++)
@@ -51,11 +51,12 @@ Mentee_progress(this.task_no);
    var feed_time=" ";
    for(int i=0; i<=sub_no; i++)
    {
-     if(submissions["$i"]["is_reviewed"]==false)
+     if(submissions["$i"]["is_reviewed"]==true)
     {  
      feed_time= submissions["$i"]["feedback_date_time"];
       this.previous_feedbacks["${feed_time}"]=submissions["$i"]["feedback"];
-       
+     this.basic_per=submissions["$i"]["basic_task_percent"];
+     this.advance_per=submissions["$i"]["advanced_task_percent"];
     }   
    }
     

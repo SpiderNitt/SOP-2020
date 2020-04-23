@@ -1,5 +1,5 @@
 
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 import 'package:inductions_20/screens/data/mentee_profile.dart';
 import 'package:inductions_20/screens/task.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ feedback.forEach((k,v){
   _messages.add("$v");
   String date1= "$k".substring(0, 10);
 
-  int hr =int.parse("$k".substring(11,13))-12+5;
+  int hr =int.parse("$k".substring(11,13))+5;
    int min =int.parse("$k".substring(14,16))+30;
    int sec= int.parse("$k".substring(17,19));
   if(min>=60)

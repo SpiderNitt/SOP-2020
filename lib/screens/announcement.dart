@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/theme/styling.dart';
 import 'package:inductions_20/screens/widgets/Announcementbox.dart';
 import 'package:inductions_20/screens/data/announcement.dart';
 //import 'package:inductions_20/screens/widgets/mentee_navigation.dart';
@@ -35,7 +35,7 @@ Future<void>get_announcement() async{
   _messages.add("$v");
   String date1= "$k".substring(0, 10);
 
-  int hr =int.parse("$k".substring(11,13))-12+5;
+  int hr =int.parse("$k".substring(11,13))+5;
    int min =int.parse("$k".substring(14,16))+30;
    int sec= int.parse("$k".substring(17,19));
   if(min>=60)
