@@ -39,8 +39,8 @@ class _TasklistState extends State<Tasklist> {
         backgroundColor: config.appbarcolor,
       ),
       body: SingleChildScrollView(
-        
-        child: FutureBuilder(
+        child: Container(
+          child: FutureBuilder(
           future: get('https://spider.nitt.edu/inductions20test/api/mentor/${this.roll}/profile', 
           headers: {
             HttpHeaders.authorizationHeader : 'Bearer ${this.jwt}'
@@ -64,6 +64,7 @@ class _TasklistState extends State<Tasklist> {
              else return Center(
                child: CircularProgressIndicator());
           }),
+        ),
         ),
       bottomNavigationBar: NavigationBar(0,this.jwt),
     );
