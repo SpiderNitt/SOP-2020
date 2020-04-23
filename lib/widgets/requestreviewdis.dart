@@ -17,16 +17,16 @@ class Data{
     List<Map> temp = [];
    for(int i = 0; i < res["review_list"].length; ++i){
      temp.add({
-           "menteename": res['review_list']['$i']['mentee_name'],
+           "menteename": res['review_list']['$i']["mentee_name"],
            "title": res['review_list']['$i']["task_title"],
-           "link": jsonDecode(res['review_list']['$i']["submission_links"]),
+           "link": (res['review_list']['$i']["submission_links"] == "") ? {"0" : 'No links'} : jsonDecode(res['review_list']['$i']["submission_links"]),
            'des':  res['review_list']['$i']["submission_description"],
            'id':  res['review_list']['$i']["submission_id"],
            'rflag': res['review_list']['$i']["is_reviewed"]
      });
    }
-    
     return Data(temp);
+    
   }
 
   Data.for500(){
@@ -72,7 +72,6 @@ class _RequestlistState extends State<Requestlist> {
      HttpHeaders.authorizationHeader: 'Bearer ${this.jwt}'
      } 
    );
-
    if(resp.headers['status'] == '500')
    return  Data.for500();
   else if(resp.headers['status'] == '403')
@@ -245,11 +244,11 @@ return notreview;
           }    
    }
 
-      else if(snapshot.hasError)
+      else if(snapshot.hasError){
       return Center(
       child: Text("${snapshot.error}", style: TextStyle(color: config.fontColor),)
       );
-         
+      }   
       else return  Center(
           child: CircularProgressIndicator(),
         );

@@ -66,7 +66,7 @@ class _TasklistState extends State<Tasklist> {
           }),
         ),
         ),
-      bottomNavigationBar: NavigationBar(0,this.jwt),
+      bottomNavigationBar: NavigationBar(3,this.jwt),
     );
   }
 }
