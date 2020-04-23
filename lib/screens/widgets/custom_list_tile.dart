@@ -3,7 +3,7 @@ import 'package:inductions_20/theme/styling.dart';
 
 class CustomListTile extends StatelessWidget {
   final IconData _icon;
-  final String _text;
+  final dynamic _text;
   final Function _onTap;
 
   CustomListTile(this._icon, this._text, this._onTap);
@@ -13,7 +13,10 @@ class CustomListTile extends StatelessWidget {
     return Material(
       color: theme.primaryColor,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          _onTap();
+          Navigator.pop(context);
+        },
         focusColor: theme.primaryColor,
         highlightColor: theme.primaryColor,
         splashColor: theme.tertiaryColor.withOpacity(0.5),

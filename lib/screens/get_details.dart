@@ -9,6 +9,8 @@ import 'package:inductions_20/screens/widgets/custom_button.dart';
 import 'package:inductions_20/screens/widgets/custom_input.dart';
 import 'package:inductions_20/theme/styling.dart';
 
+import 'mentor_home.dart';
+
 class GetDetails extends StatefulWidget {
   @override
   ViewState createState() => ViewState();
@@ -168,8 +170,12 @@ class ViewState extends State<GetDetails> {
                                         },
                                       );
                                       if (payloadMap["is_mentor"]) {
-                                        Navigator.pushNamed(context, '/',
-                                            arguments: {'jwt': "$token"});
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Mentor("$token")),
+                                        );
                                       } else {
                                         Navigator.pushNamed(
                                             context, '/mentee/');

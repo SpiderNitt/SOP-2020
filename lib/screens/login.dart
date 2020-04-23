@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
+import 'package:inductions_20/screens/mentor_home.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -218,9 +219,12 @@ class LoginViewState extends State<LoginScreen> {
                                           context, '/get_details');
                                     } else {
                                       if (payloadMap["is_mentor"]) {
-                                        Navigator.pushNamed(
-                                            context, '/splash_screen',
-                                            arguments: {'jwt': "$token"});
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Mentor("$token")),
+                                        );
                                       } else {
                                         Navigator.pushNamed(
                                             context, '/mentee/');
