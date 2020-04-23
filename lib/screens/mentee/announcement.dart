@@ -3,8 +3,11 @@ import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/widgets/Announcementbox.dart';
 import 'package:inductions_20/screens/mentee/data/announcement.dart';
 import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
-import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
 
+import 'config/jwtparse.dart';
+import 'config/extractjwt.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Announcement extends StatefulWidget{
 
@@ -16,6 +19,14 @@ AnnouncementState createState() => AnnouncementState();
 }
 class AnnouncementState extends State<Announcement> with SingleTickerProviderStateMixin {
 
+var username;
+var name;
+var url;
+var user={
+     "name": "loading..",
+     "avatar_url":" ",
+     "login":"loading.."
+    };
 List _messages=[];
 List date=[];
 List time=[];
@@ -50,7 +61,22 @@ Future<void>get_announcement() async{
   
     });
 
-    
+
+      ProvideJwt provideJwt =ProvideJwt(); 
+      await  provideJwt.extractjwt();
+      var jwt= provideJwt.jwt;
+      var res= tryParseJwt(jwt);
+
+
+  
+   String url='https://api.github.com/users/'; 
+  http.Response response =await http.get(Uri.encodeFull(url+username), 
+  headers: {"Accept":"application/json"});
+  var user1= await json.decode(response.body);
+  setState(() {
+    this.user= user1;
+   });
+
 }
 
 
@@ -72,7 +98,8 @@ Future<void>get_announcement() async{
       debugShowCheckedModeBanner: false,
       home: Scaffold(
          backgroundColor:theme.primaryColor,
-      //    drawer: MenteeCustomDrawer() ,
+      drawer: MenteeCustomDrawer('${this.user["name"]}', username,'${this.user["avatar_url"]}') ,
+    
      
         appBar: AppBar(
         title: Text('''Announcement'''),

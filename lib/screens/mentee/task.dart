@@ -136,7 +136,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     min =int.parse(feed_time.substring(14,16))+30;
     sec= int.parse(feed_time.substring(17,19));
   if(min>=60)
-  { hr++;
+  { hr++; 
     min=min-60;
    }
    if(hr>=24)

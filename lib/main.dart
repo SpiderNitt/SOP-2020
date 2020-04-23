@@ -34,7 +34,6 @@ class Spider extends StatelessWidget {
         '/review': (context) => Request(),
         '/task': (context) => Tasklist(),
         '/mentee/': (context) => homepage(),
-        '/mentee/task/': (context) => TASK(),
         '/mentee/announcement/':(context) => Announcement(),
       
       },
