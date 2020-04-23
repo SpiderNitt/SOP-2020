@@ -20,8 +20,9 @@ class Data{
            "menteename": res['review_list']['$i']['mentee_name'],
            "title": res['review_list']['$i']["task_title"],
            "link": jsonDecode(res['review_list']['$i']["submission_links"]),
-           'des':  res['review_list']['$i'][ "submission_description"],
-           'id':  res['review_list']['$i'][ "submission_id"]
+           'des':  res['review_list']['$i']["submission_description"],
+           'id':  res['review_list']['$i']["submission_id"],
+           'rflag': res['review_list']['$i']["is_reviewed"]
      });
    }
     
@@ -90,12 +91,17 @@ class _RequestlistState extends State<Requestlist> {
 Widget submitlinks(dynamic checklinks, dynamic cont){
   
   List<Widget> tempstore = [Text('Repo Links', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.fontColor))];
+
   for(int j = 0; j< checklinks['link'].length; ++j){
      tempstore.add( Text(checklinks['link']['$j'],  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.links)),);
      tempstore.add(SizedBox(
                     height:5,
                   ));
       }
+      
+     if(checklinks['rflag'] == true)
+     tempstore.add( Text('Reviewed', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.success)));
+     else{
      tempstore.add( Text('Not reviewed', softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.danger)));
      tempstore.add(FlatButton(
                   onPressed: (){
@@ -107,6 +113,7 @@ Widget submitlinks(dynamic checklinks, dynamic cont){
           }, 
          child: Text('Write a review', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
          ));
+     }
      return Column(
          crossAxisAlignment: CrossAxisAlignment.start,
         children: tempstore,
@@ -151,21 +158,26 @@ Widget filter(dynamic contst, dynamic item){
 
 List<Widget> listmaker(dynamic contxt){
 
-List<Widget> finallist = [];
+List<Widget> notreview = [], reviewed = [];
 
 this.resultobt.forEach((element){
 
-  if(element['menteename'].contains(this.searchword) || this.searchword == '')
-    finallist.add(filter(contxt, element));
-  
-
+  if(element['menteename'].contains(this.searchword) || this.searchword == ''){
+    if(element['rflag'] == true)    
+    reviewed.add(filter(contxt, element));
+    else
+    notreview.add(filter(contxt, element));
+  }
 });
-if(finallist.length == 0)
-finallist.add(Center(
+
+notreview.addAll(reviewed);
+
+if(notreview.length == 0)
+notreview.add(Center(
       child: Text("No matching results", style: TextStyle(color: config.fontColor, fontSize: 20,  fontFamily: config.fontFamily))
       )); 
 
-return finallist;
+return notreview;
 }
 
   @override
