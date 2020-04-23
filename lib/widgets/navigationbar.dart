@@ -3,12 +3,12 @@ import 'package:inductions_20/screens/mentor_home.dart';
 import '../others/config.dart';
 
 class NavigationBar extends StatefulWidget {
-  @override
-  int value;
-  String jwt;
+  final int value;
+  final String jwt;
 
   NavigationBar(this.value, this.jwt);
 
+  @override
   _NavigationBarState createState() =>
       _NavigationBarState(this.value, this.jwt);
 }

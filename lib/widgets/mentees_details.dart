@@ -36,7 +36,7 @@ class Data {
 }
 
 class MenteeDet extends StatefulWidget {
-  String jwttoken;
+  final String jwttoken;
   MenteeDet(this.jwttoken);
 
   @override

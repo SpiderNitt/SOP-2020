@@ -40,12 +40,9 @@ class MentorCustomDrawer extends StatelessWidget {
                     color: theme.primaryColor,
                   ),
                 ),
-                // currentAccountPicture: CircleAvatar(
-                //   backgroundImage: NetworkImage(
-                //     _url,
-                //   ),
-                //   backgroundColor: theme.fontColor,
-                // ),
+                currentAccountPicture: Image(
+                  image: AssetImage("assets/images/spiderIcon.webp"),
+                ),
                 decoration: BoxDecoration(
                   color: theme.tertiaryColor,
                 ),

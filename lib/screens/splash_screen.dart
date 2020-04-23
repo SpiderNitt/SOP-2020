@@ -25,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () async {
         dynamic storage = new FlutterSecureStorage();
         var jwtToken = await storage.read(key: "jwt");
+        print(jwtToken);
         if (jwtToken == null)
           Navigator.pushNamed(context, '/login');
         else {

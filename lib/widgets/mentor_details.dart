@@ -4,12 +4,12 @@ import 'package:http/http.dart';
 import 'dart:convert';
 
 class Data {
-  String gitacc, avatar_url, errormsg;
+  String gitacc, avatarUrl, errormsg;
   dynamic status;
 
   Data(List json) {
     this.gitacc = json[0]['owner']['login'];
-    this.avatar_url = json[0]['owner']['avatar_url'];
+    this.avatarUrl = json[0]['owner']['avatar_url'];
     this.status = '200 OK';
   }
 
@@ -17,7 +17,7 @@ class Data {
 }
 
 class MenDet extends StatefulWidget {
-  String name, gitacc;
+  final String name, gitacc;
 
   MenDet(this.name, this.gitacc);
 
@@ -65,7 +65,7 @@ class _MenDetState extends State<MenDet> {
                         shape: BoxShape.circle,
                       ),
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(snapshot.data.avatar_url),
+                        backgroundImage: NetworkImage(snapshot.data.avatarUrl),
                         radius: 60.0,
                       ),
                     ),
