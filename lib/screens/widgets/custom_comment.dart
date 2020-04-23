@@ -7,10 +7,12 @@ class Comment_box extends StatelessWidget{
 final String _text;
 final _backgroundColor;
 final _textcolor;
+final _date;
+final _time;
 final double _width;
 final _username;
 
-Comment_box(this._text, this._backgroundColor, this._textcolor,this._width, this._username);
+Comment_box(this._text, this._backgroundColor, this._textcolor,this._width, this._username, this._date, this._time);
 
 Widget build(BuildContext context) {
   return  Container(
@@ -35,7 +37,7 @@ Widget build(BuildContext context) {
                       style: TextStyle(color: _textcolor),),
                       Padding(
                         padding: EdgeInsets.only(top:5),
-                      child:Text('12/3/2019 5:30pm', 
+                      child:Text('${_date} ${_time}', 
                       style: TextStyle(fontSize:10,fontWeight: FontWeight.bold,color: _textcolor),),
                       )]
                       )

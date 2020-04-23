@@ -11,6 +11,7 @@ import 'package:flutter/rendering.dart';
 import 'package:inductions_20/Themes/styling.dart';
 import 'package:inductions_20/screens/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/task_description.dart';
+import 'package:inductions_20/screens/data/mentee_progress.dart';
 class TASK extends StatefulWidget{
   
   List task;
@@ -40,6 +41,12 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   var decadvance_per;
   var decbasic_barper;
   var decadvance_barper;
+  var feed_time="5:30";
+  var recent_time;
+  var recent_date;
+  Map  feedbacks={
+    "5:30":"you got to change this"
+  };
   TextEditingController textEditingController;
   List taskSubmitted=[];
  List<Tab> myTabs = <Tab>[
@@ -78,21 +85,59 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
    decbasic_per=this.basic_per*100;
    decadvance_per= this.advance_per*100;
 
-  task_desc();
+   task_desc();
     
     }
 
 
   Future<void> task_desc() async{
-  print('${task[1]}');
+  
   Task_details task_details= Task_details(task[1]);
   await task_details.extractTaskDetails();
   setState(() {
+    
     this.taskdes=task_details.task_description;
     this.res_desc=task_details.task_resources_desc;
     this.res_link=task_details.task_resources_link;
     this.sub_count=task_details.no_submissions;
    });
+
+  Mentee_progress mentee_progress = Mentee_progress(task[1]);
+
+  await mentee_progress.extractProgressDetails();
+
+  setState(() {
+       
+
+  basic_per=mentee_progress.basic_per/100;
+  advance_per= mentee_progress.advance_per/100;
+  feed_time=mentee_progress.recent_feedback;
+  feedbacks=mentee_progress.previous_feedbacks;
+
+  String date=  feed_time.substring(0, 10);
+
+   int hr =int.parse(feed_time.substring(11,13))-12+5;
+   int min =int.parse(feed_time.substring(14,16))+30;
+   int sec= int.parse(feed_time.substring(17,19));
+  if(min>=60)
+  { hr++;
+    min=min-60;
+   }
+
+   this.recent_date=date;
+
+   this.recent_time="$hr:$min:$sec";
+  this.taskSubmitted= mentee_progress.submitted_links;
+
+   this.overall_per=((this.basic_per+ this.advance_per)/2);
+   this.decoverall_per=this.overall_per*100 ;
+   decbasic_per=this.basic_per*100;
+   decadvance_per= this.advance_per*100;
+
+  });
+
+
+
   }  
     @override
   void dispose() {
@@ -173,7 +218,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                              Navigator.push(context, 
                              MaterialPageRoute(builder: (context) =>homepage()),);
                              },), 
-                    title: Text('${task[0]} TASK ${task[1]}'),
+                    title: Text('${task[0]}'),
                     backgroundColor: theme.blackColor ,
                     bottom: TabBar(
                     controller: _tabController,
@@ -342,10 +387,11 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
             ),
             Padding(padding: const EdgeInsets.only(left:12.0),
             child: CustomPaint(painter: Triangle(),)),
-            Comment_box('''you got to change some features,  add extra features and commit''', theme.tertiaryColor,theme.fontColor, commentwidth,'''Thrishk'''),
+            Comment_box('''${feedbacks[feed_time]}''', theme.tertiaryColor,theme.fontColor, commentwidth,'''Thrishk''','''$recent_date''','''$recent_time'''),
             ]),
             Custom_box('Previous feedbacks',(){
                             List a=task;
+                            a.add(feedbacks);
                             Navigator.push(context, 
                             PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKfeedback(task: a),
                             transitionsBuilder: (context, animation, secondaryAnimation, child){

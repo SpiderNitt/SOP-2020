@@ -143,7 +143,7 @@ ScrollController scrollController;
                 );
                 
                 var messagebody = 
-                Comment_box(_messages[index], theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''');
+                Comment_box(_messages[index], theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''',''' 12/3/2020''','''5:30pm ''');
              
 
                 Widget message;

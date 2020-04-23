@@ -9,16 +9,19 @@ class TASKfeedback extends StatefulWidget{
   List task;
   TASKfeedback({this.task});
 
-  TASKfeedbackState createState() => TASKfeedbackState();
+  TASKfeedbackState createState() => TASKfeedbackState(task);
 
 
 }
 class TASKfeedbackState extends State<TASKfeedback> with SingleTickerProviderStateMixin {
 
 
-  var taskdes;
- var task; 
- List<String> _messages;
+var taskdes;
+List task;
+TASKfeedbackState(this.task);
+List<String> _messages;
+List<String> date;
+List<String> time;
 TextEditingController textEditingController;
 ScrollController scrollController;
  
@@ -26,10 +29,26 @@ ScrollController scrollController;
   @override
   void initState() {
      _messages = List<String>();
-    _messages.add("change your name");
-        _messages.add("saniod adhajbdc eazkjsbnck");
-            _messages.add("change your namesa sdhvui sdbvjshd jkdsbnc \n dncjds");
-            
+     time= List<String>();
+     date=List<String>();
+     
+   task[3].forEach((k,v){
+     _messages.add("$v");
+  String date1= "$k".substring(0, 10);
+
+  int hr =int.parse("$k".substring(11,13))-12+5;
+   int min =int.parse("$k".substring(14,16))+30;
+   int sec= int.parse("$k".substring(17,19));
+  if(min>=60)
+  { hr++;
+    min=min-60;
+   }
+   date.add(date1);
+   time.add("$hr:$min:$sec");
+
+  
+    });
+     
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
@@ -83,7 +102,7 @@ ScrollController scrollController;
                   painter: Triangle(),
                 );
 
-                var messagebody = Comment_box(_messages[index],theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''');
+                var messagebody = Comment_box(_messages[index],theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''',date[index],time[index]);
                 Widget message;
 
 
