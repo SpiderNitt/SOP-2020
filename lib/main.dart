@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/Taskdetails.dart';
 import './screens/review.dart';
 import './screens/bio.dart';
 import './screens/commitsfinal.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       '/writereview' : (context) => Review(),
       '/bio' : (context)=> Bio(),
       '/commits': (context)=> CommitsFinal(),
-      '/review': (context) => Request() 
+      '/review': (context) => Request(),
+      '/task': (context) => Tasklist()
     },
   );
   }

@@ -139,7 +139,7 @@ dynamic res;
     );
          }
       else if(snapshot.hasError){
-        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor ),);
+        return Text("${snapshot.error}", style: TextStyle( color: config.fontColor, fontSize: 20, fontFamily: config.fontFamily ),);
       }
          else return CircularProgressIndicator();
 

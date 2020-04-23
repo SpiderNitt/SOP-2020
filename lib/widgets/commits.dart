@@ -44,7 +44,7 @@ class _CommitsState extends State<Commits> {
   _CommitsState(this.repo_det, this.gitacc);
 
   Future<Data> getdata() async{
-  Response resp = await get('https://api.github.com/repos/chakki1234/$repo_det/commits');
+  Response resp = await get('https://api.github.com/repos/${this.gitacc}/$repo_det/commits');
 
   if(resp.headers['status'] == '200 OK' || resp.headers['status'] == '304 Not Modified')
   return Data.getdata(jsonDecode(resp.body));
