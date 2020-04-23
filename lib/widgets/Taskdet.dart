@@ -57,7 +57,7 @@ List<dynamic> profiles;
                              SizedBox(
                                height: 5
                              ),
-                         Text(temp['tasks']['$j']['task_title'],  style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.success)),
+                         Text(temp['tasks']['$j']['task_title'],  style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.head)),
                            SizedBox(
                                height: 10
                              ),
