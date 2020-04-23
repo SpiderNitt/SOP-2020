@@ -101,7 +101,7 @@ await profile_task.tasks();
 setState(() {
   task_list= profile_task.prof_task_title;
   taskno_list=profile_task.taskno_list;
-
+  
 });
  
   
@@ -249,16 +249,18 @@ setState(() {
                                                clickcolor[j]= theme.primaryLightColor;}
                                                task=list[i];
                                                current_profile_no=profile_no_list[i];
-                                               
+                                            
                                                });
                                   
                                      
                              Profile_task profile_task = Profile_task(profile_no_list[i]);
                               await profile_task.tasks();
                               setState(() {
-                               task_list= profile_task.prof_task_title;
-                               taskno_list=profile_task.taskno_list;
+                                   task_list= profile_task.prof_task_title;
+                                   taskno_list=profile_task.taskno_list;
+                                  
                                    });
+                                   
                              },profilewidth,100,12,clickcolor[i],20,3,10),
                                           ], ),
                                     ),         
@@ -270,7 +272,7 @@ setState(() {
                                    for(int i=0; i<task_list.length; i++)
                                    Custom_box(task_list[i],(){
                                             print(taskno_list[i]);
-                                            List a=[task,taskno_list[i],this.user];
+                                            List a=[task,taskno_list[i],this.user,current_profile_no];
                                             Navigator.push(context, 
                                             PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASK(task: a),
                                             transitionsBuilder: (context, animation, secondaryAnimation, child){

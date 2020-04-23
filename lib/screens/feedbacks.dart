@@ -1,15 +1,19 @@
 
 import 'package:inductions_20/Themes/styling.dart';
+import 'package:inductions_20/screens/data/mentee_profile.dart';
 import 'package:inductions_20/screens/task.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/widgets/custom_comment.dart';
 
 class TASKfeedback extends StatefulWidget{
   
-  List task;
-  TASKfeedback({this.task});
+  Map feedback;
+  var taskname;
+  var mentorname;
+  
+  TASKfeedback(this.feedback, this.taskname, this.mentorname);
 
-  TASKfeedbackState createState() => TASKfeedbackState(task);
+  TASKfeedbackState createState() => TASKfeedbackState(feedback, taskname, mentorname);
 
 
 }
@@ -17,23 +21,28 @@ class TASKfeedbackState extends State<TASKfeedback> with SingleTickerProviderSta
 
 
 var taskdes;
-List task;
-TASKfeedbackState(this.task);
-List<String> _messages;
-List<String> date;
-List<String> time;
+
+var taskname;
+Map feedback;
+var mentorname;
+TASKfeedbackState(this.feedback, this.taskname, this.mentorname);
+List _messages=[];
+List date=[];
+List time=[];
 TextEditingController textEditingController;
 ScrollController scrollController;
  
   bool enableButton = false;
   @override
   void initState() {
-     _messages = List<String>();
-     time= List<String>();
-     date=List<String>();
-     
-   task[3].forEach((k,v){
-     _messages.add("$v");
+    
+
+
+
+
+
+feedback.forEach((k,v){
+  _messages.add("$v");
   String date1= "$k".substring(0, 10);
 
   int hr =int.parse("$k".substring(11,13))-12+5;
@@ -65,19 +74,15 @@ ScrollController scrollController;
    commentwidth=230;} else if (width <= 900) {
    commentwidth=290;} else {
    commentwidth=390;}  
-    task= widget.task;
+   
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
          backgroundColor: theme.primaryColor,
         appBar: AppBar(
 
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
-               Navigator.push(context, 
-              MaterialPageRoute(builder: (context) =>TASK(task: task)),);
-                 
-        },), 
-        title: Text('${task[0]} TASK ${task[1]}'),
+
+        title: Text('${taskname}'),
         
         backgroundColor: theme.blackColor ,
         ),
@@ -94,7 +99,7 @@ ScrollController scrollController;
                   padding:
                       const EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
                   child: CircleAvatar(
-                    child: Text("A"),
+                    child: Text("${mentorname[0]}"),
                   ),
                 );
 
@@ -102,7 +107,7 @@ ScrollController scrollController;
                   painter: Triangle(),
                 );
 
-                var messagebody = Comment_box(_messages[index],theme.tertiaryColor,theme.blackColor,commentwidth,'''Thrishik''',date[index],time[index]);
+                var messagebody = Comment_box(_messages[index],theme.tertiaryColor,theme.blackColor,commentwidth,'''$mentorname''',date[index],time[index]);
                 Widget message;
 
 

@@ -1,4 +1,5 @@
 import 'package:inductions_20/screens/data/task_description.dart';
+import 'package:inductions_20/screens/data/mentee_profile.dart';
 import 'package:inductions_20/screens/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/widgets/custom_graph.dart';
@@ -30,8 +31,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
 
   var submitbarcolor=theme.fontColor;
   var user;
-  var basic_per = 1.0;
-  var advance_per=0.30;
+  var basic_per = 0.0;
+  var advance_per=0.0;
   var overall_per;
   var decoverall_per;
   var sub_count=56;
@@ -47,6 +48,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
   Map  feedbacks={
     "5:30":"you got to change this"
   };
+  var mentorname;
+  var mentorcontact;
   TextEditingController textEditingController;
   List taskSubmitted=[];
  List<Tab> myTabs = <Tab>[
@@ -135,6 +138,16 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
    decadvance_per= this.advance_per*100;
 
   });
+
+
+   Mentor_details mentor_details = Mentor_details(task[3]);
+   await mentor_details.mentor_extract();
+   
+   setState(() {
+     this.mentorname= mentor_details.mentor_name;
+     this.mentorcontact= mentor_details.mentor_contact; 
+       });
+
 
 
 
@@ -294,7 +307,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
               children: myTabs.map((Tab tab){
               final String label = tab.text.toLowerCase();
               if(label!='progress')
-                  return Task_description(theme.primaryColor,taskdes, res_link, res_desc);
+                  return Task_description(theme.primaryColor,taskdes, res_link, res_desc, mentorname, mentorcontact);
               else {
         return ListView(
         children: <Widget>[
@@ -382,18 +395,17 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                   padding:
                       const EdgeInsets.only(left: 18.0, bottom: 8.0, right: 8.0),
                   child: CircleAvatar(
-                         backgroundImage: NetworkImage('${task[2]["avatar_url"]}'),
+                            child: Text("${mentorname[0]}"),
                          ),
             ),
             Padding(padding: const EdgeInsets.only(left:12.0),
             child: CustomPaint(painter: Triangle(),)),
-            Comment_box('''${feedbacks[feed_time]}''', theme.tertiaryColor,theme.fontColor, commentwidth,'''Thrishk''','''$recent_date''','''$recent_time'''),
+            Comment_box('''${feedbacks[feed_time]}''', theme.tertiaryColor,theme.fontColor, commentwidth,'''$mentorname''','''$recent_date''','''$recent_time'''),
             ]),
             Custom_box('Previous feedbacks',(){
-                            List a=task;
-                            a.add(feedbacks);
+                            print(mentorname);
                             Navigator.push(context, 
-                            PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKfeedback(task: a),
+                            PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKfeedback(feedbacks, task[0], mentorname),
                             transitionsBuilder: (context, animation, secondaryAnimation, child){
                             return SlideTransition(
                             position: Tween<Offset>(

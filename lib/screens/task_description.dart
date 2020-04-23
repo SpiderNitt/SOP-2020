@@ -12,8 +12,10 @@ final primary;
 List resource_desc;
 List resource_link;
 var task_description;
+var mentor_name;
+var mentor_contact;
 
-Task_description(this.primary, this.task_description, this.resource_link, this.resource_desc);
+Task_description(this.primary, this.task_description, this.resource_link, this.resource_desc, this.mentor_name, this.mentor_contact);
 Widget build(BuildContext context) {
 
 return ListView(
@@ -39,8 +41,8 @@ return ListView(
                     padding:const EdgeInsets.all(15),
                     child:Row(
                     children:<Widget>[
-                    Custom_box('Contact Thrishik ',(){},150,50,14,theme.blackColor,0,0,0),
-                    Custom_box('(992993922)',(){ launch("tel://21213123");},95,50,14,theme.blackColor,0,0,0),
+                    Custom_box('Contact ${mentor_name} ',(){},150,50,14,theme.blackColor,0,0,0),
+                    Custom_box('(${mentor_contact})',(){ launch("tel://${mentor_contact}");},95,50,14,theme.blackColor,0,0,0),
                     ])
                    ) ]
 
