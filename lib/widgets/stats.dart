@@ -19,7 +19,7 @@ class Data{
     for(int i = 0; i < res['submissions'].length; ++i){
       temp.add({
            'title': res['submissions']['$i']['task_title'],
-           'basic': (res['submissions']['$i']['basic_task_status'])? '100.0' : '0.0',
+           'basic': '${res['submissions']['$i']['basic_task_percent']}',
            'adv': '${res['submissions']['$i']['advanced_task_percent']}'
       });
     }

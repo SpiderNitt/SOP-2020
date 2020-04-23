@@ -14,8 +14,7 @@ class Review extends StatefulWidget {
 
 class _ReviewState extends State<Review> {
   
-  int adv_percent;
-  bool basic;
+  int adv_percent, basic;
   String review, jwt, mentorroll;
   dynamic id;
   final _formkey = GlobalKey<FormState>();
@@ -85,6 +84,7 @@ class _ReviewState extends State<Review> {
         SizedBox(height: 10),
 
         TextFormField(
+          keyboardType: TextInputType.number,
           cursorColor: config.fontColor,
           style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
           maxLines: null,
@@ -100,20 +100,15 @@ class _ReviewState extends State<Review> {
              hintText: '',
           ),
           validator: (String value){
-            print(value);
-            print(value.toLowerCase());
-            if(value.isEmpty)
-            return 'Please enter true or false';
-            if (value.toLowerCase() == 'true'){
-              this.basic = true;
-              return null;
-            }
-            if(value.toLowerCase() == 'false'){
-              this.basic = false;
-              return null;
-            }
-            else return 'Please enter true or false';
-          },
+              if(value.isEmpty)
+            return 'Please enter a pecentage';
+            else if(int.tryParse(value) > 100)
+            return 'Please enter a valid percentage';
+            else{
+              this.basic = int.tryParse(value);
+            return null;
+          }
+          }
           ),   
           SizedBox(height: 10),
 
@@ -157,8 +152,8 @@ class _ReviewState extends State<Review> {
                     "mentor_rollno": this.mentorroll,
                     "submission_id": this.id,
                     "review_message" : this.review,
-                      "basic_task_status" : this.basic,
-                      "advanced_task_status" : this.adv_percent
+                      "basic_task_percent" : this.basic,
+                      "advanced_task_percent" : this.adv_percent
                   })).then((Response resp){
                     print(resp.statusCode);
                     Scaffold.of(context).showSnackBar(
