@@ -15,7 +15,33 @@ Widget build(BuildContext context) {
 return ListView(
     
   children:<Widget>[
-      
+           Padding(padding: const EdgeInsets.all(16.0),
+   child: Container(
+   width: 370, 
+   child: Material(
+          color:theme.blackColor,
+          elevation: 10.0,
+          borderRadius: BorderRadius.circular(10.0),
+          child: Column(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+               Padding( padding:const EdgeInsets.all(15),
+               child:Text("Mentor Assigned",
+                  style: TextStyle(
+                  color: theme.tertiaryColor,
+                  fontWeight: FontWeight.bold),)),
+                  Padding(
+                    padding:const EdgeInsets.all(15),
+                    child:Row(
+                    children:<Widget>[
+                    Custom_box('Contact Thrishik ',(){},150,50,14,theme.blackColor,0,0,0),
+                    Custom_box('(992993922)',(){ launch("tel://21213123");},95,50,14,theme.blackColor,0,0,0),
+                    ])
+                   ) ]
+
+          )
+   ))),
     Padding(padding: const EdgeInsets.all(16.0),
     child: Container(
    
