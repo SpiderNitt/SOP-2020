@@ -87,9 +87,9 @@ class _MyHomePage extends State<HomePage> {
     });
   }
 
-  @override
   double profilewidth;
 
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width <= 400) {

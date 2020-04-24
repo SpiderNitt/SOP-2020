@@ -11,7 +11,7 @@ import 'dart:convert';
 
 class Announcement extends StatefulWidget {
   Announcement();
-
+  @override
   AnnouncementState createState() => AnnouncementState();
 }
 
