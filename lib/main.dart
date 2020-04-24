@@ -11,7 +11,7 @@ import 'package:inductions_20/screens/navigation/login.dart';
 import 'package:inductions_20/screens/navigation/splash_screen.dart';
 import 'package:inductions_20/screens/mentee/announcement.dart';
 import 'package:inductions_20/screens/mentee/mentee_home.dart';
-import 'package:inductions_20/screens/mentee/task.dart';
+
 
 void main() {
   runApp(Spider());

@@ -12,11 +12,11 @@ import 'dart:convert';
 class Announcement extends StatefulWidget{
 
 Announcement();
-  
+
 AnnouncementState createState() => AnnouncementState();
-
-
 }
+
+
 class AnnouncementState extends State<Announcement> with SingleTickerProviderStateMixin {
 
 var username;
@@ -67,7 +67,7 @@ Future<void>get_announcement() async{
       var jwt= provideJwt.jwt;
       var res= tryParseJwt(jwt);
 
-
+       username= res['github_username']; 
   
    String url='https://api.github.com/users/'; 
   http.Response response =await http.get(Uri.encodeFull(url+username), 
