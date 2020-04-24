@@ -1,5 +1,5 @@
 import 'dart:convert' show jsonEncode;
-
+import 'package:http/http.dart' as http;
 import 'package:inductions_20/screens/mentee/data/task_description.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/rendering.dart';
 import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/mentee/task_description.dart';
+import 'package:inductions_20/screens/mentee/comments.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_progress.dart';
 
 import 'config/jwtparse.dart';
@@ -36,7 +37,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var advancePer = 0.0;
   var overallPer;
   var decoverallPer;
-  var subCount = 56;
+  var subCount = 0;
   List task;
   var decbasicPer;
   var decadvancePer;
@@ -273,6 +274,29 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                       color: theme.tertiaryColor,
                                     ))),
                           ])),
+
+                               CustomBox('Comments',(){
+                                   List a=task;
+                                   Navigator.push(context, 
+                                   PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TaskComment(task: a),
+                                   transitionsBuilder: (context, animation, secondaryAnimation, child){
+                                   return SlideTransition(
+                                     position: Tween<Offset>(
+                                     begin: const Offset(0.0, 1.0),
+                                     end: Offset.zero,
+                                     ).animate(animation),
+                                child: SlideTransition(
+                                     position: Tween<Offset>(
+                                     end: const Offset(0.0, 1.0),
+                                     begin: Offset.zero,
+                                     ).animate(secondaryAnimation),
+                                     child: child,
+                                ),
+                              );
+                            }
+                            )
+                            ); },bottombarwidth,50,15,theme.blackColor,15,0,0),
+
                   CustomBox('Submit', () {
                     _tabController.animateTo((_tabController.index + 1));
                     double width = MediaQuery.of(context).size.width;
@@ -320,7 +344,10 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                 "submitted links should not be above 5");
                           } else {
                             try {
-                              textEditingController.clear();
+                                var response =await http.head(text);
+                                textEditingController.clear();
+
+                            
                               setState(() {
                                 taskSubmitted.add(text);
                               });
