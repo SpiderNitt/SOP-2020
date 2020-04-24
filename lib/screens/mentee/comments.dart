@@ -4,12 +4,16 @@ import 'package:inductions_20/screens/mentee/task.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/mentee/data/comments.dart';
+import 'config/jwtparse.dart';
+import 'config/extractjwt.dart';
+import 'package:http/http.dart';
+import 'dart:convert' show jsonEncode;
 
 class TaskComment extends StatefulWidget {
   final List task;
   TaskComment({this.task});
 
-  TaskCommentState createState() => TaskCommentState();
+  TaskCommentState createState() => TaskCommentState(this.task);
 }
 
 class TaskCommentState extends State<TaskComment>
@@ -17,41 +21,106 @@ class TaskCommentState extends State<TaskComment>
   var taskdes;
 
   var task;
-  List<Map<String,String>> taskmsg;
-  List<String> _messages;
+  TaskCommentState(this.task);
+  List _users;
+  List _date;
+  List _time;
+  List _messages;
+  var username;
+
   TextEditingController textEditingController;
   ScrollController scrollController;
 
   bool enableButton = false;
   @override
   void initState() {
-    _messages = List<String>();
+    _users = [];
+    _date = [];
+    _time = [];
+    _messages = [];
 
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
 
     _getcomments();
-
   }
 
-  Future<void> _getcomments() async{
+  Future<void> _getcomments() async {
+    Comments_list comments_list1 = Comments_list(task[1]);
+    await comments_list1.extractComment();
 
-   Comments_list comments_list1 = Comments_list(task[1]);
-   await comments_list1.extractComment();
-   
-   setState(() {
-     this.taskmsg=comments_list1.comments_details;
-   });
-
-  
+    setState(() {
+      this._users = comments_list1.user;
+      this._messages = comments_list1.comments;
+      this._time = comments_list1.time;
+      this._date = comments_list1.dates;
+      this.username = comments_list1.username;
+    });
   }
 
-  void handleSendMessage() {
+  void handleSendMessage() async {
     var text = textEditingController.value.text;
-    textEditingController.clear();
+
+    try {
+      ProvideJwt provideJwt = ProvideJwt();
+      await provideJwt.extractjwt();
+      String jwt = provideJwt.jwt;
+      var res = tryParseJwt(jwt);
+      var rollno = res["roll"];
+
+      String url =
+          "https://spider.nitt.edu/inductions20test/api/task/forum_comment";
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $jwt',
+      };
+      Map<String, String> list1 = {};
+
+      var Json1 = jsonEncode({
+        "rollno": "$rollno",
+        "task_id": task[1],
+        "profile_id": task[3],
+        "comment": "$text",
+        "username": "$username",
+        "is_mentor": false,
+        "reply_id": 0
+      });
+
+      Response response = await post(url, headers: headers, body: Json1);
+      int statusCode = response.statusCode;
+
+      if (statusCode == 200) {
+        print("submitted");
+      } else if (statusCode == 404) {
+        print("404 error");
+      }
+    } catch (e) {
+      print("error:$e");
+    }
+
     setState(() {
       _messages.add(text);
+      _users.add(username);
+      DateTime dateTime = new DateTime.now();
+      String datetime = "$dateTime";
+      String date = datetime.substring(0, 10);
+      var hr = int.parse(datetime.substring(11, 13));
+      var min = int.parse(datetime.substring(14, 16));
+      var sec = int.parse(datetime.substring(17, 19));
+      if (min >= 60) {
+        hr++;
+        min = min - 60;
+      }
+      if (hr >= 24) {
+        hr = hr - 24;
+      }
+
+      var times = "$hr:$min:$sec";
+      _date.add("$date");
+      _time.add("$times");
+
       enableButton = false;
     });
 
@@ -142,7 +211,7 @@ class TaskCommentState extends State<TaskComment>
                 itemBuilder: (context, index) {
                   bool reverse = false;
 
-                  if (taskmsg[index]["name"]==this.task[2]["login"]) {
+                  if (_users[index] == username) {
                     reverse = true;
                   }
 
@@ -150,7 +219,7 @@ class TaskCommentState extends State<TaskComment>
                     padding: const EdgeInsets.only(
                         left: 8.0, bottom: 8.0, right: 8.0),
                     child: CircleAvatar(
-                      child: Text("A"),
+                      child: Text("${_users[index][0]}"),
                     ),
                   );
 
@@ -159,13 +228,13 @@ class TaskCommentState extends State<TaskComment>
                   );
 
                   var messagebody = Comment_box(
-                      '''${taskmsg[index]["comment"]}''',
+                      '''${_messages[index]}''',
                       theme.tertiaryColor,
                       theme.blackColor,
                       commentwidth,
-                      '''${taskmsg[index]["name"]}''',
-                      '''${taskmsg[index]["date"]}''',
-                      '''${taskmsg[index]["time"]}''');
+                      '''${_users[index]}''',
+                      '''${_date[index]}''',
+                      '''${_time[index]}''');
 
                   Widget message;
 

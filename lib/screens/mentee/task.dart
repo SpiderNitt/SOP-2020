@@ -84,7 +84,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     ];
     textEditingController = TextEditingController();
     textEditingController1 = TextEditingController();
-    this.overallPer = ((this.basic_per + this.advancePer) / 2);
+    this.overallPer = (this.basic_per * 0.3) + (this.advancePer * 0.7);
     this.decoverallPer = this.overallPer * 100;
     decbasicPer = this.basic_per * 100;
     decadvancePer = this.advancePer * 100;
@@ -111,7 +111,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       advancePer = menteeProgress.advance_per / 100;
       feedTime = menteeProgress.recent_feedback;
       feedbacks = menteeProgress.previous_feedbacks;
-      
+
       if (feedTime != "5:30") {
         String date = feedTime.substring(0, 10);
         hr = int.parse(feedTime.substring(11, 13)) + 5;
@@ -130,7 +130,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
         this.recentTime = "$hr:$min:$sec";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
-      this.overallPer = ((this.basic_per + this.advancePer) / 2);
+      this.overallPer = (this.basic_per * 0.3) + (this.advancePer * 0.7);
       this.decoverallPer = this.overallPer * 100;
       decbasicPer = this.basic_per * 100;
       decadvancePer = this.advancePer * 100;
@@ -274,29 +274,31 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                       color: theme.tertiaryColor,
                                     ))),
                           ])),
-
-                               CustomBox('Comments',(){
-                                   List a=task;
-                                   Navigator.push(context, 
-                                   PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TaskComment(task: a),
-                                   transitionsBuilder: (context, animation, secondaryAnimation, child){
-                                   return SlideTransition(
-                                     position: Tween<Offset>(
-                                     begin: const Offset(0.0, 1.0),
-                                     end: Offset.zero,
-                                     ).animate(animation),
+                  CustomBox('Comments', () {
+                    List a = task;
+                    Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    TaskComment(task: a),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(0.0, 1.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
                                 child: SlideTransition(
-                                     position: Tween<Offset>(
-                                     end: const Offset(0.0, 1.0),
-                                     begin: Offset.zero,
-                                     ).animate(secondaryAnimation),
-                                     child: child,
+                                  position: Tween<Offset>(
+                                    end: const Offset(0.0, 1.0),
+                                    begin: Offset.zero,
+                                  ).animate(secondaryAnimation),
+                                  child: child,
                                 ),
                               );
-                            }
-                            )
-                            ); },bottombarwidth,50,15,theme.blackColor,15,0,0),
-
+                            }));
+                  }, bottombarwidth, 50, 15, theme.blackColor, 15, 0, 0),
                   CustomBox('Submit', () {
                     _tabController.animateTo((_tabController.index + 1));
                     double width = MediaQuery.of(context).size.width;
@@ -344,10 +346,9 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                 "submitted links should not be above 5");
                           } else {
                             try {
-                                var response =await http.head(text);
-                                textEditingController.clear();
+                              var response = await http.head(text);
+                              textEditingController.clear();
 
-                            
                               setState(() {
                                 taskSubmitted.add(text);
                               });
@@ -593,7 +594,29 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           ),
                         )
                       ])
-                    ]))
+                    ])),
+                Container(
+                  width: 370,
+                  child: Material(
+                    color: theme.blackColor,
+                    elevation: 10.0,
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Text(
+                              "The Completion percentage Displayed above is calculated as 70% Basic task and 30% Advance task :)",
+                              style: TextStyle(
+                                  color: theme.tertiaryColor,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
               ]);
             }
           }).toList(),
