@@ -310,6 +310,29 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                   resDesc, mentorname, mentorcontact);
             else {
               return ListView(children: <Widget>[
+                Container(
+              width: previousfeedbackwidth,
+              margin: EdgeInsets.all(10),
+              child: Material(
+                color: theme.blackColor,
+                elevation: 10.0,
+                borderRadius: BorderRadius.circular(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          ''' After adding the links, review of the work will be requested only on clicking the review button. you can also add a comment with the request.''',
+                          style: TextStyle(
+                              color: theme.tertiaryColor,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ],
+                ),
+              ),
+            ),
                 Padding(
                     padding: const EdgeInsets.all(0.0),
                     child: Column(
@@ -333,11 +356,12 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                             controller: textEditingController,
                           ),
                         ),
-                        CustomBox('Submit', () async {
+                        CustomBox('Add link', () async {
+                          print(taskSubmitted.length);
                           var text = textEditingController.value.text;
-                          if (taskSubmitted.length > 5) {
+                          if (taskSubmitted.length >= 5) {
                             showAlertDialog(context,
-                                "submitted links should not be above 5");
+                                "submitted links limited upto 5");
                           } else {
                             try {
                               var response = await http.head(text);
@@ -350,7 +374,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                               showAlertDialog(context, "Invalid link");
                             }
                           }
-                        }, 100, 38, 14, theme.tertiaryColor, 10, 0, 10),
+                        }, 110, 38, 14, theme.tertiaryColor, 10, 0, 10),
                         Container(
                           child: Column(
                             children: <Widget>[
