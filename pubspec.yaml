@@ -1,5 +1,5 @@
 name: inductions_20
-description: A new Flutter project.
+description: Spider Orientation Program(SOP) aims at mentoring and preparing you for the inductions with cool tasks, quizzes and contests. So get ready to get your hands dirty!
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -32,11 +32,16 @@ dependencies:
   flutter_secure_storage: ^3.3.3
   cached_network_image: ^2.1.0+1
   url_launcher: ^5.4.2
+  flutter_launcher_icons: 0.7.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/spiderIcon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
