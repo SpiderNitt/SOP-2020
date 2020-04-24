@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/mentor.dart';
 
 class TaskDet extends StatefulWidget {
@@ -24,7 +24,7 @@ class _TaskDetState extends State<TaskDet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 670,
+        height: 650,
         padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: ListView.builder(
             itemCount: this.profiles.length,
@@ -61,7 +61,7 @@ class _TaskDetState extends State<TaskDet> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontFamily: config.fontFamily,
-                                      color: config.success)),
+                                      color: config.head)),
                               SizedBox(height: 10),
                               FutureBuilder(
                                   future: get(
@@ -87,7 +87,13 @@ class _TaskDetState extends State<TaskDet> {
                                  listlink.add(Text('Resources',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.head)));
                                   
                                  for(int k = 0; k < tempdes['resources'].length; ++k){
-                                   listlink.add(Text(tempdes['resources']['$k']['link'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.links)));
+                                   listlink.add( InkWell(
+                                       child: Text(tempdes['resources']['$k']['link'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.links)),
+                                       onTap: () async{
+                                         if(await canLaunch('${tempdes['resources']['$k']['link']}'))
+                                         launch('${tempdes['resources']['$k']['link']}');
+                                       },
+                                     ));
 
                                    listlink.add(Text(tempdes['resources']['$k']['description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
                                    listlink.add(SizedBox(

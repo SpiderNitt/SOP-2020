@@ -116,188 +116,210 @@ class _MyHomePage extends State<HomePage> {
     }
 
     return Scaffold(
-        backgroundColor: theme.primaryColor,
-        drawer: MenteeCustomDrawer(
-            '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
-        appBar: AppBar(
-          title: Text("DASHBOARD",),
-          centerTitle: true,
-        backgroundColor: theme.blackColor,
-       
+      backgroundColor: theme.primaryColor,
+      drawer: MenteeCustomDrawer(
+          '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
+      appBar: AppBar(
+        title: Text(
+          "DASHBOARD",
         ),
-        body: SizedBox.expand(
-            child: Stack(children: <Widget>[
-          Container(
+        centerTitle: true,
+        backgroundColor: theme.blackColor,
+      ),
+      body: SizedBox.expand(
+        child: Stack(
+          children: <Widget>[
+            Container(
               height: 400,
               decoration: BoxDecoration(
-                  color: theme.blackColor,
+                  color: theme.primaryColor,
                   borderRadius: BorderRadius.circular(10)),
               margin: EdgeInsets.all(30),
-              child: Column(children: <Widget>[
-                Padding(
+              child: Column(
+                children: <Widget>[
+                  Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Container(
-                        width: width,
-                        height: 40,
-                        child: Text(
-                          '${this.user["name"]}',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: theme.fontColor),
-                        ))),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
+                      width: width,
+                      height: 40,
+                      child: Text(
+                        '${this.user["name"]}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: theme.fontColor),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
                         padding: const EdgeInsets.only(top: 45),
                         child: CircleAvatar(
                           backgroundImage: CachedNetworkImageProvider(
                               '${this.user["avatar_url"]}'),
                           radius: 90,
-                        ))
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                        padding: const EdgeInsets.only(top: 65),
-                        child: Row(children: <Widget>[
-                          Text(
-                            'GitHub:  ',
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: theme.fontColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            '${this.user["login"]}',
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: theme.tertiaryColor,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ]))
-                  ],
-                ),
-              ])),
-          SizedBox.expand(
-            child: DraggableScrollableSheet(
-              initialChildSize: 0.25,
-              minChildSize: 0.12,
-              maxChildSize: 0.8,
-              builder: (BuildContext c, s) {
-                var boxDecoration = BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(5),
-                );
-                var container = Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
+                        ),
+                      ),
+                    ],
                   ),
-                  decoration: BoxDecoration(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 65),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              'GitHub:  ',
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: theme.fontColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '${this.user["login"]}',
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: theme.tertiaryColor,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox.expand(
+              child: DraggableScrollableSheet(
+                initialChildSize: 0.25,
+                minChildSize: 0.12,
+                maxChildSize: 0.8,
+                builder: (BuildContext c, s) {
+                  var boxDecoration = BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(5),
+                  );
+                  var container = Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
                       color: theme.blackColor,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0)),
                       boxShadow: [
                         BoxShadow(color: theme.fontColor, blurRadius: 2.0)
-                      ]),
-                  child: ListView(
-                    controller: s,
-                    children: <Widget>[
-                      Center(
-                        child: Container(
-                          height: 8,
-                          width: 50,
-                          decoration: boxDecoration,
+                      ],
+                    ),
+                    child: ListView(
+                      controller: s,
+                      children: <Widget>[
+                        Center(
+                          child: Container(
+                            height: 8,
+                            width: 50,
+                            decoration: boxDecoration,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Container(
-                        height: 80,
-                        width: 370,
-                        color: theme.blackColor,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            for (int i = 0; i < list.length; i++)
-                              CustomBox(list[i], () async {
-                                setState(() {
-                                  for (int j = 0; j < list.length; j++) {
-                                    if (j == i)
-                                      clickcolor[j] = theme.tertiaryColor;
-                                    else
-                                      clickcolor[j] = theme.primaryLightColor;
-                                  }
-                                  task = list[i];
-                                  current_profile_no = profile_no_list[i];
-                                });
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Container(
+                          height: 80,
+                          width: 370,
+                          color: theme.blackColor,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: <Widget>[
+                              for (int i = 0; i < list.length; i++)
+                                CustomBox(list[i], () async {
+                                  setState(
+                                    () {
+                                      for (int j = 0; j < list.length; j++) {
+                                        if (j == i)
+                                          clickcolor[j] = theme.tertiaryColor;
+                                        else
+                                          clickcolor[j] =
+                                              theme.primaryLightColor;
+                                      }
+                                      task = list[i];
+                                      current_profile_no = profile_no_list[i];
+                                    },
+                                  );
 
-                                Profile_task profile_task =
-                                    Profile_task(profile_no_list[i]);
-                                await profile_task.tasks();
-                                setState(() {
-                                  task_list = profile_task.prof_task_title;
-                                  taskno_list = profile_task.taskno_list;
-                                });
-                              }, profilewidth, 100, 12, clickcolor[i], 20, 3,
-                                  10),
-                          ],
+                                  Profile_task profile_task =
+                                      Profile_task(profile_no_list[i]);
+                                  await profile_task.tasks();
+                                  setState(
+                                    () {
+                                      task_list = profile_task.prof_task_title;
+                                      taskno_list = profile_task.taskno_list;
+                                    },
+                                  );
+                                }, profilewidth, 100, 12, clickcolor[i], 20, 3,
+                                    10),
+                            ],
+                          ),
                         ),
-                      ),
-                      new Divider(
-                        color: theme.fontColor,
-                        height: 50,
-                        thickness: 3,
-                      ),
-                      for (int i = 0; i < task_list.length; i++)
-                        CustomBox(task_list[i], () {
-                          print(taskno_list[i]);
-                          List a = [
-                            task,
-                            taskno_list[i],
-                            this.user,
-                            current_profile_no
-                          ];
-                          Navigator.push(
+                        new Divider(
+                          color: theme.fontColor,
+                          height: 50,
+                          thickness: 3,
+                        ),
+                        for (int i = 0; i < task_list.length; i++)
+                          CustomBox(task_list[i], () {
+                            print(taskno_list[i]);
+                            List a = [
+                              task,
+                              taskno_list[i],
+                              this.user,
+                              current_profile_no
+                            ];
+                            Navigator.push(
                               context,
                               PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      Task(task: a),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var animate = Tween<Offset>(
-                                      end: const Offset(1.0, 0.0),
-                                      begin: Offset.zero,
-                                    ).animate(secondaryAnimation);
-                                    return SlideTransition(
-                                      position: Tween<Offset>(
-                                        begin: const Offset(1.0, 0.0),
-                                        end: Offset.zero,
-                                      ).animate(animation),
-                                      child: SlideTransition(
-                                        position: animate,
-                                        child: child,
-                                      ),
-                                    );
-                                  }));
-                        }, 320, 60, 15, theme.secondaryColor, 20, 3, 10),
-                    ],
-                  ),
-                );
-                return container;
-              },
-            ),
-          )
-        ])));
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        Task(task: a),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var animate = Tween<Offset>(
+                                    end: const Offset(1.0, 0.0),
+                                    begin: Offset.zero,
+                                  ).animate(secondaryAnimation);
+                                  return SlideTransition(
+                                    position: Tween<Offset>(
+                                      begin: const Offset(1.0, 0.0),
+                                      end: Offset.zero,
+                                    ).animate(animation),
+                                    child: SlideTransition(
+                                      position: animate,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }, 320, 60, 15, theme.secondaryColor, 20, 3, 10),
+                      ],
+                    ),
+                  );
+                  return container;
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

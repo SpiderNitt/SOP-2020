@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../../theme/mentor.dart';
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:inductions_20/others/jwtparse.dart';
 
 class Data {
@@ -42,13 +42,12 @@ class Data {
 }
 
 class Requestlist extends StatefulWidget {
-  final String mentorname, mentorgitacc, jwt;
+  final String jwt;
 
-  Requestlist(this.mentorname, this.mentorgitacc, this.jwt);
+  Requestlist(this.jwt);
 
   @override
-  _RequestlistState createState() =>
-      _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt);
+  _RequestlistState createState() => _RequestlistState(this.jwt);
 }
 
 class _RequestlistState extends State<Requestlist> {
@@ -58,7 +57,7 @@ class _RequestlistState extends State<Requestlist> {
 
   dynamic resultobt, res, mentorroll;
 
-  _RequestlistState(this.mentorname, this.mentorgitacc, this.jwt) {
+  _RequestlistState(this.jwt) {
     this.mentorroll = tryParseJwt(this.jwt)['roll'];
   }
 
@@ -94,14 +93,18 @@ class _RequestlistState extends State<Requestlist> {
     ];
 
     for (int j = 0; j < checklinks['link'].length; ++j) {
-      tempstore.add(
-        Text(checklinks['link']['$j'],
+      tempstore.add(InkWell(
+        child: Text(checklinks['link']['$j'],
             softWrap: true,
             style: TextStyle(
                 fontSize: 13,
                 fontFamily: config.fontFamily,
                 color: config.links)),
-      );
+        onTap: () async {
+          if (await canLaunch('${checklinks['link']['$j']}'))
+            launch('${checklinks['link']['$j']}');
+        },
+      ));
       tempstore.add(SizedBox(
         height: 5,
       ));
@@ -148,7 +151,7 @@ class _RequestlistState extends State<Requestlist> {
         ListTile(
           contentPadding: EdgeInsets.all(3),
           leading: CircleAvatar(
-            radius: 30,
+            radius: 20,
             backgroundImage: AssetImage('assets/images/current.png'),
           ),
           title: Text('${item['menteename']}',

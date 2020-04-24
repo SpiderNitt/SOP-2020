@@ -47,51 +47,61 @@ class TaskDescription extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        "Mentor Assigned",
-                        style: TextStyle(
-                            color: theme.tertiaryColor,
-                            fontWeight: FontWeight.bold),
-                      )),
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      "Mentor Assigned",
+                      style: TextStyle(
+                          color: theme.tertiaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(children: <Widget>[
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      children: <Widget>[
                         CustomBox('Contact $mentorName ', () {}, 150, 50, 14,
                             theme.blackColor, 0, 0, 0),
                         CustomBox('($mentorContact)', () {
                           launch("tel://$mentorContact");
                         }, 110, 50, 14, theme.blackColor, 0, 0, 0),
-                      ]))
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
           ),
         ),
         Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: 370,
-              child: Material(
-                color: primary,
-                elevation: 10.0,
-                borderRadius: BorderRadius.circular(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Description:",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: theme.tertiaryColor,
-                        )),
-                    Text('''$taskDescription''',
-                        style: TextStyle(fontSize: 17, color: theme.fontColor))
-                  ],
-                ),
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: 370,
+            child: Material(
+              color: primary,
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Description:",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: theme.tertiaryColor,
+                      )),
+                  Padding(
+                    child: Text(
+                      '''$taskDescription''',
+                      style: TextStyle(fontSize: 17, color: theme.fontColor),
+                    ),
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                  ),
+                ],
               ),
-            )),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(

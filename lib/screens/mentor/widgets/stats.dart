@@ -112,7 +112,7 @@ class _StatsState extends State<Stats> {
               return Container(
                 constraints: BoxConstraints(
                   minHeight: 5.0,
-                  maxHeight: 500.0,
+                  maxHeight: 550.0,
                 ),
                 margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: ListView.builder(
