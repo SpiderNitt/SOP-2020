@@ -13,35 +13,37 @@ class Announcementbox extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(10),
-        child: Container(
-          width: _width,
-          color: theme.blackColor,
-          child: Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(children: <Widget>[
-                    CircleAvatar(
-                      child: Text("A"),
-                    ),
-                    CustomBox('''$username''', () {}, 100, 50, 16,
-                        theme.blackColor, 15, 0, 0),
-                    CustomBox('''$date $time''', () {}, 130, 60, 10,
-                        theme.blackColor, 18, 0, 0)
-                  ]),
-                  Padding(
-                      padding: EdgeInsets.all(6),
-                      child: Container(
-                        child: Text(
-                          '''$text''',
-                          style:
-                              TextStyle(fontSize: 15, color: theme.fontColor),
-                        ),
-                      ))
-                ],
-              )),
-        ));
+      padding: EdgeInsets.all(10),
+      child: Container(
+        width: _width,
+        color: theme.blackColor,
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(children: <Widget>[
+                CircleAvatar(
+                  child: Text("S"),
+                ),
+                CustomBox('''$username''', () {}, 100, 50, 16, theme.blackColor,
+                    15, 0, 0),
+                CustomBox('''$date $time''', () {}, 130, 60, 10,
+                    theme.blackColor, 18, 0, 0)
+              ]),
+              Padding(
+                padding: EdgeInsets.all(6),
+                child: Container(
+                  child: Text(
+                    '''$text''',
+                    style: TextStyle(fontSize: 15, color: theme.fontColor),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

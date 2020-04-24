@@ -6,7 +6,6 @@ import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_graph.dart';
 import 'package:inductions_20/screens/mentee/mentee_home.dart';
-import 'package:http/http.dart' as http;
 import 'package:inductions_20/screens/mentee/feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
