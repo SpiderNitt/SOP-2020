@@ -51,11 +51,12 @@ class _MyHomePage extends State<homepage> {
   
   var task="WEB";
   var user;
+
   void initState() {
     super.initState();
     this.user={
      "name": "loading..",
-     "avatar_url":" ",
+     "avatar_url":"https://static.bhphoto.com/images/images500x500/1157995365_163032.jpg",
      "login":"loading.."
     };
    makeRequest();
@@ -65,28 +66,31 @@ class _MyHomePage extends State<homepage> {
 
 
   
-  Future<String> makeRequest() async{
+  Future<void> makeRequest() async{
       ProvideJwt provideJwt =ProvideJwt(); 
       await  provideJwt.extractjwt();
       var jwt= provideJwt.jwt;
       
       var res= tryParseJwt(jwt);
       setState(() {
-        
-      
-      username= res['github_username']; 
+         username=res['github_username']; 
       });
 
-
-String url='https://api.github.com/users/'; 
+   try{
+  String url='https://api.github.com/users/'; 
   http.Response response =await http.get(Uri.encodeFull(url+username), 
   headers: {"Accept":"application/json"});
   var user1= await json.decode(response.body);
   setState(() {
     this.user= user1;
    });
-
-  print(this.user);  
+   }
+   catch(e)
+   {
+     print("exception error: $e");
+   }
+ 
+ try{
   Mentee_profile mentee_profile= Mentee_profile();
   await mentee_profile.ExtractResponse();
   setState(() {
@@ -97,15 +101,24 @@ String url='https://api.github.com/users/';
    this.current_profile_no= profile_no_list[0];
 
  });
+ }
+ catch(e){
+   print("exception error: $e");
+ }
 
+try{
  Profile_task profile_task = Profile_task(profile_no_list[0]);
-await profile_task.tasks();
-setState(() {
+  await profile_task.tasks();
+   setState(() {
   task_list= profile_task.prof_task_title;
   taskno_list=profile_task.taskno_list;
   
 });
- 
+}
+catch(e)
+{
+  print("exception error : $e");
+}
   
   }
   @override 

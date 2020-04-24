@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:inductions_20/screens/mentee/announcement.dart';
-import 'package:inductions_20/screens/mentee/mentee_home.dart';
 import 'package:inductions_20/screens/navigation/widgets/custom_list_tile.dart';
 import '../../theme/navigation.dart';
 
@@ -51,20 +49,10 @@ class MenteeCustomDrawer extends StatelessWidget {
               ),
             ),
             CustomListTile(Icons.home, "Home Page", () {
-              Navigator.push(context, 
-               MaterialPageRoute(builder: (context) =>homepage()),);
-
-                          Navigator.push(context, 
-               MaterialPageRoute(builder: (context) =>homepage()),);
-             
+              Navigator.pushNamed(context, '/mentee/');
             }),
             CustomListTile(Icons.announcement, "Announcements", () {
-     
-                            Navigator.push(context, 
-               MaterialPageRoute(builder: (context) =>Announcement()),);
-
-              Navigator.pushNamed(context,'/mentee/announcement/');
-               
+              Navigator.pushNamed(context, '/mentee/announcement/');
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();
