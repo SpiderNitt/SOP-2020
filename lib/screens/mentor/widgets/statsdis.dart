@@ -42,7 +42,7 @@ class Statsdis extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        Text('Beginar Task Percentage',
+        Text('Basic Task Percentage',
             style: TextStyle(
                 fontSize: 20,
                 fontFamily: config.fontFamily,

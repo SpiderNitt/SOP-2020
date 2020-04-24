@@ -21,7 +21,7 @@ class Mentor extends StatelessWidget {
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         elevation: 0,
-        title: Text('Mentor Page'),
+        title: Text('Dashboard'),
         centerTitle: true,
         backgroundColor: config.appbarcolor,
       ),
