@@ -223,7 +223,7 @@ class TaskCommentState extends State<TaskComment>
               );
             },
           ),
-          title: Text('${task[0]} TASK ${task[1]}'),
+          title: Text('${task[0]}'),
           backgroundColor: theme.blackColor,
         ),
         body: Column(
