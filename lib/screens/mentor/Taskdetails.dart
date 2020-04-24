@@ -44,12 +44,22 @@ class _TasklistState extends State<Tasklist> {
                 }),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                dynamic temp = jsonDecode(snapshot.data.body);
-                for (int i = 0; i < temp["profile_ids"].length; ++i) {
-                  this.profiles.add(temp["profile_ids"]['$i']);
-                }
 
-                return TaskDet(this.jwt, this.profiles);
+                try{
+                  this.profiles = [];
+                  dynamic temp = jsonDecode(snapshot.data.body);
+                  for(int i = 0; i < temp["profile_ids"].length; ++i){
+                  this.profiles.add(temp["profile_ids"]['$i']);  
+              }
+
+             return TaskDet(this.jwt, this.profiles);
+
+              } catch(e){
+                return Center(
+                  child: Text('$e',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor))
+                );
+              }
+              
               }
 
               if (snapshot.hasError) {

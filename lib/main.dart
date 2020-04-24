@@ -11,12 +11,9 @@ import 'package:inductions_20/screens/navigation/login.dart';
 import 'package:inductions_20/screens/navigation/splash_screen.dart';
 import 'package:inductions_20/screens/mentee/announcement.dart';
 
-import 'package:device_preview/device_preview.dart';
 import 'package:inductions_20/screens/mentee/mentee_home.dart';
 
-
 void main() => runApp(Spider());
-
 
 class Spider extends StatelessWidget {
   Widget build(BuildContext context) {

@@ -35,10 +35,10 @@ class TaskCommentState extends State<TaskComment>
   bool enableButton = false;
   @override
   void initState() {
-    _users=[];
-    _date=[];
-    _time=[];
-    _messages=[];
+    _users = [];
+    _date = [];
+    _time = [];
+    _messages = [];
 
     textEditingController = TextEditingController();
     scrollController = ScrollController();
@@ -86,28 +86,27 @@ class TaskCommentState extends State<TaskComment>
                           var res = tryParseJwt(jwt);
                           var rollno = res["roll"];
 
-                          String url =
-                              "https://spider.nitt.edu/inductions20test/api/task/forum_comment";
-                          Map<String, String> headers = {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'Authorization': 'Bearer $jwt',
-                          };
-                          Map<String, String> list1 = {};
+      String url =
+          "https://spider.nitt.edu/inductions20test/api/task/forum_comment";
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $jwt',
+      };
+      Map<String, String> list1 = {};
 
-                          var Json1 = jsonEncode({
-                            "rollno": "$rollno",
-                            "task_id": task[1],
-                            "profile_id": task[3],
-                            "comment": "$text",
-                            "username": "$username",
-                            "is_mentor": false,
-                            "reply_id": 0
-                          });
+      var Json1 = jsonEncode({
+        "rollno": "$rollno",
+        "task_id": task[1],
+        "profile_id": task[3],
+        "comment": "$text",
+        "username": "$username",
+        "is_mentor": false,
+        "reply_id": 0
+      });
 
-                          Response response =
-                              await post(url, headers: headers, body: Json1);
-                          int statusCode = response.statusCode;
+      Response response = await post(url, headers: headers, body: Json1);
+      int statusCode = response.statusCode;
 
                           if (statusCode == 200) {
                             print("submitted");
@@ -123,22 +122,20 @@ class TaskCommentState extends State<TaskComment>
       _messages.add(text);
       _users.add(username);
       DateTime dateTime = new DateTime.now();
-      String datetime="$dateTime";
+      String datetime = "$dateTime";
       String date = datetime.substring(0, 10);
-       var  hr = int.parse(datetime.substring(11, 13));
-       var  min = int.parse(datetime.substring(14, 16));
-       var  sec = int.parse(datetime.substring(17, 19));
-        if (min >= 60) {
-          hr++;
-          min = min - 60;
-        }
-        if (hr >= 24) {
-          hr = hr - 24;
-        }
+      var hr = int.parse(datetime.substring(11, 13));
+      var min = int.parse(datetime.substring(14, 16));
+      var sec = int.parse(datetime.substring(17, 19));
+      if (min >= 60) {
+        hr++;
+        min = min - 60;
+      }
+      if (hr >= 24) {
+        hr = hr - 24;
+      }
 
-       
-
-      var  times= "$hr:$min:$sec";
+      var times = "$hr:$min:$sec";
       _date.add("$date");
       _time.add("$times");
 
@@ -265,7 +262,7 @@ class TaskCommentState extends State<TaskComment>
                 itemBuilder: (context, index) {
                   bool reverse = false;
 
-                  if (_users[index]== username) {
+                  if (_users[index] == username) {
                     reverse = true;
                   }
 

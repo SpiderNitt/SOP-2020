@@ -24,7 +24,7 @@ class _TaskDetState extends State<TaskDet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 600,
+        height: 670,
         padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: ListView.builder(
             itemCount: this.profiles.length,
@@ -72,14 +72,33 @@ class _TaskDetState extends State<TaskDet> {
                                       }),
                                   builder: (context, snapst) {
                                     if (snapst.hasData) {
-                                      dynamic tempdes =
-                                          jsonDecode(snapst.data.body);
-                                      return Text(tempdes['task_description'],
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: config.fontFamily,
-                                              color: config.fontColor));
-                                    }
+
+                                     
+                                 List<Widget> listlink = [];
+                                 dynamic tempdes = jsonDecode(snapst.data.body);
+                                 
+                                 listlink.add(Text(tempdes['task_description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
+                                 
+                                 listlink.add(SizedBox(
+                                   height: 10
+                                 ));
+                                 
+                                 if(tempdes['resources'].length != 0)
+                                 listlink.add(Text('Resources',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.head)));
+                                  
+                                 for(int k = 0; k < tempdes['resources'].length; ++k){
+                                   listlink.add(Text(tempdes['resources']['$k']['link'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.links)));
+
+                                   listlink.add(Text(tempdes['resources']['$k']['description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
+                                   listlink.add(SizedBox(
+                                   height: 5
+                                 ));
+                                 } 
+
+                                  return Column(
+                                    children: listlink
+                                  );
+                                  }
 
                                     if (snapst.hasError) {
                                       return Text('${snapst.error}',
