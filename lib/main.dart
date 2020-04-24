@@ -12,7 +12,6 @@ import 'package:inductions_20/screens/navigation/splash_screen.dart';
 import 'package:inductions_20/screens/mentee/announcement.dart';
 import 'package:inductions_20/screens/mentee/mentee_home.dart';
 
-
 void main() {
   runApp(Spider());
 }
@@ -33,9 +32,8 @@ class Spider extends StatelessWidget {
         '/commits': (context) => CommitsFinal(),
         '/review': (context) => Request(),
         '/task': (context) => Tasklist(),
-        '/mentee/': (context) => homepage(),
-        '/mentee/announcement/':(context) => Announcement(),
-      
+        '/mentee/': (context) => HomePage(),
+        '/mentee/announcement/': (context) => Announcement(),
       },
     );
   }
