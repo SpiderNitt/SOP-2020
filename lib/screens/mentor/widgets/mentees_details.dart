@@ -4,8 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../../theme/mentor.dart';
 import 'dart:convert';
-
 import 'package:inductions_20/others/jwtparse.dart';
+
+
+String profileconvert(dynamic proid){
+
+  if (proid == 1) {
+  return "Algos";
+  }
+  else if (proid == 2) {
+  return "App Development - Android Native";
+} 
+  else if (proid == 3){
+  return "App Development - Flutter";
+} 
+  else if (proid == 4 ){
+  return "App Development - React Native";
+} 
+  else if (proid == 5){
+  return "Tronix - Embedded Systems and Analog Electronics";
+} 
+  else if (proid == 6) {
+  return "Tronix - Robotics and control";
+} 
+  else if (proid == 7) {
+  return "Tronix - Signal Processing and Machine Learning";
+} 
+  else if (proid == 8) {
+  return "Web Development";
+}
+}
 
 class Data {
   List<Map> menteenames;
@@ -20,6 +48,7 @@ class Data {
         "mentee_name": res['mentee_list']['$i']['mentee_name'],
         "mentee_roll": res['mentee_list']['$i']['mentee_roll'],
         "github_username": res['mentee_list']['$i']['github_username'],
+        "profile":  res['mentee_list']['$i']['profile'],
       });
     }
     return Data(temp, stat);
@@ -134,23 +163,24 @@ class _MenteeDetState extends State<MenteeDet> {
                                         .data.menteenames[index]['mentee_roll'],
                                   });
                             },
-                            // leading: CircleAvatar(
-                            //   radius: 30,
-                            //   backgroundImage:
-                            //       AssetImage('assets/images/android.png'),
-                            // ),
+                            leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage:
+                                  AssetImage('assets/images/current.png'),
+                            ),
                             title: Text(
                                 '${snapshot.data.menteenames[index]['mentee_name']}',
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontFamily: config.fontFamily,
                                     color: config.fontColor)),
+                         subtitle: Text(profileconvert(snapshot.data.menteenames[index]['profile']), softWrap: true, style: TextStyle( fontSize: 14, fontFamily: config.fontFamily, color: config.fontColor)),      
                           ),
                           Opacity(
                               opacity: 0.5,
                               child: Divider(
                                 color: config.fontColor,
-                                indent: 0,
+                                indent: 70,
                                 thickness: sqrt1_2,
                               )),
                         ],

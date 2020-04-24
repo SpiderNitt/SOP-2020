@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../../theme/mentor.dart';
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:inductions_20/others/jwtparse.dart';
 
 class Data {
@@ -95,12 +95,13 @@ class _RequestlistState extends State<Requestlist> {
 
     for (int j = 0; j < checklinks['link'].length; ++j) {
       tempstore.add(
-        Text(checklinks['link']['$j'],
-            softWrap: true,
-            style: TextStyle(
-                fontSize: 13,
-                fontFamily: config.fontFamily,
-                color: config.links)),
+        InkWell(
+          child: Text(checklinks['link']['$j'],  softWrap: true, style: TextStyle( fontSize: 13, fontFamily: config.fontFamily, color: config.links)),
+          onTap: () async{
+            if(await canLaunch('${checklinks['link']['$j']}'))
+             launch('${checklinks['link']['$j']}');
+          },
+        )
       );
       tempstore.add(SizedBox(
         height: 5,
