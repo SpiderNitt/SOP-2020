@@ -49,15 +49,18 @@ class MenteeCustomDrawer extends StatelessWidget {
               ),
             ),
             CustomListTile(Icons.home, "Home Page", () {
+              print("home");
               Navigator.pushNamed(context, '/mentee/');
             }),
             CustomListTile(Icons.announcement, "Announcements", () {
+              print("Announcement");
               Navigator.pushNamed(context, '/mentee/announcement/');
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();
               await storage.delete(key: "jwt");
-              Navigator.pushNamed(context, '/login');
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/login', (Route<dynamic> route) => false);
             }),
           ],
         ),

@@ -27,7 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
         var jwtToken = await storage.read(key: "jwt");
         print(jwtToken);
         if (jwtToken == null)
-          Navigator.pushNamed(context, '/login');
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/login', (Route<dynamic> route) => false);
         else {
           var res = tryParseJwt(jwtToken);
           if (res["is_mentor"]) {
@@ -35,8 +36,10 @@ class _SplashScreenState extends State<SplashScreen> {
               context,
               MaterialPageRoute(builder: (context) => Mentor(jwtToken)),
             );
+            
           } else {
-            Navigator.pushNamed(context, '/mentee/');
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/mentee/', (Route<dynamic> route) => false);
           }
         }
       },

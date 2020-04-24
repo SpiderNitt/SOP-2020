@@ -89,7 +89,7 @@ class LoginViewState extends State<LoginScreen> {
                 ),
                 Image(
                   image: AssetImage(
-                    'assets/images/spiderIcon.webp',
+                    'assets/images/spiderIcon.png',
                   ),
                   height: imagesize * 0.7,
                   width: imagesize * 0.7,
@@ -219,6 +219,7 @@ class LoginViewState extends State<LoginScreen> {
                                           context, '/get_details');
                                     } else {
                                       if (payloadMap["is_mentor"]) {
+                                        print("Login as mentor");
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -226,8 +227,11 @@ class LoginViewState extends State<LoginScreen> {
                                                   Mentor("$token")),
                                         );
                                       } else {
-                                        Navigator.pushNamed(
-                                            context, '/mentee/');
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                                '/mentee/',
+                                                (Route<dynamic> route) =>
+                                                    false);
                                       }
                                     }
                                   } else {
