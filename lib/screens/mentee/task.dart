@@ -114,8 +114,8 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
 
       if (feedTime != "5:30") {
         String date = feedTime.substring(0, 10);
-        hr = int.parse(feedTime.substring(11, 13)) + 5;
-        min = int.parse(feedTime.substring(14, 16)) + 30;
+        hr = int.parse(feedTime.substring(11, 13));
+        min = int.parse(feedTime.substring(14, 16));
         sec = int.parse(feedTime.substring(17, 19));
         if (min >= 60) {
           hr++;
@@ -130,7 +130,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
         this.recentTime = "$hr:$min:$sec";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
-      this.overallPer = (this.basic_per*0.7) + (this.advancePer*0.3);
+      this.overallPer = (this.basic_per * 0.7) + (this.advancePer * 0.3);
       this.decoverallPer = this.overallPer * 100;
       decbasicPer = this.basic_per * 100;
       decadvancePer = this.advancePer * 100;
@@ -274,17 +274,21 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                       color: theme.tertiaryColor,
                                     ))),
                           ])),
-
-                               CustomBox('Discussion',(){
-                                   List a=task;
-                                   Navigator.push(context, 
-                                   PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TaskComment(task: a),
-                                   transitionsBuilder: (context, animation, secondaryAnimation, child){
-                                   return SlideTransition(
-                                     position: Tween<Offset>(
-                                     begin: const Offset(0.0, 1.0),
-                                     end: Offset.zero,
-                                     ).animate(animation),
+                  CustomBox('Discussion', () {
+                    List a = task;
+                    Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    TaskComment(task: a),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(0.0, 1.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
                                 child: SlideTransition(
                                   position: Tween<Offset>(
                                     end: const Offset(0.0, 1.0),
@@ -293,11 +297,8 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                   child: child,
                                 ),
                               );
-                            }
-                            )
-                            ); },bottombarwidth,50,15,theme.blackColor,15,0,0),
-
-                 
+                            }));
+                  }, bottombarwidth, 50, 15, theme.blackColor, 15, 0, 0),
                 ]),
           ),
         ),
@@ -311,28 +312,28 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
             else {
               return ListView(children: <Widget>[
                 Container(
-              width: previousfeedbackwidth,
-              margin: EdgeInsets.all(10),
-              child: Material(
-                color: theme.blackColor,
-                elevation: 10.0,
-                borderRadius: BorderRadius.circular(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          ''' After adding the links, review of the work will be requested only on clicking the review button. you can also add a comment with the request.''',
-                          style: TextStyle(
-                              color: theme.tertiaryColor,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ],
+                  width: previousfeedbackwidth,
+                  margin: EdgeInsets.all(10),
+                  child: Material(
+                    color: theme.blackColor,
+                    elevation: 10.0,
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Text(
+                              ''' After adding the links, review of the work will be requested only on clicking the review button. you can also add a comment with the request.''',
+                              style: TextStyle(
+                                  color: theme.tertiaryColor,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
                 Padding(
                     padding: const EdgeInsets.all(0.0),
                     child: Column(
@@ -360,8 +361,8 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           print(taskSubmitted.length);
                           var text = textEditingController.value.text;
                           if (taskSubmitted.length >= 5) {
-                            showAlertDialog(context,
-                                "submitted links limited upto 5");
+                            showAlertDialog(
+                                context, "submitted links limited upto 5");
                           } else {
                             try {
                               var response = await http.head(text);
@@ -472,7 +473,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                             );
                           }));
                 }, previousfeedbackwidth, 50, 14.5, theme.blackColor, 15, 10,
-                  5),
+                    5),
                 Container(
                     margin: EdgeInsets.only(
                         top: 30.0, left: reviewpadding, right: reviewpadding),

@@ -34,8 +34,8 @@ class TASKfeedbackState extends State<TASKfeedback>
       _messages.add("$v");
       String date1 = "$k".substring(0, 10);
 
-      int hr = int.parse("$k".substring(11, 13)) + 5;
-      int min = int.parse("$k".substring(14, 16)) + 30;
+      int hr = int.parse("$k".substring(11, 13));
+      int min = int.parse("$k".substring(14, 16));
       int sec = int.parse("$k".substring(17, 19));
       if (min >= 60) {
         hr++;

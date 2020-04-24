@@ -32,7 +32,7 @@ class AnnouncementState extends State<Announcement>
   var username;
   var name;
   var url;
-  var user ;
+  var user;
   List _messages = [];
   List date = [];
   List time = [];
@@ -45,7 +45,8 @@ class AnnouncementState extends State<Announcement>
     scrollController = ScrollController();
     this.user = {
       "name": "loading..",
-      "avatar_url":"https://media-exp1.licdn.com/dms/image/C510BAQG9qrZT4zZUUA/company-logo_200_200/0?e=2159024400&v=beta&t=nv5kv0k1DSSLrKxY2fLQ4YEsfZGvQ-XJ8Ypiu66RqaA",
+      "avatar_url":
+          "https://media-exp1.licdn.com/dms/image/C510BAQG9qrZT4zZUUA/company-logo_200_200/0?e=2159024400&v=beta&t=nv5kv0k1DSSLrKxY2fLQ4YEsfZGvQ-XJ8Ypiu66RqaA",
       "login": "loading.."
     };
     get_announcement();
@@ -62,8 +63,8 @@ class AnnouncementState extends State<Announcement>
       msg.add("$v");
       String date1 = "$k".substring(0, 10);
 
-      int hr = int.parse("$k".substring(11, 13)) + 5;
-      int min = int.parse("$k".substring(14, 16)) + 30;
+      int hr = int.parse("$k".substring(11, 13));
+      int min = int.parse("$k".substring(14, 16));
       int sec = int.parse("$k".substring(17, 19));
       if (min >= 60) {
         hr++;
