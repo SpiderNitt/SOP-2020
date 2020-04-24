@@ -108,7 +108,7 @@ class TaskCommentState extends State<TaskComment>
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TASK(task: task)),
+                MaterialPageRoute(builder: (context) => Task(task: task)),
               );
             },
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inductions_20/theme/mentee.dart';
 
-class Custom_box extends StatelessWidget {
+class CustomBox extends StatelessWidget {
   final String _text;
   final _ontap;
   final double _width;
@@ -12,7 +12,7 @@ class Custom_box extends StatelessWidget {
   final double _margin;
   final double _borderRadius;
 
-  Custom_box(this._text, this._ontap, this._width, this._height, this._fontsize,
+  CustomBox(this._text, this._ontap, this._width, this._height, this._fontsize,
       this._backgroundcolor, this._padding, this._margin, this._borderRadius);
 
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class Custom_box extends StatelessWidget {
               color: _backgroundcolor,
               borderRadius: BorderRadius.circular(_borderRadius)),
           child: Text(
-            '${_text}',
+            '$_text',
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.bold,

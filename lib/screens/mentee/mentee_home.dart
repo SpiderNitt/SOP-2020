@@ -18,7 +18,6 @@ import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
 class HomePage extends StatefulWidget {
   var name, usernamee, jwt;
   dynamic res;
-  //  HomePage();
 
   @override
   _MyHomePage createState() => _MyHomePage();
@@ -221,7 +220,7 @@ class _MyHomePage extends State<HomePage> {
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
                             for (int i = 0; i < list.length; i++)
-                              Custom_box(list[i], () async {
+                              CustomBox(list[i], () async {
                                 setState(() {
                                   for (int j = 0; j < list.length; j++) {
                                     if (j == i)
@@ -251,7 +250,7 @@ class _MyHomePage extends State<HomePage> {
                         thickness: 3,
                       ),
                       for (int i = 0; i < task_list.length; i++)
-                        Custom_box(task_list[i], () {
+                        CustomBox(task_list[i], () {
                           print(taskno_list[i]);
                           List a = [
                             task,
@@ -264,7 +263,7 @@ class _MyHomePage extends State<HomePage> {
                               PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      TASK(task: a),
+                                      Task(task: a),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var animate = Tween<Offset>(

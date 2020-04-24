@@ -30,14 +30,14 @@ class AnnouncementState extends State<Announcement>
   @override
   void initState() {
     scrollController = ScrollController();
-    get_announcement();
+    getAnnouncements();
     super.initState();
   }
 
-  Future<void> get_announcement() async {
-    Announcement_list announcement_list = Announcement_list();
-    await announcement_list.extractProgressDetails();
-    announcement_list.announcements.forEach((k, v) {
+  Future<void> getAnnouncements() async {
+    AnnouncementList announcementList = AnnouncementList();
+    await announcementList.extractProgressDetails();
+    announcementList.announcements.forEach((k, v) {
       _messages.add("$v");
       String date1 = "$k".substring(0, 10);
 
@@ -82,30 +82,25 @@ class AnnouncementState extends State<Announcement>
       commentwidth = 390;
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: theme.primaryColor,
-        drawer: MenteeCustomDrawer(
-            '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
-        appBar: AppBar(
-          title: Text('''Announcement'''),
-          backgroundColor: theme.blackColor,
-        ),
-        body: ListView.builder(
-            controller: scrollController,
-            itemCount: _messages.length,
-            itemBuilder: (context, index) {
-              Announcementbox('''Anjenaya''', '''${date[index]}''',
-                  '''${time[index]}''', '''${_messages[index]}''', width);
-            }),
+    return Scaffold(
+      backgroundColor: theme.primaryColor,
+      drawer: MenteeCustomDrawer(
+          '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
+      appBar: AppBar(
+        title: Text('''Announcement'''),
+        backgroundColor: theme.blackColor,
       ),
+      body: ListView.builder(
+          controller: scrollController,
+          itemCount: _messages.length,
+          itemBuilder: (context, index) => Announcementbox(
+              '''Anjenaya''',
+              '''${date[index]}''',
+              '''${time[index]}''',
+              '''${_messages[index]}''',
+              width)),
     );
   }
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
-  }
+  State<StatefulWidget> createState() => null;
 }

@@ -36,10 +36,9 @@ class _SplashScreenState extends State<SplashScreen> {
               context,
               MaterialPageRoute(builder: (context) => Mentor(jwtToken)),
             );
-            
           } else {
             Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/mentee/', (Route<dynamic> route) => false);
+                '/mentee/', (Route<dynamic> route) => false);
           }
         }
       },
@@ -49,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(

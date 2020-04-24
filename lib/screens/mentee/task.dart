@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:convert' show jsonEncode;
 
 import 'package:inductions_20/screens/mentee/data/task_description.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
@@ -6,7 +6,6 @@ import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_graph.dart';
 import 'package:inductions_20/screens/mentee/mentee_home.dart';
-import 'package:inductions_20/screens/mentee/comments.dart';
 import 'package:http/http.dart' as http;
 import 'package:inductions_20/screens/mentee/feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,40 +19,41 @@ import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
 
-class TASK extends StatefulWidget {
+class Task extends StatefulWidget {
   List task;
-  TASK({this.task});
+  Task({this.task});
 
-  TASKState createState() => TASKState(task);
+  TaskState createState() => TaskState(task);
 }
 
-class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
+class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var taskdes = "loading...";
-  List res_desc = [];
-  List res_link = [];
+  List resDesc = [];
+  List resLink = [];
 
   var submitbarcolor = theme.fontColor;
   var user;
   var basic_per = 0.0;
-  var advance_per = 0.0;
-  var overall_per;
-  var decoverall_per;
-  var sub_count = 56;
+  var advancePer = 0.0;
+  var overallPer;
+  var decoverallPer;
+  var subCount = 56;
   List task;
-  TASKState(this.task);
-  var decbasic_per;
-  var decadvance_per;
-  var decbasic_barper;
-  var decadvance_barper;
-  var feed_time = "5:30";
-  var recent_time;
-  var recent_date;
+  var decbasicPer;
+  var decadvancePer;
+  var decbasicBarper;
+  var decadvanceBarper;
+  var feedTime = "5:30";
+  var recentTime;
+  var recentDate;
   Map feedbacks = {};
   List taskSubmitted;
   var mentorname = "loading..";
   var mentorcontact = "loading..";
   int hr = 0, min = 0, sec = 0;
   TextEditingController textEditingController, textEditingController1;
+
+  TaskState(this.task);
 
   List<Tab> myTabs = <Tab>[
     Tab(text: 'Description'),
@@ -84,39 +84,39 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     ];
     textEditingController = TextEditingController();
     textEditingController1 = TextEditingController();
-    this.overall_per = ((this.basic_per + this.advance_per) / 2);
-    this.decoverall_per = this.overall_per * 100;
-    decbasic_per = this.basic_per * 100;
-    decadvance_per = this.advance_per * 100;
+    this.overallPer = ((this.basic_per + this.advancePer) / 2);
+    this.decoverallPer = this.overallPer * 100;
+    decbasicPer = this.basic_per * 100;
+    decadvancePer = this.advancePer * 100;
     taskSubmitted = [];
-    task_desc();
+    taskDesc();
   }
 
-  Future<void> task_desc() async {
-    Task_details task_details = Task_details(task[1]);
-    await task_details.extractTaskDetails();
+  Future<void> taskDesc() async {
+    Task_details taskDetails = Task_details(task[1]);
+    await taskDetails.extractTaskDetails();
     setState(() {
-      this.taskdes = task_details.task_description;
-      this.res_desc = task_details.task_resources_desc;
-      this.res_link = task_details.task_resources_link;
-      this.sub_count = task_details.no_submissions;
+      this.taskdes = taskDetails.task_description;
+      this.resDesc = taskDetails.task_resources_desc;
+      this.resLink = taskDetails.task_resources_link;
+      this.subCount = taskDetails.no_submissions;
     });
 
-    Mentee_progress mentee_progress = Mentee_progress(task[1]);
+    Mentee_progress menteeProgress = Mentee_progress(task[1]);
 
-    await mentee_progress.extractProgressDetails();
+    await menteeProgress.extractProgressDetails();
 
     setState(() {
-      basic_per = mentee_progress.basic_per / 100;
-      advance_per = mentee_progress.advance_per / 100;
-      feed_time = mentee_progress.recent_feedback;
-      feedbacks = mentee_progress.previous_feedbacks;
+      basic_per = menteeProgress.basic_per / 100;
+      advancePer = menteeProgress.advance_per / 100;
+      feedTime = menteeProgress.recent_feedback;
+      feedbacks = menteeProgress.previous_feedbacks;
       print(feedbacks);
-      if (feed_time != "5:30") {
-        String date = feed_time.substring(0, 10);
-        hr = int.parse(feed_time.substring(11, 13)) + 5;
-        min = int.parse(feed_time.substring(14, 16)) + 30;
-        sec = int.parse(feed_time.substring(17, 19));
+      if (feedTime != "5:30") {
+        String date = feedTime.substring(0, 10);
+        hr = int.parse(feedTime.substring(11, 13)) + 5;
+        min = int.parse(feedTime.substring(14, 16)) + 30;
+        sec = int.parse(feedTime.substring(17, 19));
         if (min >= 60) {
           hr++;
           min = min - 60;
@@ -125,25 +125,23 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           hr = hr - 24;
         }
 
-        this.recent_date = date;
+        this.recentDate = date;
 
-        this.recent_time = "$hr:$min:$sec";
-      } else {
-        String date = "2020-04-24T09:27:01+05:30";
-      }
-      this.taskSubmitted = mentee_progress.submitted_links;
-      this.overall_per = ((this.basic_per + this.advance_per) / 2);
-      this.decoverall_per = this.overall_per * 100;
-      decbasic_per = this.basic_per * 100;
-      decadvance_per = this.advance_per * 100;
+        this.recentTime = "$hr:$min:$sec";
+      } else {}
+      this.taskSubmitted = menteeProgress.submitted_links;
+      this.overallPer = ((this.basic_per + this.advancePer) / 2);
+      this.decoverallPer = this.overallPer * 100;
+      decbasicPer = this.basic_per * 100;
+      decadvancePer = this.advancePer * 100;
     });
 
-    Mentor_details mentor_details = Mentor_details(task[3]);
-    await mentor_details.mentor_extract();
+    Mentor_details mentorDetails = Mentor_details(task[3]);
+    await mentorDetails.mentor_extract();
 
     setState(() {
-      this.mentorname = mentor_details.mentor_name;
-      this.mentorcontact = mentor_details.mentor_contact;
+      this.mentorname = mentorDetails.mentor_name;
+      this.mentorcontact = mentorDetails.mentor_contact;
     });
   }
 
@@ -175,8 +173,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
       percentbarwidth = 120;
       leftpaddingwidth = 5;
       previousfeedbackwidth = 320;
-      decbasic_barper = this.basic_per * percentbarwidth;
-      decadvance_barper = this.advance_per * percentbarwidth;
+      decbasicBarper = this.basic_per * percentbarwidth;
+      decadvanceBarper = this.advancePer * percentbarwidth;
     } else if (width <= 600) {
       submitedlinkswidth = 4 * (width / 5);
       submissionwidth = 110;
@@ -187,8 +185,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
       previousfeedbackwidth = 320;
       bottombarwidth = width / 3;
       percentbarwidth = 130;
-      decbasic_barper = this.basic_per * percentbarwidth;
-      decadvance_barper = this.advance_per * percentbarwidth;
+      decbasicBarper = this.basic_per * percentbarwidth;
+      decadvanceBarper = this.advancePer * percentbarwidth;
     } else if (width <= 900) {
       submitedlinkswidth = 4 * (width / 5);
       submissionwidth = 110;
@@ -199,8 +197,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
       reviewpadding = 10;
       previousfeedbackwidth = 320;
       percentbarwidth = 130;
-      decbasic_barper = this.basic_per * percentbarwidth;
-      decadvance_barper = this.advance_per * percentbarwidth;
+      decbasicBarper = this.basic_per * percentbarwidth;
+      decadvanceBarper = this.advancePer * percentbarwidth;
     } else {
       submitedlinkswidth = 4 * (width / 5);
       submissionwidth = 110;
@@ -211,8 +209,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
       linkinputwidth = 500;
       reviewpadding = 340;
       previousfeedbackwidth = 400;
-      decbasic_barper = this.basic_per * percentbarwidth;
-      decadvance_barper = this.advance_per * percentbarwidth;
+      decbasicBarper = this.basic_per * percentbarwidth;
+      decadvanceBarper = this.advancePer * percentbarwidth;
     }
     task = widget.task;
     return MaterialApp(
@@ -235,16 +233,17 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
         ),
         floatingActionButton: _tabController.index == 0
             ? FloatingActionButton(
+                onPressed: () {},
                 backgroundColor: theme.fontColor,
                 child: ListView(children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(bottom: 0),
                   ),
-                  Circular_percentage(
+                  CircularPercentage(
                       48,
                       8,
-                      this.overall_per,
-                      Text("${decoverall_per.toStringAsFixed(0)}"),
+                      this.overallPer,
+                      Text("${decoverallPer.toStringAsFixed(0)}"),
                       theme.advancetaskColor),
                 ]))
             : null,
@@ -268,17 +267,17 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                             Padding(
                                 padding: EdgeInsets.only(
                                     top: 16, left: leftpaddingwidth, right: 0),
-                                child: Text("${sub_count} submission",
+                                child: Text("$subCount submission",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: theme.tertiaryColor,
                                     ))),
                           ])),
-                  Custom_box('Submit', () {
+                  CustomBox('Submit', () {
                     _tabController.animateTo((_tabController.index + 1));
                     double width = MediaQuery.of(context).size.width;
-                    print(feed_time);
+                    print(feedTime);
                   }, bottombarwidth, 50, 15, theme.blackColor, 15, 0, 0),
                 ]),
           ),
@@ -288,8 +287,8 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
           children: myTabs.map((Tab tab) {
             final String label = tab.text.toLowerCase();
             if (label != 'progress')
-              return Task_description(theme.primaryColor, taskdes, res_link,
-                  res_desc, mentorname, mentorcontact);
+              return TaskDescription(theme.primaryColor, taskdes, resLink,
+                  resDesc, mentorname, mentorcontact);
             else {
               return ListView(children: <Widget>[
                 Padding(
@@ -315,14 +314,13 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                             controller: textEditingController,
                           ),
                         ),
-                        Custom_box('Submit', () async {
+                        CustomBox('Submit', () async {
                           var text = textEditingController.value.text;
                           if (taskSubmitted.length > 5) {
                             showAlertDialog(context,
                                 "submitted links should not be above 5");
                           } else {
                             try {
-                              var response = await http.head(text);
                               textEditingController.clear();
                               setState(() {
                                 taskSubmitted.add(text);
@@ -354,7 +352,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Custom_box('''${taskSubmitted[i]}''', () {
+                                      CustomBox('''${taskSubmitted[i]}''', () {
                                         launch('${taskSubmitted[i]}');
                                       }, submitedlinkswidth, 38, 15,
                                           theme.primaryLightColor, 10, 3, 0),
@@ -382,7 +380,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                   height: 50,
                   thickness: 1,
                 ),
-                if (feed_time != "5:30")
+                if (feedTime != "5:30")
                   Row(children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(
@@ -397,15 +395,15 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                           painter: Triangle(),
                         )),
                     Comment_box(
-                        '''${feedbacks[feed_time]}''',
+                        '''${feedbacks[feedTime]}''',
                         theme.tertiaryColor,
                         theme.fontColor,
                         commentwidth,
                         '''$mentorname''',
-                        '''$recent_date''',
-                        '''$recent_time'''),
+                        '''$recentDate''',
+                        '''$recentTime'''),
                   ]),
-                Custom_box('Previous feedbacks', () {
+                CustomBox('Previous feedbacks', () {
                   Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -446,7 +444,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                                   color: theme.fontColor, fontSize: 15)),
                           controller: textEditingController1,
                         ),
-                        Custom_box('Send Request to Review', () async {
+                        CustomBox('Send Request to Review', () async {
                           var text = textEditingController1.value.text;
                           ProvideJwt provideJwt = ProvideJwt();
                           String jwt = provideJwt.jwt;
@@ -458,7 +456,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                           Map<String, String> headers = {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
-                            'Authorization': 'Bearer ${jwt}',
+                            'Authorization': 'Bearer $jwt',
                           };
                           Map<String, String> list1 = {};
                           for (int i = 0; i < taskSubmitted.length; i++)
@@ -493,16 +491,16 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 40),
                 ),
-                Circular_percentage(
+                CircularPercentage(
                     180.0,
                     15.0,
-                    this.advance_per,
-                    Circular_percentage(
+                    this.advancePer,
+                    CircularPercentage(
                         130.0,
                         15.0,
                         this.basic_per,
                         Text(
-                          "${decoverall_per.toStringAsFixed(0)} %",
+                          "${decoverallPer.toStringAsFixed(0)} %",
                           style: TextStyle(color: theme.fontColor),
                         ),
                         theme.tertiaryColor),
@@ -531,7 +529,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                       TableRow(children: <Widget>[
                         Row(children: <Widget>[
                           Container(
-                            width: decbasic_barper,
+                            width: decbasicBarper,
                             height: 15,
                             color: theme.tertiaryColor,
                           ),
@@ -541,7 +539,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                           height: 40,
                           padding: const EdgeInsets.only(top: 0, left: 10),
                           child: Text(
-                            'Basic Task : ${decbasic_per} %',
+                            'Basic Task : $decbasicPer %',
                             style: TextStyle(
                               color: theme.fontColor,
                             ),
@@ -551,7 +549,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                       TableRow(children: <Widget>[
                         Row(children: <Widget>[
                           Container(
-                            width: decadvance_barper,
+                            width: decadvanceBarper,
                             height: 15,
                             color: theme.advancetaskColor,
                           )
@@ -561,7 +559,7 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                           height: 40,
                           padding: const EdgeInsets.only(top: 0, left: 10),
                           child: Text(
-                            'Advance Task : ${decadvance_per} %',
+                            'Advance Task : $decadvancePer %',
                             style: TextStyle(
                               color: theme.fontColor,
                             ),
@@ -592,9 +590,5 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
     );
   }
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
-  }
+  State<StatefulWidget> createState() => null;
 }
