@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'dart:convert' show json;
 import 'package:http/http.dart' as http;
 import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/task.dart';
@@ -8,9 +8,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:http/http.dart';
-// import 'dart:convert';
 import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
 
 import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
@@ -44,13 +41,19 @@ class _MyHomePage extends State<HomePage> {
 
   var task = "WEB";
   var user;
+
   void initState() {
     super.initState();
-    this.user = {"name": "loading..", "avatar_url": " ", "login": "loading.."};
+    this.user = {
+      "name": "loading..",
+      "avatar_url":
+          "https://media-exp1.licdn.com/dms/image/C510BAQG9qrZT4zZUUA/company-logo_200_200/0?e=2159024400&v=beta&t=nv5kv0k1DSSLrKxY2fLQ4YEsfZGvQ-XJ8Ypiu66RqaA",
+      "login": "loading.."
+    };
     makeRequest();
   }
 
-  Future<String> makeRequest() async {
+  Future<void> makeRequest() async {
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();
     var jwt = provideJwt.jwt;
@@ -60,30 +63,41 @@ class _MyHomePage extends State<HomePage> {
       username = res['github_username'];
     });
 
-    String url = 'https://api.github.com/users/';
-    http.Response response = await http.get(Uri.encodeFull(url + username),
-        headers: {"Accept": "application/json"});
-    var user1 = await json.decode(response.body);
-    setState(() {
-      this.user = user1;
-    });
+    try {
+      String url = 'https://api.github.com/users/';
+      http.Response response = await http.get(Uri.encodeFull(url + username),
+          headers: {"Accept": "application/json"});
+      var user1 = await json.decode(response.body);
+      setState(() {
+        this.user = user1;
+      });
+    } catch (e) {
+      print("exception error: $e");
+    }
 
-    print(this.user);
-    Mentee_profile mentee_profile = Mentee_profile();
-    await mentee_profile.ExtractResponse();
-    setState(() {
-      this.list = mentee_profile.profilelist;
-      this.profile_no_list = mentee_profile.profnolist;
-      this.task = list[0];
-      this.current_profile_no = profile_no_list[0];
-    });
+    try {
+      Mentee_profile mentee_profile = Mentee_profile();
+      await mentee_profile.ExtractResponse();
+      setState(() {
+        this.list = mentee_profile.profilelist;
+        this.profile_no_list = mentee_profile.profnolist;
+        this.task = list[0];
+        this.current_profile_no = profile_no_list[0];
+      });
+    } catch (e) {
+      print("exception error: $e");
+    }
 
-    Profile_task profile_task = Profile_task(profile_no_list[0]);
-    await profile_task.tasks();
-    setState(() {
-      task_list = profile_task.prof_task_title;
-      taskno_list = profile_task.taskno_list;
-    });
+    try {
+      Profile_task profile_task = Profile_task(profile_no_list[0]);
+      await profile_task.tasks();
+      setState(() {
+        task_list = profile_task.prof_task_title;
+        taskno_list = profile_task.taskno_list;
+      });
+    } catch (e) {
+      print("exception error : $e");
+    }
   }
 
   double profilewidth;
