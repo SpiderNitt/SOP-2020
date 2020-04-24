@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart';
 import 'package:inductions_20/screens/mentor/mentor_home.dart';
+import 'package:inductions_20/screens/navigation/get_details.dart';
 import 'package:inductions_20/screens/navigation/widgets/custom_button.dart';
 import 'package:inductions_20/screens/navigation/widgets/custom_input.dart';
 import 'package:string_validator/string_validator.dart';
@@ -215,8 +216,11 @@ class LoginViewState extends State<LoginScreen> {
                                         .decode(base64Url.decode(normalized));
                                     final payloadMap = json.decode(resp);
                                     if (parsedJson["is_first_time"] == true) {
-                                      Navigator.pushNamed(
-                                          context, '/get_details');
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GetDetails("$password")));
                                     } else {
                                       if (payloadMap["is_mentor"]) {
                                         print("Login as mentor");

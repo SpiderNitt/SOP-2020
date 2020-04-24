@@ -11,8 +11,12 @@ import 'package:inductions_20/screens/navigation/widgets/custom_input.dart';
 import '../../theme/navigation.dart';
 
 class GetDetails extends StatefulWidget {
+  final String password;
+
+  const GetDetails(this.password);
+
   @override
-  ViewState createState() => ViewState();
+  ViewState createState() => ViewState(this.password);
 }
 
 class ViewState extends State<GetDetails> {
@@ -24,6 +28,9 @@ class ViewState extends State<GetDetails> {
   double padding;
   double fontsize;
   double containerwidth;
+  final String passwd;
+
+  ViewState(this.passwd);
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -147,6 +154,7 @@ class ViewState extends State<GetDetails> {
                                         '{"rollno" : "$roll", "github_username": "$githubUsername"}';
                                     Response response = await post(url,
                                         headers: headers, body: jsonToken);
+
                                     if (response.statusCode == 200) {
                                       AlertDialog alert = AlertDialog(
                                         title: Text("Spider Orientation"),
@@ -158,8 +166,6 @@ class ViewState extends State<GetDetails> {
                                               Navigator.of(context,
                                                       rootNavigator: true)
                                                   .pop('dialog');
-                                              Navigator.of(context)
-                                                  .pushNamed('/login');
                                             },
                                           ),
                                         ],
@@ -170,17 +176,19 @@ class ViewState extends State<GetDetails> {
                                           return alert;
                                         },
                                       );
-                                      if (payloadMap["is_mentor"]) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Mentor("$token")),
-                                        );
-                                      } else {
-                                        Navigator.pushNamed(
-                                            context, '/mentee/');
-                                      }
+                                      rerouteLogin(passwd, "$roll");
+                                      // if (payloadMap["is_mentor"]) {
+                                      //   Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             Mentor("$token")),
+                                      //   );
+                                      // } else {
+                                      //   Navigator.pushNamed(
+                                      //       context, '/mentee/');
+                                      // }
+
                                     } else {
                                       AlertDialog alert = AlertDialog(
                                         title: Text("Spider Orientation"),
@@ -250,5 +258,62 @@ class ViewState extends State<GetDetails> {
         ),
       ),
     );
+  }
+
+  rerouteLogin(password, rollnumber) async {
+    String url = "https://spider.nitt.edu/inductions20test/login/";
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+    };
+
+    String reqBody = '{"rollno": "$rollnumber", "password": "$password"}';
+    Response response = await post(url, headers: headers, body: reqBody);
+    var parsedJson = await json.decode(response.body);
+    print(response.body);
+    if (parsedJson["success"] == true) {
+      final String jwt = parsedJson["jwt"];
+      final storage = new FlutterSecureStorage();
+      await storage.write(key: "jwt", value: "$jwt");
+      String token = await storage.read(key: "jwt");
+      final parts = token.split('.');
+      final payload = parts[1];
+      var normalized = base64Url.normalize(payload);
+      var resp = utf8.decode(base64Url.decode(normalized));
+      final payloadMap = json.decode(resp);
+      if (parsedJson["is_first_time"] == true) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => GetDetails("$password")));
+      } else {
+        if (payloadMap["is_mentor"]) {
+          print("Login as mentor");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Mentor("$token")),
+          );
+        } else {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              '/mentee/', (Route<dynamic> route) => false);
+        }
+      }
+    } else {
+      AlertDialog alert = AlertDialog(
+        title: Text("Spider Orientation"),
+        content: Text("Incorrect roll number and password"),
+        actions: [
+          FlatButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop('dialog');
+            },
+          ),
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
   }
 }

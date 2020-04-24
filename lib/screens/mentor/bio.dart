@@ -42,6 +42,24 @@ class _BioState extends State<Bio> {
                 key: _formkey,
                 child: Column(
                   children: <Widget>[
+                    Text(
+                      "Current Github Username: ",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: config.fontFamily,
+                          color: config.fontColor),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20.0),
+                      child: Text(
+                        "$gitacc",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: config.fontFamily,
+                          color: Color(0xFF00A8E8),
+                        ),
+                      ),
+                    ),
                     TextFormField(
                       style: TextStyle(
                         color: config.fontColor,

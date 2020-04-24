@@ -32,12 +32,8 @@ dependencies:
   flutter_secure_storage: ^3.3.3
   cached_network_image: ^2.1.0+1
   url_launcher: ^5.4.2
-<<<<<<< HEAD
   flutter_emoji: ^2.2.1+1
-  device_preview: ^0.4.4
-=======
   flutter_launcher_icons: 0.7.4
->>>>>>> c83efbb91a8ec5bffe077b90e1ad23753d5e5b15
 
 dev_dependencies:
   flutter_test:

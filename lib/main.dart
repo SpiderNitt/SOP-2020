@@ -24,7 +24,7 @@ class Spider extends StatelessWidget {
       routes: {
         '/splash_screen': (context) => SplashScreen(),
         '/login': (context) => LoginScreen(),
-        '/get_details': (context) => GetDetails(),
+        // '/get_details': (context) => GetDetails(),
         '/menteetask': (context) => MenteeTask(),
         '/writereview': (context) => Review(),
         '/bio': (context) => Bio(),
