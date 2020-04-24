@@ -7,6 +7,7 @@ import 'package:inductions_20/screens/mentee/data/comments.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 import 'dart:convert' show jsonEncode;
 
 class TaskComment extends StatefulWidget {
@@ -44,11 +45,13 @@ class TaskCommentState extends State<TaskComment>
     super.initState();
    
     _getcomments();
-     
-
+   
+      
   }
 
+
   Future<void> _getcomments() async{
+
 
    Comments_list comments_list1 = Comments_list(task[1]);
    await comments_list1.extractComment();
@@ -67,8 +70,16 @@ class TaskCommentState extends State<TaskComment>
 
   void handleSendMessage() async {
         var text = textEditingController.value.text; 
-                          
-                          try{
+            
+          
+    final RegExp REGEX_EMOJI = RegExp(r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
+    if(text.contains(REGEX_EMOJI)){
+
+             
+               showAlertDialog(context, "message containing emojis or photos is restricted");
+             
+    }else{
+       try{
                           ProvideJwt provideJwt = ProvideJwt();
                           await provideJwt.extractjwt();
                           String jwt = provideJwt.jwt;
@@ -105,14 +116,10 @@ class TaskCommentState extends State<TaskComment>
                           {
                             print("404 error");
                           }
-                          }catch(e)
-                          {
-                            print("error:$e");
-                          }    
-                      
-
-   
+                        
+             try{       
     setState(() {
+      textEditingController.clear();
       _messages.add(text);
       _users.add(username);
       DateTime dateTime = new DateTime.now();
@@ -136,12 +143,18 @@ class TaskCommentState extends State<TaskComment>
       _time.add("$times");
 
       enableButton = false;
-    });
+    });}
+    catch(e){print("error:$e");}
 
+  }catch(e){  print("error:$e");
+                          }    
     Future.delayed(Duration(milliseconds: 100), () {
       scrollController.animateTo(scrollController.position.maxScrollExtent,
           curve: Curves.ease, duration: Duration(milliseconds: 500));
     });
+
+             }
+
   }
 
   double commentwidth;
@@ -218,6 +231,33 @@ class TaskCommentState extends State<TaskComment>
         ),
         body: Column(
           children: <Widget>[
+        Container(
+          width: 370,
+          margin: EdgeInsets.all(10),
+          child: Material(
+            color: theme.blackColor,
+            elevation: 10.0,
+            borderRadius: BorderRadius.circular(10.0),
+            child: Column(
+               
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.all(15),
+                    
+                   
+                    child: Text(
+                      ''' This will be an interactive field between you and your friends, regarding the task''',
+                      style: TextStyle(
+                          color: theme.tertiaryColor,
+                          fontWeight: FontWeight.bold),
+                    )),
+              
+              ],
+            ),
+          ),
+        ),
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
@@ -303,5 +343,19 @@ class TaskCommentState extends State<TaskComment>
     );
   }
 
+showAlertDialog(BuildContext context, text) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text(text),
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   State<StatefulWidget> createState() => null;
 }

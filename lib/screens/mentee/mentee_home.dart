@@ -120,15 +120,10 @@ class _MyHomePage extends State<HomePage> {
         drawer: MenteeCustomDrawer(
             '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
         appBar: AppBar(
-          title: Text("Profile"),
-          elevation: 0,
-          backgroundColor: theme.blackColor,
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              // child: Icon(Icons.more_vert, color: theme.fontColor),
-            )
-          ],
+          title: Text("DASHBOARD",),
+          centerTitle: true,
+        backgroundColor: theme.blackColor,
+       
         ),
         body: SizedBox.expand(
             child: Stack(children: <Widget>[
@@ -229,7 +224,7 @@ class _MyHomePage extends State<HomePage> {
                       Container(
                         height: 80,
                         width: 370,
-                        color: theme.primaryColor,
+                        color: theme.blackColor,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[

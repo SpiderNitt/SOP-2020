@@ -130,7 +130,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
         this.recentTime = "$hr:$min:$sec";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
-      this.overallPer = (this.basic_per*0.3) + (this.advancePer*0.7);
+      this.overallPer = (this.basic_per*0.7) + (this.advancePer*0.3);
       this.decoverallPer = this.overallPer * 100;
       decbasicPer = this.basic_per * 100;
       decadvancePer = this.advancePer * 100;
@@ -275,7 +275,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                     ))),
                           ])),
 
-                               CustomBox('Comments',(){
+                               CustomBox('Discussion',(){
                                    List a=task;
                                    Navigator.push(context, 
                                    PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TaskComment(task: a),
@@ -297,11 +297,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                             )
                             ); },bottombarwidth,50,15,theme.blackColor,15,0,0),
 
-                  CustomBox('Submit', () {
-                    _tabController.animateTo((_tabController.index + 1));
-                    double width = MediaQuery.of(context).size.width;
-                    print(feedTime);
-                  }, bottombarwidth, 50, 15, theme.blackColor, 15, 0, 0),
+                 
                 ]),
           ),
         ),
@@ -455,7 +451,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                             );
                           }));
                 }, previousfeedbackwidth, 50, 14.5, theme.blackColor, 15, 10,
-                    0),
+                  5),
                 Container(
                     margin: EdgeInsets.only(
                         top: 30.0, left: reviewpadding, right: reviewpadding),
