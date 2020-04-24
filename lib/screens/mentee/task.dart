@@ -84,7 +84,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     ];
     textEditingController = TextEditingController();
     textEditingController1 = TextEditingController();
-    this.overallPer = ((this.basic_per + this.advancePer) / 2);
+    this.overallPer = (this.basic_per*0.3 )+ (this.advancePer*0.7);
     this.decoverallPer = this.overallPer * 100;
     decbasicPer = this.basic_per * 100;
     decadvancePer = this.advancePer * 100;
@@ -130,7 +130,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
         this.recentTime = "$hr:$min:$sec";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
-      this.overallPer = ((this.basic_per + this.advancePer) / 2);
+      this.overallPer = (this.basic_per*0.3) + (this.advancePer*0.7);
       this.decoverallPer = this.overallPer * 100;
       decbasicPer = this.basic_per * 100;
       decadvancePer = this.advancePer * 100;
@@ -305,7 +305,9 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                 ]),
           ),
         ),
-        body: TabBarView(
+        body: 
+
+         TabBarView(
           controller: _tabController,
           children: myTabs.map((Tab tab) {
             final String label = tab.text.toLowerCase();
@@ -592,8 +594,35 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                             ),
                           ),
                         )
+                        
                       ])
-                    ]))
+                    ])),
+                      Container(
+          width: 370,
+          child: Material(
+            color: theme.blackColor,
+            elevation: 10.0,
+            borderRadius: BorderRadius.circular(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.all(15),
+                   
+                    child: Text(
+                      "The Completion percentage Displayed above is calculated as 70% Basic task and 30% Advance task :)",
+                      style: TextStyle(
+                          color: theme.tertiaryColor,
+                          fontWeight: FontWeight.bold),
+                    )),
+              
+              ],
+            ),
+          ),
+        ),
+               
+
               ]);
             }
           }).toList(),
