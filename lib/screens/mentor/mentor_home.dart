@@ -6,7 +6,8 @@ import 'widgets/mentor_details.dart';
 import '../../others/jwtparse.dart';
 
 class Mentor extends StatelessWidget {
-  String name, gitacc, jwt;
+  String name, gitacc;
+  final jwt;
   dynamic res;
   Mentor(this.jwt) {
     this.res = tryParseJwt(this.jwt);

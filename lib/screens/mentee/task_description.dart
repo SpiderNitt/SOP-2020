@@ -32,66 +32,67 @@ class TaskDescription extends StatelessWidget {
   TaskDescription(this.primary, this.taskDescription, this.resourceLink,
       this.resourceDesc, this.mentorName, this.mentorContact);
   Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Container(
-          width: 370,
-          child: Material(
-            color: theme.blackColor,
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      "Mentor Assigned",
-                      style: TextStyle(
-                          color: theme.tertiaryColor,
-                          fontWeight: FontWeight.bold),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(children: <Widget>[
-                      CustomBox('Contact $mentorName ', () {}, 150, 50, 14,
-                          theme.blackColor, 0, 0, 0),
-                      CustomBox('($mentorContact)', () {
-                        launch("tel://$mentorContact");
-                      }, 110, 50, 14, theme.blackColor, 0, 0, 0),
-                    ]))
-              ],
-            ),
-          ),
-        ),
-      ),
-      Padding(
+    return ListView(
+      children: <Widget>[
+        Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
             width: 370,
             child: Material(
-              color: primary,
+              color: theme.blackColor,
               elevation: 10.0,
               borderRadius: BorderRadius.circular(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Description:",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: theme.tertiaryColor,
+                  Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        "Mentor Assigned",
+                        style: TextStyle(
+                            color: theme.tertiaryColor,
+                            fontWeight: FontWeight.bold),
                       )),
-                  Text('''$taskDescription''',
-                      style: TextStyle(fontSize: 17, color: theme.fontColor))
+                  Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Row(children: <Widget>[
+                        CustomBox('Contact $mentorName ', () {}, 150, 50, 14,
+                            theme.blackColor, 0, 0, 0),
+                        CustomBox('($mentorContact)', () {
+                          launch("tel://$mentorContact");
+                        }, 110, 50, 14, theme.blackColor, 0, 0, 0),
+                      ]))
                 ],
               ),
             ),
-          )),
-      Padding(
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              width: 370,
+              child: Material(
+                color: primary,
+                elevation: 10.0,
+                borderRadius: BorderRadius.circular(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Description:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: theme.tertiaryColor,
+                        )),
+                    Text('''$taskDescription''',
+                        style: TextStyle(fontSize: 17, color: theme.fontColor))
+                  ],
+                ),
+              ),
+            )),
+        Padding(
           padding: const EdgeInsets.all(16.0),
           child: Container(
             width: 370,
@@ -132,7 +133,9 @@ class TaskDescription extends StatelessWidget {
                 ],
               ),
             ),
-          )),
-    ]);
+          ),
+        ),
+      ],
+    );
   }
 }

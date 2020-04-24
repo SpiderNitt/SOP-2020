@@ -158,6 +158,8 @@ class ViewState extends State<GetDetails> {
                                               Navigator.of(context,
                                                       rootNavigator: true)
                                                   .pop('dialog');
+                                              Navigator.of(context)
+                                                  .pushNamed('/login');
                                             },
                                           ),
                                         ],
