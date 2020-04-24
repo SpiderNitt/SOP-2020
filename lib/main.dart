@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/navigation/get_details.dart';
 import 'package:inductions_20/screens/navigation/login.dart';
 import 'package:inductions_20/screens/navigation/splash_screen.dart';
+import 'package:inductions_20/screens/mentee/announcement.dart';
+import 'package:inductions_20/screens/mentee/mentee_home.dart';
+import 'package:inductions_20/screens/mentee/task.dart';
 
 void main() {
   runApp(Spider());
@@ -29,7 +32,10 @@ class Spider extends StatelessWidget {
         '/bio': (context) => Bio(),
         '/commits': (context) => CommitsFinal(),
         '/review': (context) => Request(),
-        '/task': (context) => Tasklist()
+        '/task': (context) => Tasklist(),
+        '/mentee/': (context) => homepage(),
+        '/mentee/announcement/':(context) => Announcement(),
+      
       },
     );
   }
