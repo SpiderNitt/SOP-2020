@@ -130,7 +130,7 @@ class _MyHomePage extends State<HomePage> {
           Container(
               height: 400,
               decoration: BoxDecoration(
-                  color: theme.blackColor,
+                  color: theme.primaryColor,
                   borderRadius: BorderRadius.circular(10)),
               margin: EdgeInsets.all(30),
               child: Column(children: <Widget>[
@@ -248,7 +248,7 @@ class _MyHomePage extends State<HomePage> {
                                   task_list = profile_task.prof_task_title;
                                   taskno_list = profile_task.taskno_list;
                                 });
-                              }, profilewidth, 100, 12, clickcolor[i], 20, 3,
+                              }, profilewidth, 100, 15, clickcolor[i], 20, 3,
                                   10),
                           ],
                         ),
@@ -256,7 +256,7 @@ class _MyHomePage extends State<HomePage> {
                       new Divider(
                         color: theme.fontColor,
                         height: 50,
-                        thickness: 3,
+                        thickness: 0.2,
                       ),
                       for (int i = 0; i < task_list.length; i++)
                         CustomBox(task_list[i], () {
