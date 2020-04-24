@@ -31,7 +31,7 @@ Widget build(BuildContext context) {
 
                   Row(
                     children: <Widget>[
-                      CircleAvatar(child: Text("A"),),
+                      CircleAvatar(child: Text("S"),),
                       Custom_box('''${username}''',(){},100,50,16,theme.blackColor,15,0,0),
                       Custom_box('''${date} ${time}''',(){},130,60,10,theme.blackColor,18,0,0)
                    ]

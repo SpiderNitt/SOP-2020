@@ -23,30 +23,36 @@ var username;
 var name;
 var url;
 var user;
-List _messages=[];
-List date=[];
-List time=[];
-
+List _messages=["helleo icnk djsk "];
+List date=["12-2-2019"];
+List time=["90:90"];
 ScrollController scrollController;
  
   @override
   void initState() {
+      super.initState();
       scrollController = ScrollController();
       this.user={
      "name": "loading..",
-     "avatar_url":" ",
+     "avatar_url":"https://media-exp1.licdn.com/dms/image/C510BAQG9qrZT4zZUUA/company-logo_200_200/0?e=2159024400&v=beta&t=nv5kv0k1DSSLrKxY2fLQ4YEsfZGvQ-XJ8Ypiu66RqaA",
      "login":"loading.."
     };
     get_announcement(); 
-    super.initState();
+    
+  
+
 }
 
-Future<void>get_announcement() async{
+Future<String>get_announcement() async{
     
   Announcement_list announcement_list = Announcement_list();
   await announcement_list.extractProgressDetails();
+ 
+   var msg=[];
+   var _date=[];
+   var _time=[];
   announcement_list.announcements.forEach((k,v){
-  _messages.add("$v");
+  msg.add("$v");
   String date1= "$k".substring(0, 10);
 
   int hr =int.parse("$k".substring(11,13))+5;
@@ -56,13 +62,13 @@ Future<void>get_announcement() async{
   { hr++;
     min=min-60;
    }
-   date.add(date1);
-   time.add("$hr:$min:$sec");
-
+   _date.add(date1);
+   _time.add("$hr:$min:$sec");
+   
   
+   
+      
     });
-
-
       ProvideJwt provideJwt =ProvideJwt(); 
       await  provideJwt.extractjwt();
       var jwt= provideJwt.jwt;
@@ -76,6 +82,9 @@ Future<void>get_announcement() async{
   var user1= await json.decode(response.body);
   setState(() {
     this.user= user1;
+      this._messages=msg;
+  this.time=_time;
+  this.date=_date;
    });
 
 }
@@ -103,22 +112,20 @@ Future<void>get_announcement() async{
     
      
         appBar: AppBar(
-        title: Text('''Announcement'''),
+        title: Text('''Announcements'''),
         backgroundColor: theme.blackColor ,
         ),
         
-        body: ListView.builder(
-              controller: scrollController,
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-              
-          Announcementbox('''Anjenaya''','''${date[index]}''','''${time[index]}''','''${_messages[index]}''', width);
-               } 
+        body: ListView(
+               children: <Widget>[
+               for(int i=0; i<_messages.length; i++)
+                Announcementbox('''Spider''','''${date[i]}''','''${time[i]}''','''${_messages[i]}''', width),
+                 ] )
         ),    
           
         
-           ),
-    );
+           );
+    
   }
 
   @override

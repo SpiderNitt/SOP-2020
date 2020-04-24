@@ -297,7 +297,28 @@ class TASKState extends State<TASK> with SingleTickerProviderStateMixin {
                    fontWeight: FontWeight.bold,
                    color: theme.tertiaryColor,
                    ) )),])),
-                   
+                      Custom_box('Comments',(){
+                                   List a=task;
+                                   Navigator.push(context, 
+                                   PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation)=>TASKcomments(task: a),
+                                   transitionsBuilder: (context, animation, secondaryAnimation, child){
+                                   return SlideTransition(
+                                     position: Tween<Offset>(
+                                     begin: const Offset(0.0, 1.0),
+                                     end: Offset.zero,
+                                     ).animate(animation),
+                                child: SlideTransition(
+                                     position: Tween<Offset>(
+                                     end: const Offset(0.0, 1.0),
+                                     begin: Offset.zero,
+                                     ).animate(secondaryAnimation),
+                                     child: child,
+                                ),
+                              );
+                            }
+                            )
+                            ); },bottombarwidth,50,15, 0xff000000,15,0,0),
+
                    Custom_box('Submit',(){
                    _tabController.animateTo((_tabController.index+1));
                    double width = MediaQuery.of(context).size.width;

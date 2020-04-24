@@ -56,7 +56,7 @@ class _MyHomePage extends State<homepage> {
     super.initState();
     this.user={
      "name": "loading..",
-     "avatar_url":"https://static.bhphoto.com/images/images500x500/1157995365_163032.jpg",
+     "avatar_url":"https://media-exp1.licdn.com/dms/image/C510BAQG9qrZT4zZUUA/company-logo_200_200/0?e=2159024400&v=beta&t=nv5kv0k1DSSLrKxY2fLQ4YEsfZGvQ-XJ8Ypiu66RqaA",
      "login":"loading.."
     };
    makeRequest();
