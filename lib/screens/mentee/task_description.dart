@@ -60,7 +60,7 @@ class TaskDescription extends StatelessWidget {
                           theme.blackColor, 0, 0, 0),
                       CustomBox('($mentorContact)', () {
                         launch("tel://$mentorContact");
-                      }, 95, 50, 14, theme.blackColor, 0, 0, 0),
+                      }, 110, 50, 14, theme.blackColor, 0, 0, 0),
                     ]))
               ],
             ),

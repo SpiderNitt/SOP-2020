@@ -9,16 +9,17 @@ class Mentee_profile {
   Mentee_profile();
 
   Future<void> ExtractResponse() async {
-    List _profiles = [
-      'Algos',
-      'App AN',
-      'App Flutter',
-      'App RN',
-      'Tronix ES&AE',
-      'Tronix R&C',
-      'Tronix SP&ML',
-      'WEB'
-    ];
+    List _profiles =[
+    'Algos',
+    'App Development - Android Native',
+    'App Development - Flutter',
+    'App Development - React Native',
+    'Tronix - Embedded Systems and Analog Electronics',
+    'Tronix - Robotics and control',
+    'Tronix - Signal Processing and Machine Learning',
+    'Web Development'
+  ];
+
     profnolist = [];
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();

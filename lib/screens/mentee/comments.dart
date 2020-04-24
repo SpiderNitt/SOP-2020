@@ -3,6 +3,7 @@ import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/task.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_comment.dart';
+import 'package:inductions_20/screens/mentee/data/comments.dart';
 
 class TaskComment extends StatefulWidget {
   final List task;
@@ -14,7 +15,9 @@ class TaskComment extends StatefulWidget {
 class TaskCommentState extends State<TaskComment>
     with SingleTickerProviderStateMixin {
   var taskdes;
+
   var task;
+  List<Map<String,String>> taskmsg;
   List<String> _messages;
   TextEditingController textEditingController;
   ScrollController scrollController;
@@ -27,6 +30,21 @@ class TaskCommentState extends State<TaskComment>
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
+
+    _getcomments();
+
+  }
+
+  Future<void> _getcomments() async{
+
+   Comments_list comments_list1 = Comments_list(task[1]);
+   await comments_list1.extractComment();
+   
+   setState(() {
+     this.taskmsg=comments_list1.comments_details;
+   });
+
+  
   }
 
   void handleSendMessage() {
@@ -124,7 +142,7 @@ class TaskCommentState extends State<TaskComment>
                 itemBuilder: (context, index) {
                   bool reverse = false;
 
-                  if (index == 0) {
+                  if (taskmsg[index]["name"]==this.task[2]["login"]) {
                     reverse = true;
                   }
 
@@ -141,13 +159,13 @@ class TaskCommentState extends State<TaskComment>
                   );
 
                   var messagebody = Comment_box(
-                      _messages[index],
+                      '''${taskmsg[index]["comment"]}''',
                       theme.tertiaryColor,
                       theme.blackColor,
                       commentwidth,
-                      '''Thrishik''',
-                      ''' 12/3/2020''',
-                      '''5:30pm ''');
+                      '''${taskmsg[index]["name"]}''',
+                      '''${taskmsg[index]["date"]}''',
+                      '''${taskmsg[index]["time"]}''');
 
                   Widget message;
 

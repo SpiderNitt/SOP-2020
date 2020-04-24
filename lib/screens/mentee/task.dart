@@ -111,7 +111,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       advancePer = menteeProgress.advance_per / 100;
       feedTime = menteeProgress.recent_feedback;
       feedbacks = menteeProgress.previous_feedbacks;
-      print(feedbacks);
+      
       if (feedTime != "5:30") {
         String date = feedTime.substring(0, 10);
         hr = int.parse(feedTime.substring(11, 13)) + 5;
@@ -355,7 +355,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                               showAlertDialog(context, "Invalid link");
                             }
                           }
-                        }, 68, 38, 14, theme.tertiaryColor, 10, 3, 10),
+                        }, 100, 38, 14, theme.tertiaryColor, 10, 0, 10),
                         Container(
                           child: Column(
                             children: <Widget>[
