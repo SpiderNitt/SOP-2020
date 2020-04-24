@@ -43,115 +43,103 @@ class TaskCommentState extends State<TaskComment>
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
-   
+
     _getcomments();
-   
-      
   }
 
+  Future<void> _getcomments() async {
+    Comments_list comments_list1 = Comments_list(task[1]);
+    await comments_list1.extractComment();
 
-  Future<void> _getcomments() async{
-
-
-   Comments_list comments_list1 = Comments_list(task[1]);
-   await comments_list1.extractComment();
-   
-   setState(() {
-     this._users=comments_list1.user;
-     this._messages=comments_list1.comments;
-     this._time=comments_list1.time;
-     this._date=comments_list1.dates;
-     this.username=comments_list1.username;
-   });
-   
-
-  
+    setState(() {
+      this._users = comments_list1.user;
+      this._messages = comments_list1.comments;
+      this._time = comments_list1.time;
+      this._date = comments_list1.dates;
+      this.username = comments_list1.username;
+    });
   }
 
   void handleSendMessage() async {
-        var text = textEditingController.value.text; 
-            
-          
-    final RegExp REGEX_EMOJI = RegExp(r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
-    if(text.contains(REGEX_EMOJI)){
+    var text = textEditingController.value.text;
 
-             
-               showAlertDialog(context, "message containing emojis or photos is restricted");
-             
-    }else{
-       try{
-                          ProvideJwt provideJwt = ProvideJwt();
-                          await provideJwt.extractjwt();
-                          String jwt = provideJwt.jwt;
-                          var res = tryParseJwt(jwt);
-                          var rollno = res["roll"];
+    final RegExp REGEX_EMOJI = RegExp(
+        r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
+    if (text.contains(REGEX_EMOJI)) {
+      showAlertDialog(
+          context, "message containing emojis or photos is restricted");
+    } else {
+      try {
+        ProvideJwt provideJwt = ProvideJwt();
+        await provideJwt.extractjwt();
+        String jwt = provideJwt.jwt;
+        var res = tryParseJwt(jwt);
+        var rollno = res["roll"];
 
-      String url =
-          "https://spider.nitt.edu/inductions20test/api/task/forum_comment";
-      Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $jwt',
-      };
-      Map<String, String> list1 = {};
+        String url =
+            "https://spider.nitt.edu/inductions20test/api/task/forum_comment";
+        Map<String, String> headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $jwt',
+        };
+        Map<String, String> list1 = {};
 
-      var Json1 = jsonEncode({
-        "rollno": "$rollno",
-        "task_id": task[1],
-        "profile_id": task[3],
-        "comment": "$text",
-        "username": "$username",
-        "is_mentor": false,
-        "reply_id": 0
+        var Json1 = jsonEncode({
+          "rollno": "$rollno",
+          "task_id": task[1],
+          "profile_id": task[3],
+          "comment": "$text",
+          "username": "$username",
+          "is_mentor": false,
+          "reply_id": 0
+        });
+
+        Response response = await post(url, headers: headers, body: Json1);
+        int statusCode = response.statusCode;
+
+        if (statusCode == 200) {
+          print("submitted");
+        } else if (statusCode == 404) {
+          print("404 error");
+        }
+
+        try {
+          setState(() {
+            textEditingController.clear();
+            _messages.add(text);
+            _users.add(username);
+            DateTime dateTime = new DateTime.now();
+            String datetime = "$dateTime";
+            String date = datetime.substring(0, 10);
+            var hr = int.parse(datetime.substring(11, 13));
+            var min = int.parse(datetime.substring(14, 16));
+            var sec = int.parse(datetime.substring(17, 19));
+            if (min >= 60) {
+              hr++;
+              min = min - 60;
+            }
+            if (hr >= 24) {
+              hr = hr - 24;
+            }
+
+            var times = "$hr:$min:$sec";
+            _date.add("$date");
+            _time.add("$times");
+
+            enableButton = false;
+          });
+        } catch (e) {
+          print("error:$e");
+        }
+      } catch (e) {
+        print("error:$e");
+      }
+      Future.delayed(Duration(milliseconds: 100), () {
+        scrollController.animateTo(scrollController.position.maxScrollExtent,
+            curve: Curves.ease, duration: Duration(milliseconds: 500));
       });
-
-      Response response = await post(url, headers: headers, body: Json1);
-      int statusCode = response.statusCode;
-
-                          if (statusCode == 200) {
-                            print("submitted");
-                          }
-                          else if(statusCode ==404)
-                          {
-                            print("404 error");
-                          }
-                        
-             try{       
-    setState(() {
-      textEditingController.clear();
-      _messages.add(text);
-      _users.add(username);
-      DateTime dateTime = new DateTime.now();
-      String datetime = "$dateTime";
-      String date = datetime.substring(0, 10);
-      var hr = int.parse(datetime.substring(11, 13));
-      var min = int.parse(datetime.substring(14, 16));
-      var sec = int.parse(datetime.substring(17, 19));
-      if (min >= 60) {
-        hr++;
-        min = min - 60;
-      }
-      if (hr >= 24) {
-        hr = hr - 24;
-      }
-
-      var times = "$hr:$min:$sec";
-      _date.add("$date");
-      _time.add("$times");
-
-      enableButton = false;
-    });}
-    catch(e){print("error:$e");}
-
-  }catch(e){  print("error:$e");
-                          }    
-    Future.delayed(Duration(milliseconds: 100), () {
-      scrollController.animateTo(scrollController.position.maxScrollExtent,
-          curve: Curves.ease, duration: Duration(milliseconds: 500));
-    });
-
-             }
-
+    }
   }
 
   double commentwidth;
@@ -223,38 +211,34 @@ class TaskCommentState extends State<TaskComment>
               );
             },
           ),
-          title: Text('${task[0]} TASK ${task[1]}'),
+          title: Text('${task[0]}'),
           backgroundColor: theme.blackColor,
         ),
         body: Column(
           children: <Widget>[
-        Container(
-          width: 370,
-          margin: EdgeInsets.all(10),
-          child: Material(
-            color: theme.blackColor,
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(10.0),
-            child: Column(
-               
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.all(15),
-                    
-                   
-                    child: Text(
-                      ''' This will be an interactive field between you and your friends, regarding the task''',
-                      style: TextStyle(
-                          color: theme.tertiaryColor,
-                          fontWeight: FontWeight.bold),
-                    )),
-              
-              ],
+            Container(
+              width: 370,
+              margin: EdgeInsets.all(10),
+              child: Material(
+                color: theme.blackColor,
+                elevation: 10.0,
+                borderRadius: BorderRadius.circular(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          ''' This will be an interactive field between you and your friends, regarding the task''',
+                          style: TextStyle(
+                              color: theme.tertiaryColor,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
@@ -340,7 +324,7 @@ class TaskCommentState extends State<TaskComment>
     );
   }
 
-showAlertDialog(BuildContext context, text) {
+  showAlertDialog(BuildContext context, text) {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: Text(text),
@@ -354,5 +338,6 @@ showAlertDialog(BuildContext context, text) {
       },
     );
   }
+
   State<StatefulWidget> createState() => null;
 }
