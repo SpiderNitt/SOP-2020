@@ -6,7 +6,11 @@ import 'dart:convert';
 
 class Comments_list{
   
-  List comments_details;
+  List comments;
+  List user;
+  List dates;
+  List time;
+  var username;
   int taskid;
   Comments_list(this.taskid);
 
@@ -15,7 +19,9 @@ class Comments_list{
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();
     String jwt = provideJwt.jwt;
-       
+    var res = tryParseJwt(jwt);
+
+    this.username = res["username"];
     try{   
     String url =
         "https://spider.nitt.edu/inductions20test/api/task/${taskid}";
@@ -30,7 +36,10 @@ class Comments_list{
     if (statusCode == 200) {
     var parsedJson = json.decode(response.body);
     int comments_no=parsedJson["comments_no"];
-    var commentsdetails=[];
+    comments=[];
+    user=[];
+    dates=[];
+    time=[];
     for(int i=0; i<comments_no; i++){
 
      var datetime=parsedJson["comments"]["$i"]["date_time"];
@@ -48,20 +57,18 @@ class Comments_list{
 
        
 
-      var  time= "$hr:$min:$sec";
+      var  times= "$hr:$min:$sec";
 
 
-    Map<String,String> comment={
-        "name": "${parsedJson["comments"]["$i"]["link"]}",
-        "comment":"${parsedJson["comments"]["$i"]["comment"]}",
-        "date":"${date}",
-        "time":"${time}"
+ 
+        user.add(parsedJson["comments"]["$i"]["link"]);
+        comments.add(parsedJson["comments"]["$i"]["comment"]);
+        dates.add("$date");
+        time.add("$times");
       
-      };
-      commentsdetails.add(comment);
-    }
+      }
+      
     
-   this.comments_details=commentsdetails;
       
     }
     else
