@@ -7,6 +7,7 @@ import 'package:inductions_20/screens/mentee/data/comments.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
 import 'dart:convert' show jsonEncode;
 
 class TaskComment extends StatefulWidget {
@@ -42,32 +43,48 @@ class TaskCommentState extends State<TaskComment>
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
-
+   
     _getcomments();
+   
+      
   }
 
-  Future<void> _getcomments() async {
-    Comments_list comments_list1 = Comments_list(task[1]);
-    await comments_list1.extractComment();
 
-    setState(() {
-      this._users = comments_list1.user;
-      this._messages = comments_list1.comments;
-      this._time = comments_list1.time;
-      this._date = comments_list1.dates;
-      this.username = comments_list1.username;
-    });
+  Future<void> _getcomments() async{
+
+
+   Comments_list comments_list1 = Comments_list(task[1]);
+   await comments_list1.extractComment();
+   
+   setState(() {
+     this._users=comments_list1.user;
+     this._messages=comments_list1.comments;
+     this._time=comments_list1.time;
+     this._date=comments_list1.dates;
+     this.username=comments_list1.username;
+   });
+   
+
+  
   }
 
   void handleSendMessage() async {
-    var text = textEditingController.value.text;
+        var text = textEditingController.value.text; 
+            
+          
+    final RegExp REGEX_EMOJI = RegExp(r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
+    if(text.contains(REGEX_EMOJI)){
 
-    try {
-      ProvideJwt provideJwt = ProvideJwt();
-      await provideJwt.extractjwt();
-      String jwt = provideJwt.jwt;
-      var res = tryParseJwt(jwt);
-      var rollno = res["roll"];
+             
+               showAlertDialog(context, "message containing emojis or photos is restricted");
+             
+    }else{
+       try{
+                          ProvideJwt provideJwt = ProvideJwt();
+                          await provideJwt.extractjwt();
+                          String jwt = provideJwt.jwt;
+                          var res = tryParseJwt(jwt);
+                          var rollno = res["roll"];
 
       String url =
           "https://spider.nitt.edu/inductions20test/api/task/forum_comment";
@@ -91,16 +108,17 @@ class TaskCommentState extends State<TaskComment>
       Response response = await post(url, headers: headers, body: Json1);
       int statusCode = response.statusCode;
 
-      if (statusCode == 200) {
-        print("submitted");
-      } else if (statusCode == 404) {
-        print("404 error");
-      }
-    } catch (e) {
-      print("error:$e");
-    }
-
+                          if (statusCode == 200) {
+                            print("submitted");
+                          }
+                          else if(statusCode ==404)
+                          {
+                            print("404 error");
+                          }
+                        
+             try{       
     setState(() {
+      textEditingController.clear();
       _messages.add(text);
       _users.add(username);
       DateTime dateTime = new DateTime.now();
@@ -122,12 +140,18 @@ class TaskCommentState extends State<TaskComment>
       _time.add("$times");
 
       enableButton = false;
-    });
+    });}
+    catch(e){print("error:$e");}
 
+  }catch(e){  print("error:$e");
+                          }    
     Future.delayed(Duration(milliseconds: 100), () {
       scrollController.animateTo(scrollController.position.maxScrollExtent,
           curve: Curves.ease, duration: Duration(milliseconds: 500));
     });
+
+             }
+
   }
 
   double commentwidth;
@@ -204,6 +228,33 @@ class TaskCommentState extends State<TaskComment>
         ),
         body: Column(
           children: <Widget>[
+        Container(
+          width: 370,
+          margin: EdgeInsets.all(10),
+          child: Material(
+            color: theme.blackColor,
+            elevation: 10.0,
+            borderRadius: BorderRadius.circular(10.0),
+            child: Column(
+               
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                    padding: const EdgeInsets.all(15),
+                    
+                   
+                    child: Text(
+                      ''' This will be an interactive field between you and your friends, regarding the task''',
+                      style: TextStyle(
+                          color: theme.tertiaryColor,
+                          fontWeight: FontWeight.bold),
+                    )),
+              
+              ],
+            ),
+          ),
+        ),
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
@@ -289,5 +340,19 @@ class TaskCommentState extends State<TaskComment>
     );
   }
 
+showAlertDialog(BuildContext context, text) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      content: Text(text),
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   State<StatefulWidget> createState() => null;
 }
