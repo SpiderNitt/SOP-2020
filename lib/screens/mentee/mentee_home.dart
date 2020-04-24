@@ -106,11 +106,11 @@ class _MyHomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     if (width <= 400) {
-      profilewidth = 95;
+      profilewidth = 195;
     } else if (width <= 600) {
-      profilewidth = 95;
+      profilewidth = 195;
     } else if (width <= 900) {
-      profilewidth = 95;
+      profilewidth = 195;
     } else {
       profilewidth = 320;
     }
