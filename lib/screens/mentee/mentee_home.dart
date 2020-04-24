@@ -33,7 +33,7 @@ class homepage extends StatefulWidget{
 class _MyHomePage extends State<homepage> {
 
   
-  String username="thrishik7";
+  String username="";
   _MyHomePage();
   List<Color> clickcolor=[theme.tertiaryColor,
   theme.primaryLightColor,

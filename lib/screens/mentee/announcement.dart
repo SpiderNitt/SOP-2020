@@ -22,11 +22,7 @@ class AnnouncementState extends State<Announcement> with SingleTickerProviderSta
 var username;
 var name;
 var url;
-var user={
-     "name": "loading..",
-     "avatar_url":" ",
-     "login":"loading.."
-    };
+var user;
 List _messages=[];
 List date=[];
 List time=[];
@@ -36,6 +32,11 @@ ScrollController scrollController;
   @override
   void initState() {
       scrollController = ScrollController();
+      this.user={
+     "name": "loading..",
+     "avatar_url":" ",
+     "login":"loading.."
+    };
     get_announcement(); 
     super.initState();
 }
