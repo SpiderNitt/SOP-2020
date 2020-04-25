@@ -385,7 +385,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                     Padding(
                                         padding: const EdgeInsets.all(15.0),
                                         child: Text(
-                                          "Submited Links:",
+                                          "Submitted Links:",
                                           style: TextStyle(
                                               color: theme.fontColor,
                                               fontWeight: FontWeight.bold),
@@ -490,13 +490,17 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           controller: textEditingController1,
                         ),
                         CustomBox('Send Request to Review', () async {
+                          
+                          if(taskSubmitted.length>0)
+                          {
+                          try{
                           var text = textEditingController1.value.text;
                           ProvideJwt provideJwt = ProvideJwt();
                           await provideJwt.extractjwt();
                           String jwt = provideJwt.jwt;
                           var res = tryParseJwt(jwt);
                           var rollno = res["roll"];
-
+                          
                           String url =
                               "https://spider.nitt.edu/inductions20test/api/mentee/new_task_submission";
                           Map<String, String> headers = {
@@ -531,6 +535,14 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           } else {
                             showAlertDialog(context, "Server error");
                           }
+                          }catch(e)
+                          {
+                            print("error: $e");
+                          }
+                          }
+                          else
+                          showAlertDialog(context, "Add links to request for review");
+
                         }, 420, 50, 14.5, theme.tertiaryColor, 15, 8, 10),
                       ],
                     )),
