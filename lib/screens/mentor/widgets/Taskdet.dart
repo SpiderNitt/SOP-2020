@@ -121,12 +121,15 @@ class _TaskDetState extends State<TaskDet> {
                         }
 
                         return Column(children: tempwid);
-                      } else
-                        return Text('No data found',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: config.fontFamily,
-                                color: config.fontColor));
+                      } 
+                      else return Text('');
+                      // else
+                      //   return Center(
+                      //     child: Text('No data found ',
+                      //       style: TextStyle(
+                      //           fontSize: 18,
+                      //           fontFamily: config.fontFamily,
+                      //           color: config.fontColor)));
                     }
 
                     if (snapshot.hasError)
