@@ -40,18 +40,11 @@ class Comments_list {
         for (int i = 0; i < comments_no; i++) {
           var datetime = parsedJson["comments"]["$i"]["date_time"];
           String date = datetime.substring(0, 10);
-          var hr = int.parse(datetime.substring(11, 13)) + 5;
-          var min = int.parse(datetime.substring(14, 16)) + 30;
+          var hr = int.parse(datetime.substring(11, 13)) ;
+          var min = int.parse(datetime.substring(14, 16));
           var sec = int.parse(datetime.substring(17, 19));
-          if (min >= 60) {
-            hr++;
-            min = min - 60;
-          }
-          if (hr >= 24) {
-            hr = hr - 24;
-          }
 
-          var times = "$hr:$min:$sec";
+          var times = "$hr:$min";
 
           user.add(parsedJson["comments"]["$i"]["link"]);
           comments.add(parsedJson["comments"]["$i"]["comment"]);

@@ -62,15 +62,12 @@ class AnnouncementState extends State<Announcement>
       msg.add("$v");
       String date1 = "$k".substring(0, 10);
 
-      int hr = int.parse("$k".substring(11, 13)) + 5;
-      int min = int.parse("$k".substring(14, 16)) + 30;
+      int hr = int.parse("$k".substring(11, 13));
+      int min = int.parse("$k".substring(14, 16));
       int sec = int.parse("$k".substring(17, 19));
-      if (min >= 60) {
-        hr++;
-        min = min - 60;
-      }
+
       _date.add(date1);
-      _time.add("$hr:$min:$sec");
+      _time.add("$hr:$min");
     });
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();

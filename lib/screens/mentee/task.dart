@@ -114,20 +114,13 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
 
       if (feedTime != "5:30") {
         String date = feedTime.substring(0, 10);
-        hr = int.parse(feedTime.substring(11, 13)) + 5;
-        min = int.parse(feedTime.substring(14, 16)) + 30;
+        hr = int.parse(feedTime.substring(11, 13));
+        min = int.parse(feedTime.substring(14, 16));
         sec = int.parse(feedTime.substring(17, 19));
-        if (min >= 60) {
-          hr++;
-          min = min - 60;
-        }
-        if (hr >= 24) {
-          hr = hr - 24;
-        }
 
         this.recentDate = date;
 
-        this.recentTime = "$hr:$min:$sec";
+        this.recentTime = "$hr:$min";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
       this.overallPer = (this.basic_per*0.7) + (this.advancePer*0.3);
