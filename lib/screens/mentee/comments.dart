@@ -155,6 +155,9 @@ class TaskCommentState extends State<TaskComment>
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: TextField(
+                keyboardType: TextInputType.multiline,
+                 minLines: 1,
+                 maxLines: 5,
               onChanged: (text) {
                 setState(() {
                   enableButton = text.isNotEmpty;

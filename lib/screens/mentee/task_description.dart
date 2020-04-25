@@ -19,6 +19,7 @@ import 'package:flutter/material.dart'
 import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class TaskDescription extends StatelessWidget {
   final primary;
@@ -66,10 +67,11 @@ class TaskDescription extends StatelessWidget {
                         CustomBox('$mentorContact', () {
                           launch("tel://$mentorContact");
                         }, 110, 50, 12, theme.blackColor, 0, 0, 0),
-                       if(mentorContact.length>10)                      
-                       CustomBox('$mentorContact', () {
+                       if(mentorContact.length>10)    
+                                    
+                       CustomBox("$mentorContact", () {
                           launch("${mentorContact}");
-                        }, 110, 50, 12, theme.blackColor, 0, 0, 0),
+                        }, 200, 50, 12, theme.blackColor, 10, 10, 0),
                       ],
                     ),
                   )
@@ -97,11 +99,20 @@ class TaskDescription extends StatelessWidget {
                         color: theme.tertiaryColor,
                       )),
                   Padding(
-                    child: Text(
-                      '''$taskDescription''',
-                      style: TextStyle(fontSize: 17, color: theme.fontColor),
-                    ),
-                    padding: const EdgeInsets.only(bottom: 16.0),
+                     padding: const EdgeInsets.only(bottom: 16.0),
+                    child: 
+                      Linkify(
+                      onOpen: (link) async {
+                       if (await canLaunch(link.url)) {
+                       await launch(link.url);
+                       } else {
+                          throw 'Could not launch $link';
+                            }
+                           },
+                      text: taskDescription,
+                     style: TextStyle(fontSize: 17, color: theme.fontColor),
+                     linkStyle: TextStyle(color: theme.tertiaryColor),
+                   )
                   ),
                 ],
               ),

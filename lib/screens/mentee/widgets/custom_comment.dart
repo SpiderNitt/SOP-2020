@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:inductions_20/theme/mentee.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Comment_box extends StatelessWidget{
@@ -33,8 +36,19 @@ Widget build(BuildContext context) {
                       children:<Widget>[
                        Text(_username, 
                       style: TextStyle(fontSize:16,fontWeight: FontWeight.bold, color: _textcolor),),
-                      Text(_text, 
-                      style: TextStyle(color: _textcolor),),
+                      Linkify(
+                      onOpen: (link) async {
+                       if (await canLaunch(link.url)) {
+                       await launch(link.url);
+                       } else {
+                          throw 'Could not launch $link';
+                            }
+                           },
+                       text: '''$_text''',
+                     style: TextStyle(color: _textcolor),
+                     linkStyle: TextStyle(color: Colors.white70),
+),
+                    
                       Padding(
                         padding: EdgeInsets.only(top:5),
                       child:Text('${_date} ${_time}', 

@@ -48,7 +48,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var recentDate;
   Map feedbacks = {};
   List taskSubmitted;
-  var mentorname = "loading..";
+  var mentorname = "";
   var mentorcontact = "loading..";
   int hr = 0, min = 0, sec = 0;
   TextEditingController textEditingController, textEditingController1;
