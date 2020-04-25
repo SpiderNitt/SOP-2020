@@ -43,15 +43,8 @@ class Comments_list {
           var hr = int.parse(datetime.substring(11, 13));
           var min = int.parse(datetime.substring(14, 16));
           var sec = int.parse(datetime.substring(17, 19));
-          if (min >= 60) {
-            hr++;
-            min = min - 60;
-          }
-          if (hr >= 24) {
-            hr = hr - 24;
-          }
 
-          var times = "$hr:$min:$sec";
+          var times = "$hr:$min";
 
           user.add(parsedJson["comments"]["$i"]["link"]);
           comments.add(parsedJson["comments"]["$i"]["comment"]);

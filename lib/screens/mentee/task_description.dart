@@ -43,8 +43,8 @@ class TaskDescription extends StatelessWidget {
               elevation: 10.0,
               borderRadius: BorderRadius.circular(10.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(15),
@@ -56,14 +56,20 @@ class TaskDescription extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
+                    padding: const EdgeInsets.all(1),
+                    child:Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        CustomBox('Contact $mentorName ', () {}, 150, 50, 14,
+                        CustomBox('Contact $mentorName ', () {}, 150, 50, 20,
                             theme.blackColor, 0, 0, 0),
-                        CustomBox('($mentorContact)', () {
+                        if(mentorContact.length<=15)  
+                        CustomBox('$mentorContact', () {
                           launch("tel://$mentorContact");
-                        }, 110, 50, 14, theme.blackColor, 0, 0, 0),
+                        }, 110, 50, 12, theme.blackColor, 0, 0, 0),
+                       if(mentorContact.length>10)                      
+                       CustomBox('$mentorContact', () {
+                          launch("${mentorContact}");
+                        }, 110, 50, 12, theme.blackColor, 0, 0, 0),
                       ],
                     ),
                   )

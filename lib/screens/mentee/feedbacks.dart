@@ -37,12 +37,9 @@ class TASKfeedbackState extends State<TASKfeedback>
       int hr = int.parse("$k".substring(11, 13));
       int min = int.parse("$k".substring(14, 16));
       int sec = int.parse("$k".substring(17, 19));
-      if (min >= 60) {
-        hr++;
-        min = min - 60;
-      }
+
       date.add(date1);
-      time.add("$hr:$min:$sec");
+      time.add("$hr:$min");
     });
 
     textEditingController = TextEditingController();

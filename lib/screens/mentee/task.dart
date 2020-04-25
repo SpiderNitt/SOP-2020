@@ -117,17 +117,10 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
         hr = int.parse(feedTime.substring(11, 13));
         min = int.parse(feedTime.substring(14, 16));
         sec = int.parse(feedTime.substring(17, 19));
-        if (min >= 60) {
-          hr++;
-          min = min - 60;
-        }
-        if (hr >= 24) {
-          hr = hr - 24;
-        }
 
         this.recentDate = date;
 
-        this.recentTime = "$hr:$min:$sec";
+        this.recentTime = "$hr:$min";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
       this.overallPer = (this.basic_per * 0.7) + (this.advancePer * 0.3);
@@ -386,7 +379,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                     Padding(
                                         padding: const EdgeInsets.all(15.0),
                                         child: Text(
-                                          "Submited Links:",
+                                          "Submitted Links:",
                                           style: TextStyle(
                                               color: theme.fontColor,
                                               fontWeight: FontWeight.bold),
@@ -491,13 +484,17 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           controller: textEditingController1,
                         ),
                         CustomBox('Send Request to Review', () async {
+                          
+                          if(taskSubmitted.length>0)
+                          {
+                          try{
                           var text = textEditingController1.value.text;
                           ProvideJwt provideJwt = ProvideJwt();
                           await provideJwt.extractjwt();
                           String jwt = provideJwt.jwt;
                           var res = tryParseJwt(jwt);
                           var rollno = res["roll"];
-
+                          
                           String url =
                               "https://spider.nitt.edu/inductions20test/api/mentee/new_task_submission";
                           Map<String, String> headers = {
@@ -532,6 +529,14 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           } else {
                             showAlertDialog(context, "Server error");
                           }
+                          }catch(e)
+                          {
+                            print("error: $e");
+                          }
+                          }
+                          else
+                          showAlertDialog(context, "Add links to request for review");
+
                         }, 420, 50, 14.5, theme.tertiaryColor, 15, 8, 10),
                       ],
                     )),
