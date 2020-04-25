@@ -3,10 +3,10 @@ import '../../../theme/mentor.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Statsdis extends StatelessWidget {
-  final String taskname;
+  final String taskname, profile;
   double advPercent, begPercent;
 
-  Statsdis(this.taskname, double beg, double adv) {
+  Statsdis(this.taskname, double beg, double adv, this.profile) {
     this.advPercent = adv / 100;
     this.begPercent = beg / 100;
   }
@@ -15,9 +15,17 @@ class Statsdis extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(this.taskname,
+         Text('${this.profile}',
             style: TextStyle(
                 fontSize: 25,
+                fontFamily: config.fontFamily,
+                color: config.head)),
+        SizedBox(
+          height: 10,
+        ),     
+        Text('${this.taskname}',
+            style: TextStyle(
+                fontSize: 22,
                 fontFamily: config.fontFamily,
                 color: config.fontColor)),
         SizedBox(

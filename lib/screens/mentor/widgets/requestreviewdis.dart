@@ -6,6 +6,18 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:inductions_20/others/jwtparse.dart';
 
+
+String returndate(dynamic date){
+
+      String datefinal = "$date".substring(0, 10);
+
+      int hr = int.parse("$date".substring(11, 13));
+      int min = int.parse("$date".substring(14, 16));
+      int sec = int.parse("$date".substring(17, 19));
+   
+      return '$datefinal  $hr:$min:$sec';
+}
+
 class Data {
   List<Map> sublist;
   String status;
@@ -23,7 +35,8 @@ class Data {
             : jsonDecode(res['review_list']['$i']["submission_links"]),
         'des': res['review_list']['$i']["submission_description"],
         'id': res['review_list']['$i']["submission_id"],
-        'rflag': res['review_list']['$i']["is_reviewed"]
+        'rflag': res['review_list']['$i']["is_reviewed"],
+        'date': res['review_list']['$i']["submission_date_time"]
       });
     }
     return Data(temp);
@@ -110,13 +123,20 @@ class _RequestlistState extends State<Requestlist> {
       ));
     }
 
-    if (checklinks['rflag'] == true)
+    if (checklinks['rflag'] == true){
       tempstore.add(Text('Reviewed',
           softWrap: true,
           style: TextStyle(
               fontSize: 13,
               fontFamily: config.fontFamily,
               color: config.success)));
+     tempstore.add(Text(returndate(checklinks['date']),
+            softWrap: true,
+            style: TextStyle(
+                fontSize: 13,
+                fontFamily: config.fontFamily,
+                color: config.head)));
+    }
     else {
       tempstore.add(Text('Not reviewed',
           softWrap: true,
@@ -138,6 +158,12 @@ class _RequestlistState extends State<Requestlist> {
                 fontFamily: config.fontFamily,
                 color: config.fontColor)),
       ));
+      tempstore.add(Text(returndate(checklinks['date']),
+            softWrap: true,
+            style: TextStyle(
+                fontSize: 13,
+                fontFamily: config.fontFamily,
+                color: config.head)));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,7 +226,7 @@ class _RequestlistState extends State<Requestlist> {
     List<Widget> notreview = [], reviewed = [];
 
     this.resultobt.forEach((element) {
-      if (element['menteename'].contains(this.searchword) ||
+      if (element['menteename'].toLowerCase().contains(this.searchword) ||
           this.searchword == '') {
         if (element['rflag'] == true)
           reviewed.add(filter(contxt, element));

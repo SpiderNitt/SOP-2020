@@ -18,7 +18,10 @@ class Data {
       temp.add({
         'title': res['submissions']['$i']['task_title'],
         'basic': '${res['submissions']['$i']['basic_task_percent']}',
-        'adv': '${res['submissions']['$i']['advanced_task_percent']}'
+        'adv': '${res['submissions']['$i']['advanced_task_percent']}',
+        'id': res['submissions']['$i']['task_id'],
+        'date':  res['submissions']['$i']['submission_date_time'],
+        'profile': res['submissions']['$i']['profile_task_count']
       });
     }
     return Data(temp);
@@ -135,7 +138,8 @@ class _StatsState extends State<Stats> {
                             double.tryParse(
                                 snapshot.data.submission[index]['basic']),
                             double.tryParse(
-                                snapshot.data.submission[index]['adv']));
+                                snapshot.data.submission[index]['adv']),
+                                 snapshot.data.submission[index]['profile']);
                     }),
               );
           } else if (snapshot.hasError) {
