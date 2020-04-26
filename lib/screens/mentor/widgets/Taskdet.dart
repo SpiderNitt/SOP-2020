@@ -100,6 +100,19 @@ class _TaskDetState extends State<TaskDet> {
                                    height: 5
                                  ));
                                  } 
+                                // added button here
+                                listlink.add(FlatButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '', arguments: {
+                                      
+                                    });
+                                  },
+                                  child: Text('Discussions Forum',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: config.fontFamily,
+                                          color: config.fontColor)),
+                                ));
 
                                   return Column(
                                     children: listlink

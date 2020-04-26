@@ -72,11 +72,12 @@ class _RepoDetState extends State<RepoDet> {
                     itemCount: (snapshot.data.repos.length + 1),
                     itemBuilder: (context, index) {
                       if (snapshot.data.repos.length == 0)
-                        return Text('No repos yet',
+                        return Center(
+                          child: Text('No repos yet',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: config.fontFamily,
-                                color: config.fontColor));
+                                color: config.fontColor)));
 
                       if (index == snapshot.data.repos.length)
                         return null;
