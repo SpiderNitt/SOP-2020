@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "882221092813",
+    "firebase_url": "https://sop-announcemen.firebaseio.com",
+    "project_id": "sop-announcemen",
+    "storage_bucket": "sop-announcemen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882221092813:android:880c6fb6da972763f03e84",
+        "android_client_info": {
+          "package_name": "com.spider.sop_20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882221092813-of1jv5di5gu9nckrpmkdft09lgfqdf2l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqKuB1k-HAbUlqdGWtwkAca9ixeBdcuCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882221092813-of1jv5di5gu9nckrpmkdft09lgfqdf2l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
