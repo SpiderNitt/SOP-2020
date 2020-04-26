@@ -1,9 +1,11 @@
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/mentor.dart';
+import 'package:inductions_20/screens/mentor/comments.dart';
 
 class TaskDet extends StatefulWidget {
   final String _jwttoken;
@@ -103,9 +105,32 @@ class _TaskDetState extends State<TaskDet> {
                                 // added button here
                                 listlink.add(FlatButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, '', arguments: {
-                                      
-                                    });
+                                   
+                                  List a=[temp['tasks']['$j']['task_title'],temp['tasks']['$j']['task_id'],this.profiles[index]];
+
+
+                                   Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    TaskComment(task: a),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(0.0, 1.0),
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: SlideTransition(
+                                  position: Tween<Offset>(
+                                    end: const Offset(0.0, 1.0),
+                                    begin: Offset.zero,
+                                  ).animate(secondaryAnimation),
+                                  child: child,
+                                ),
+                              );
+                            }));
                                   },
                                   child: Text('Discussions Forum',
                                       style: TextStyle(

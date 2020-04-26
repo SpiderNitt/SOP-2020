@@ -66,12 +66,14 @@ Widget build(BuildContext context) {
 
 class Triangle extends CustomPainter {
   
-
+ 
+ Color color;
+ Triangle(this.color);
 
   @override
 
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Color(0xff00a8e8);
+    var paint = Paint()..color = color;
 
     var path = Path();
     path.lineTo(10, 0);

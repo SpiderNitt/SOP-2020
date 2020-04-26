@@ -431,7 +431,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                     Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: CustomPaint(
-                          painter: Triangle(),
+                          painter: Triangle(theme.tertiaryColor),
                         )),
                     Comment_box(
                         '''${feedbacks[feedTime]}''',

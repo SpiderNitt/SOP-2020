@@ -85,7 +85,7 @@ class TASKfeedbackState extends State<TASKfeedback>
                   );
 
                   var triangle = CustomPaint(
-                    painter: Triangle(),
+                    painter: Triangle(theme.tertiaryColor),
                   );
 
                   var messagebody = Comment_box(

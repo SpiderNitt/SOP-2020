@@ -9,6 +9,7 @@ class Comments_list {
   List dates;
   List time;
   var username;
+  List pos;
   int taskid;
   Comments_list(this.taskid);
 
@@ -33,10 +34,12 @@ class Comments_list {
       if (statusCode == 200) {
         var parsedJson = json.decode(response.body);
         int comments_no = parsedJson["comments_no"];
+
         comments = [];
         user = [];
         dates = [];
         time = [];
+        pos=[];
         for (int i = 0; i < comments_no; i++) {
           var datetime = parsedJson["comments"]["$i"]["date_time"];
           String date = datetime.substring(0, 10);
@@ -50,6 +53,7 @@ class Comments_list {
           comments.add(parsedJson["comments"]["$i"]["comment"]);
           dates.add("$date");
           time.add("$times");
+          pos.add(parsedJson["comments"]["$i"]["is_mentor"]);
         }
       } else {
         print("failed to load");
