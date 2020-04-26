@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-
 import '../../../theme/mentor.dart';
 
 class Data {
   String gitacc, avatarUrl, errormsg;
   dynamic status;
 
-  Data(List json) {
-    this.gitacc = json[0]['owner']['login'];
-    this.avatarUrl = json[0]['owner']['avatar_url'];
+  Data(dynamic json) {
+    this.gitacc = json['login'];
+    this.avatarUrl = json['avatar_url'];
     this.status = '200 OK';
   }
 
@@ -34,7 +33,7 @@ class _MenDetState extends State<MenDet> {
 
   Future<Data> getdata() async {
     Response resp =
-        await get('https://api.github.com/users/${this.gitacc}/repos');
+        await get('https://api.github.com/users/${this.gitacc}');
     if (resp.headers['status'] == '200 OK' ||
         resp.headers['status'] == '304 Not Modified')
       return Data(json.decode(resp.body));
