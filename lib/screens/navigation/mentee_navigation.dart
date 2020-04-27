@@ -4,10 +4,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:inductions_20/screens/navigation/widgets/custom_list_tile.dart';
 import '../../theme/navigation.dart';
 
+
 class MenteeCustomDrawer extends StatelessWidget {
   final String _name;
   final String _username;
   final String _url;
+  final storage = new FlutterSecureStorage();
 
   MenteeCustomDrawer(this._name, this._username, this._url);
 
@@ -55,6 +57,11 @@ class MenteeCustomDrawer extends StatelessWidget {
             CustomListTile(Icons.announcement, "Announcements", () {
               print("Announcement");
               Navigator.pushNamed(context, '/mentee/announcement/');
+            }),
+              CustomListTile(Icons.person_outline, "Change_GitHub", () async{
+              print("Change_github");
+              String token = await storage.read(key: "jwt");
+              Navigator.pushNamed(context, '/biomentee', arguments: {'jwt': token});
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();
