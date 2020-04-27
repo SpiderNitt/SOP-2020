@@ -33,19 +33,18 @@ class Comments_list {
       int statusCode = response.statusCode;
       if (statusCode == 200) {
         var parsedJson = json.decode(response.body);
-        int comments_no = parsedJson["comments_no"];
+        int commentsNo = parsedJson["comments_no"];
 
         comments = [];
         user = [];
         dates = [];
         time = [];
-        pos=[];
-        for (int i = 0; i < comments_no; i++) {
+        pos = [];
+        for (int i = 0; i < commentsNo; i++) {
           var datetime = parsedJson["comments"]["$i"]["date_time"];
           String date = datetime.substring(0, 10);
           var hr = int.parse(datetime.substring(11, 13));
           var min = int.parse(datetime.substring(14, 16));
-          var sec = int.parse(datetime.substring(17, 19));
 
           var times = "$hr:$min";
 

@@ -7,7 +7,6 @@ import 'package:inductions_20/screens/mentee/data/comments.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
 import 'dart:convert' show jsonEncode;
 
 class TaskComment extends StatefulWidget {
@@ -30,7 +29,7 @@ class TaskCommentState extends State<TaskComment>
   List _pos;
   var username;
   Color color;
-  var user="";
+  var user = "";
 
   TextEditingController textEditingController;
   ScrollController scrollController;
@@ -42,8 +41,8 @@ class TaskCommentState extends State<TaskComment>
     _date = [];
     _time = [];
     _messages = [];
-    _pos=[];
-    color=theme.tertiaryColor;
+    _pos = [];
+    color = theme.tertiaryColor;
     textEditingController = TextEditingController();
     scrollController = ScrollController();
     super.initState();
@@ -61,7 +60,7 @@ class TaskCommentState extends State<TaskComment>
       this._time = comments_list1.time;
       this._date = comments_list1.dates;
       this.username = comments_list1.username;
-      this._pos=comments_list1.pos;
+      this._pos = comments_list1.pos;
     });
   }
 
@@ -121,7 +120,6 @@ class TaskCommentState extends State<TaskComment>
             var min = int.parse(datetime.substring(14, 16));
             var sec = int.parse(datetime.substring(17, 19));
 
-
             var times = "$hr:$min";
             _date.add("$date");
             _time.add("$times");
@@ -160,9 +158,9 @@ class TaskCommentState extends State<TaskComment>
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: TextField(
-                keyboardType: TextInputType.multiline,
-                 minLines: 1,
-                 maxLines: 5,
+              keyboardType: TextInputType.multiline,
+              minLines: 1,
+              maxLines: 5,
               onChanged: (text) {
                 setState(() {
                   enableButton = text.isNotEmpty;
@@ -251,16 +249,14 @@ class TaskCommentState extends State<TaskComment>
                   if (_users[index] == username) {
                     reverse = true;
                   }
-                  if(_pos[index] == true)
-                  {
-                    color=Colors.amber;
-                    user='''${_users[index]} * ''';
+                  if (_pos[index] == true) {
+                    color = Colors.amber;
+                    user = '''${_users[index]} * ''';
+                  } else {
+                    color = theme.tertiaryColor;
+                    user = '''${_users[index]} ''';
                   }
-                  else{
-                     color=theme.tertiaryColor;
-                     user='''${_users[index]} ''';
-                  }
-          
+
                   var avatar = Padding(
                     padding: const EdgeInsets.only(
                         left: 8.0, bottom: 8.0, right: 8.0),

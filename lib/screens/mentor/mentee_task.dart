@@ -20,8 +20,8 @@ class _MenteeTaskState extends State<MenteeTask> {
 
     if (data['git'] == '')
       return Scaffold(
-        drawer: MentorCustomDrawer(tryParseJwt(data['jwt'])['username'],
-            tryParseJwt(data['jwt'])['github_username']),
+        // drawer: MentorCustomDrawer(tryParseJwt(data['jwt'])['username'],
+        //     tryParseJwt(data['jwt'])['github_username']),
         backgroundColor: config.bgColor,
         appBar: AppBar(
           elevation: 0,

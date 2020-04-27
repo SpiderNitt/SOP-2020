@@ -118,7 +118,7 @@ class _MyHomePage extends State<HomePage> {
     return Scaffold(
       backgroundColor: theme.primaryColor,
       drawer: MenteeCustomDrawer(
-          '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
+          '${this.user["name"]}', username, '${this.user["avatar_url"]}', true),
       appBar: AppBar(
         title: Text(
           "DASHBOARD",

@@ -8,8 +8,14 @@ class MenteeCustomDrawer extends StatelessWidget {
   final String _name;
   final String _username;
   final String _url;
+  final bool _isDash;
 
-  MenteeCustomDrawer(this._name, this._username, this._url);
+  MenteeCustomDrawer(
+    this._name,
+    this._username,
+    this._url,
+    this._isDash,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +55,14 @@ class MenteeCustomDrawer extends StatelessWidget {
               ),
             ),
             CustomListTile(Icons.home, "Home Page", () {
-              print("home");
-              Navigator.pushNamed(context, '/mentee/');
+              if (_isDash == false) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/mentee/', (Route<dynamic> route) => false);
+              }
             }),
             CustomListTile(Icons.announcement, "Announcements", () {
-              print("Announcement");
-              Navigator.pushNamed(context, '/mentee/announcement/');
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/mentee/announcement/', (Route<dynamic> route) => false);
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();

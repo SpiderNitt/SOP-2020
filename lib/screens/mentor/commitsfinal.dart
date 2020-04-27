@@ -16,8 +16,8 @@ class _CommitsFinal extends State<CommitsFinal> {
     Map data = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      drawer: MentorCustomDrawer(tryParseJwt(data['jwt'])['username'],
-          tryParseJwt(data['jwt'])['github_username']),
+      // drawer: MentorCustomDrawer(tryParseJwt(data['jwt'])['username'],
+      //     tryParseJwt(data['jwt'])['github_username']),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

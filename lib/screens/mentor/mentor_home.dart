@@ -17,7 +17,8 @@ class Mentor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MentorCustomDrawer(this.name, this.gitacc),
+      drawer:
+          MentorCustomDrawer(this.name, this.gitacc, true, false, false, false),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

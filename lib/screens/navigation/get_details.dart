@@ -177,18 +177,6 @@ class ViewState extends State<GetDetails> {
                                         },
                                       );
                                       rerouteLogin(passwd, "$roll");
-                                      // if (payloadMap["is_mentor"]) {
-                                      //   Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             Mentor("$token")),
-                                      //   );
-                                      // } else {
-                                      //   Navigator.pushNamed(
-                                      //       context, '/mentee/');
-                                      // }
-
                                     } else {
                                       AlertDialog alert = AlertDialog(
                                         title: Text("Spider Orientation"),
@@ -286,10 +274,10 @@ class ViewState extends State<GetDetails> {
       } else {
         if (payloadMap["is_mentor"]) {
           print("Login as mentor");
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Mentor("$token")),
-          );
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Mentor("$token")),
+              ModalRoute.withName('/mentor'));
         } else {
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/mentee/', (Route<dynamic> route) => false);

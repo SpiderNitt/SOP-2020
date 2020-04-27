@@ -105,8 +105,8 @@ class AnnouncementState extends State<Announcement>
 
     return Scaffold(
       backgroundColor: theme.primaryColor,
-      drawer: MenteeCustomDrawer(
-          '${this.user["name"]}', username, '${this.user["avatar_url"]}'),
+      drawer: MenteeCustomDrawer('${this.user["name"]}', username,
+          '${this.user["avatar_url"]}', false),
       appBar: AppBar(
         title: Text('''Announcements'''),
         backgroundColor: theme.blackColor,

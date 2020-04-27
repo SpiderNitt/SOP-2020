@@ -22,7 +22,14 @@ class _RequestState extends State<Request> {
     String gitacc = res['github_username'];
 
     return Scaffold(
-      drawer: MentorCustomDrawer(name, gitacc),
+      drawer: MentorCustomDrawer(
+        name,
+        gitacc,
+        false,
+        false,
+        true,
+        false,
+      ),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

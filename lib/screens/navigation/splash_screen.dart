@@ -32,10 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
         else {
           var res = tryParseJwt(jwtToken);
           if (res["is_mentor"]) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Mentor(jwtToken)),
-            );
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => Mentor(jwtToken)),
+                ModalRoute.withName('/mentor'));
           } else {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 '/mentee/', (Route<dynamic> route) => false);

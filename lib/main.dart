@@ -6,7 +6,6 @@ import 'package:inductions_20/screens/mentor/mentee_task.dart';
 import 'package:inductions_20/screens/mentor/review.dart';
 import 'package:inductions_20/screens/mentor/write_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:inductions_20/screens/navigation/get_details.dart';
 import 'package:inductions_20/screens/navigation/login.dart';
 import 'package:inductions_20/screens/navigation/splash_screen.dart';
 import 'package:inductions_20/screens/mentee/announcement.dart';

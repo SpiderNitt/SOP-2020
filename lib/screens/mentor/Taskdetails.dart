@@ -24,8 +24,14 @@ class _TasklistState extends State<Tasklist> {
     this.roll = this.res["roll"];
 
     return Scaffold(
-      drawer:
-          MentorCustomDrawer(this.res["username"], this.res["github_username"]),
+      drawer: MentorCustomDrawer(
+        this.res["username"],
+        this.res["github_username"],
+        false,
+        true,
+        false,
+        false,
+      ),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
@@ -44,22 +50,22 @@ class _TasklistState extends State<Tasklist> {
                 }),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-
-                try{
+                try {
                   this.profiles = [];
                   dynamic temp = jsonDecode(snapshot.data.body);
-                  for(int i = 0; i < temp["profile_ids"].length; ++i){
-                  this.profiles.add(temp["profile_ids"]['$i']);  
-              }
+                  for (int i = 0; i < temp["profile_ids"].length; ++i) {
+                    this.profiles.add(temp["profile_ids"]['$i']);
+                  }
 
-             return TaskDet(this.jwt, this.profiles);
-
-              } catch(e){
-                return Center(
-                  child: Text('$e',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor))
-                );
-              }
-              
+                  return TaskDet(this.jwt, this.profiles);
+                } catch (e) {
+                  return Center(
+                      child: Text('$e',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: config.fontFamily,
+                              color: config.fontColor)));
+                }
               }
 
               if (snapshot.hasError) {

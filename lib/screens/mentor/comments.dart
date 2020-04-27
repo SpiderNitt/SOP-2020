@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'package:inductions_20/theme/mentee.dart';
-import 'package:inductions_20/screens/mentee/task.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/mentee/data/comments.dart';
 import 'package:inductions_20/screens/mentee/config/jwtparse.dart';
 import 'package:inductions_20/screens/mentee/config/extractjwt.dart';
 import 'package:http/http.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
 import 'dart:convert' show jsonEncode;
 
 class TaskComment extends StatefulWidget {
@@ -29,7 +27,7 @@ class TaskCommentState extends State<TaskComment>
   List _messages;
   Color color;
   var username;
-  var user="";
+  var user = "";
 
   TextEditingController textEditingController;
   ScrollController scrollController;
@@ -85,7 +83,6 @@ class TaskCommentState extends State<TaskComment>
           'Accept': 'application/json',
           'Authorization': 'Bearer $jwt',
         };
-        Map<String, String> list1 = {};
 
         var Json1 = jsonEncode({
           "rollno": "$rollno",
@@ -116,8 +113,6 @@ class TaskCommentState extends State<TaskComment>
             String date = datetime.substring(0, 10);
             var hr = int.parse(datetime.substring(11, 13));
             var min = int.parse(datetime.substring(14, 16));
-            var sec = int.parse(datetime.substring(17, 19));
-
 
             var times = "$hr:$min";
             _date.add("$date");
@@ -157,9 +152,9 @@ class TaskCommentState extends State<TaskComment>
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: TextField(
-                keyboardType: TextInputType.multiline,
-                 minLines: 1,
-                 maxLines: 5,
+              keyboardType: TextInputType.multiline,
+              minLines: 1,
+              maxLines: 5,
               onChanged: (text) {
                 setState(() {
                   enableButton = text.isNotEmpty;
@@ -201,7 +196,6 @@ class TaskCommentState extends State<TaskComment>
       home: Scaffold(
         backgroundColor: theme.primaryColor,
         appBar: AppBar(
-
           title: Text('${task[0]}'),
           backgroundColor: theme.blackColor,
         ),
@@ -239,12 +233,11 @@ class TaskCommentState extends State<TaskComment>
 
                   if (_users[index] == username) {
                     reverse = true;
-                    color=Colors.amber;
-                     user='''${_users[index]} * ''';
-                  }
-                  else{
-                    color=theme.tertiaryColor;
-                      user='''${_users[index]} ''';
+                    color = Colors.amber;
+                    user = '''${_users[index]} * ''';
+                  } else {
+                    color = theme.tertiaryColor;
+                    user = '''${_users[index]} ''';
                   }
 
                   var avatar = Padding(

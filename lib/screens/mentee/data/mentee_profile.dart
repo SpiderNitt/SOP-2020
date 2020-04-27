@@ -9,16 +9,16 @@ class Mentee_profile {
   Mentee_profile();
 
   Future<void> ExtractResponse() async {
-    List _profiles =[
-    'Algos',
-    'App Development - Android Native',
-    'App Development - Flutter',
-    'App Development - React Native',
-    'Tronix - Embedded Systems and Analog Electronics',
-    'Tronix - Robotics and control',
-    'Tronix - Signal Processing and Machine Learning',
-    'Web Development'
-  ];
+    List _profiles = [
+      'Algos',
+      'App Development - Android Native',
+      'App Development - Flutter',
+      'App Development - React Native',
+      'Tronix - Embedded Systems and Analog Electronics',
+      'Tronix - Robotics and control',
+      'Tronix - Signal Processing and Machine Learning',
+      'Web Development'
+    ];
 
     profnolist = [];
     ProvideJwt provideJwt = ProvideJwt();
@@ -29,11 +29,11 @@ class Mentee_profile {
     var rollno = res["roll"];
     print(rollno);
     String url =
-        "https://spider.nitt.edu/inductions20test/api/mentee/${rollno}/profile";
+        "https://spider.nitt.edu/inductions20test/api/mentee/$rollno/profile";
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${jwt}',
+      'Authorization': 'Bearer $jwt',
     };
     Response response = await get(url, headers: headers);
 

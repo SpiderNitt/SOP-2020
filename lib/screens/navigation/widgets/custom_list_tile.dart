@@ -14,8 +14,8 @@ class CustomListTile extends StatelessWidget {
       color: theme.primaryColor,
       child: InkWell(
         onTap: () {
+          Navigator.pop(context);
           _onTap();
-          // Navigator.pop(context);
         },
         focusColor: theme.primaryColor,
         highlightColor: theme.primaryColor,
