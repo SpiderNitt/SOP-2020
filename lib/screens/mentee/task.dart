@@ -47,8 +47,8 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var recentTime;
   var recentDate;
   Map feedbacks = {};
-  List taskSubmitted;
-  var mentorname = "";
+  List taskSubmitted=[];
+  var mentorname = " ";
   var mentorcontact = "loading..";
   int hr = 0, min = 0, sec = 0;
   TextEditingController textEditingController, textEditingController1;
@@ -88,7 +88,10 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     this.decoverallPer = this.overallPer * 100;
     decbasicPer = this.basic_per * 100;
     decadvancePer = this.advancePer * 100;
-    taskSubmitted = [];
+    subCount=0;
+    taskSubmitted=[];
+    feedbacks={};
+    feedTime="5:30";
     taskDesc();
   }
 
@@ -102,6 +105,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       this.subCount = taskDetails.no_submissions;
     });
 
+
     Mentee_progress menteeProgress = Mentee_progress(task[1]);
 
     await menteeProgress.extractProgressDetails();
@@ -109,9 +113,11 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     setState(() {
       basic_per = menteeProgress.basic_per / 100;
       advancePer = menteeProgress.advance_per / 100;
+     
       feedTime = menteeProgress.recent_feedback;
       feedbacks = menteeProgress.previous_feedbacks;
-
+      
+       print("check");
       if (feedTime != "5:30") {
         String date = feedTime.substring(0, 10);
         hr = int.parse(feedTime.substring(11, 13));
@@ -129,6 +135,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       decadvancePer = this.advancePer * 100;
     });
 
+  print("mentor");
     Mentor_details mentorDetails = Mentor_details(task[3]);
     await mentorDetails.mentor_extract();
 

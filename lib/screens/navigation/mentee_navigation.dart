@@ -9,6 +9,7 @@ class MenteeCustomDrawer extends StatelessWidget {
   final String _username;
   final String _url;
   final bool _isDash;
+  final storage = new FlutterSecureStorage();
 
   MenteeCustomDrawer(
     this._name,
@@ -63,6 +64,12 @@ class MenteeCustomDrawer extends StatelessWidget {
             CustomListTile(Icons.announcement, "Announcements", () {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   '/mentee/announcement/', (Route<dynamic> route) => false);
+            }),
+            CustomListTile(Icons.person_outline, "Change GitHub", () async {
+              print("Change_github");
+              String token = await storage.read(key: "jwt");
+              Navigator.pushNamed(context, '/biomentee',
+                  arguments: {'jwt': token});
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();

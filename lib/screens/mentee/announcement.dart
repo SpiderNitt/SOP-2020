@@ -1,23 +1,15 @@
-import 'package:flutter/material.dart'
-    show
-        AppBar,
-        BuildContext,
-        ListView,
-        MediaQuery,
-        Scaffold,
-        ScrollController,
-        SingleTickerProviderStateMixin,
-        State,
-        StatefulWidget,
-        Text,
-        Widget;
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/widgets/Announcementbox.dart';
 import 'package:inductions_20/screens/mentee/data/announcement.dart';
 import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
-
+import 'package:inductions_20/screens/mentee/firebase_messaging/firebase_notification.dart';
+import 'package:inductions_20/screens/mentee/data/model/firebaseMessage.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
+
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -29,6 +21,10 @@ class Announcement extends StatefulWidget {
 
 class AnnouncementState extends State<Announcement>
     with SingleTickerProviderStateMixin {
+
+  final FirebaseMessaging _firebaseMessaging =FirebaseMessaging();
+  final List<Message> messages=[];
+  
   var username;
   var name;
   var url;
@@ -50,6 +46,49 @@ class AnnouncementState extends State<Announcement>
       "login": "loading.."
     };
     get_announcement();
+
+_firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        final notification = message['notification'];
+        setState(() {
+          messages.add(Message(title: notification['title'], body: notification['body']));
+        });
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                        content: ListTile(
+                        title: Text(message['notification']['title']),
+                        subtitle: Text(message['notification']['body']),
+                        ),
+                        actions: <Widget>[
+                        FlatButton(
+                            child: Text('Ok'),
+                            onPressed: () => Navigator.of(context).pop(),
+                        ),
+                    ],
+                ),
+            );
+      },
+      
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        
+        
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+       
+      },
+    );
+
+  _firebaseMessaging.requestNotificationPermissions(
+     const IosNotificationSettings(sound: true, badge: true, alert: true)
+  );
+
+
+
+
   }
 
   Future<String> get_announcement() async {
