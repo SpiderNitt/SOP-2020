@@ -25,14 +25,8 @@ class _BioState extends State<Bio> {
     this.mentorroll = res["roll"];
 
     return Scaffold(
-      drawer: MentorCustomDrawer(
-        name,
-        gitacc,
-        false,
-        false,
-        false,
-        true,
-      ),
+      drawer:
+          MentorCustomDrawer(name, gitacc, false, false, false, true, false),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

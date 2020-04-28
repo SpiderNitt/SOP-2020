@@ -1,5 +1,4 @@
 import 'dart:convert' show jsonEncode;
-import 'package:http/http.dart' as http;
 import 'package:inductions_20/screens/mentee/data/task_description.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
@@ -47,7 +46,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var recentTime;
   var recentDate;
   Map feedbacks = {};
-  List taskSubmitted=[];
+  List taskSubmitted = [];
   var mentorname = " ";
   var mentorcontact = "loading..";
   int hr = 0, min = 0, sec = 0;
@@ -88,10 +87,10 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     this.decoverallPer = this.overallPer * 100;
     decbasicPer = this.basic_per * 100;
     decadvancePer = this.advancePer * 100;
-    subCount=0;
-    taskSubmitted=[];
-    feedbacks={};
-    feedTime="5:30";
+    subCount = 0;
+    taskSubmitted = [];
+    feedbacks = {};
+    feedTime = "5:30";
     taskDesc();
   }
 
@@ -105,7 +104,6 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       this.subCount = taskDetails.no_submissions;
     });
 
-
     Mentee_progress menteeProgress = Mentee_progress(task[1]);
 
     await menteeProgress.extractProgressDetails();
@@ -113,11 +111,11 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     setState(() {
       basic_per = menteeProgress.basic_per / 100;
       advancePer = menteeProgress.advance_per / 100;
-     
+
       feedTime = menteeProgress.recent_feedback;
       feedbacks = menteeProgress.previous_feedbacks;
-      
-       print("check");
+
+      print("check");
       if (feedTime != "5:30") {
         String date = feedTime.substring(0, 10);
         hr = int.parse(feedTime.substring(11, 13));
@@ -135,7 +133,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       decadvancePer = this.advancePer * 100;
     });
 
-  print("mentor");
+    print("mentor");
     Mentor_details mentorDetails = Mentor_details(task[3]);
     await mentorDetails.mentor_extract();
 
@@ -365,7 +363,6 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                 context, "submitted links limited upto 5");
                           } else {
                             try {
-                              var response = await http.head(text);
                               textEditingController.clear();
 
                               setState(() {
@@ -491,59 +488,55 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           controller: textEditingController1,
                         ),
                         CustomBox('Send Request to Review', () async {
-                          
-                          if(taskSubmitted.length>0)
-                          {
-                          try{
-                          var text = textEditingController1.value.text;
-                          ProvideJwt provideJwt = ProvideJwt();
-                          await provideJwt.extractjwt();
-                          String jwt = provideJwt.jwt;
-                          var res = tryParseJwt(jwt);
-                          var rollno = res["roll"];
-                          
-                          String url =
-                              "https://spider.nitt.edu/inductions20test/api/mentee/new_task_submission";
-                          Map<String, String> headers = {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'Authorization': 'Bearer $jwt',
-                          };
-                          Map<String, String> list1 = {};
-                          for (int i = 0; i < taskSubmitted.length; i++)
-                            list1["$i"] = "${taskSubmitted[i]}";
+                          if (taskSubmitted.length > 0) {
+                            try {
+                              var text = textEditingController1.value.text;
+                              ProvideJwt provideJwt = ProvideJwt();
+                              await provideJwt.extractjwt();
+                              String jwt = provideJwt.jwt;
+                              var res = tryParseJwt(jwt);
+                              var rollno = res["roll"];
 
-                          var sublinks = (jsonEncode(list1));
-                          print(sublinks);
+                              String url =
+                                  "https://spider.nitt.edu/inductions20test/api/mentee/new_task_submission";
+                              Map<String, String> headers = {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'Authorization': 'Bearer $jwt',
+                              };
+                              Map<String, String> list1 = {};
+                              for (int i = 0; i < taskSubmitted.length; i++)
+                                list1["$i"] = "${taskSubmitted[i]}";
 
-                          var Json1 = jsonEncode({
-                            "rollno": "$rollno",
-                            "task_id": task[1],
-                            "profile_id": task[3],
-                            "submission_links_no": taskSubmitted.length,
-                            "submission_links": sublinks,
-                            "submission_description": "$text"
-                          });
+                              var sublinks = (jsonEncode(list1));
+                              print(sublinks);
 
-                          Response response =
-                              await post(url, headers: headers, body: Json1);
-                          int statusCode = response.statusCode;
+                              var Json1 = jsonEncode({
+                                "rollno": "$rollno",
+                                "task_id": task[1],
+                                "profile_id": task[3],
+                                "submission_links_no": taskSubmitted.length,
+                                "submission_links": sublinks,
+                                "submission_description": "$text"
+                              });
 
-                          if (statusCode == 200) {
-                            showAlertDialog(context, "Submitted");
-                          } else if (statusCode == 400) {
-                            showAlertDialog(context, "bad request");
-                          } else {
-                            showAlertDialog(context, "Server error");
-                          }
-                          }catch(e)
-                          {
-                            print("error: $e");
-                          }
-                          }
-                          else
-                          showAlertDialog(context, "Add links to request for review");
+                              Response response = await post(url,
+                                  headers: headers, body: Json1);
+                              int statusCode = response.statusCode;
 
+                              if (statusCode == 200) {
+                                showAlertDialog(context, "Submitted");
+                              } else if (statusCode == 400) {
+                                showAlertDialog(context, "bad request");
+                              } else {
+                                showAlertDialog(context, "Server error");
+                              }
+                            } catch (e) {
+                              print("error: $e");
+                            }
+                          } else
+                            showAlertDialog(
+                                context, "Add links to request for review");
                         }, 420, 50, 14.5, theme.tertiaryColor, 15, 8, 10),
                       ],
                     )),

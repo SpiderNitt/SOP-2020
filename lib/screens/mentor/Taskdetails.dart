@@ -24,14 +24,8 @@ class _TasklistState extends State<Tasklist> {
     this.roll = this.res["roll"];
 
     return Scaffold(
-      drawer: MentorCustomDrawer(
-        this.res["username"],
-        this.res["github_username"],
-        false,
-        true,
-        false,
-        false,
-      ),
+      drawer: MentorCustomDrawer(this.res["username"],
+          this.res["github_username"], false, true, false, false, false),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

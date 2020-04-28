@@ -11,7 +11,6 @@ import 'package:flutter/material.dart'
         MainAxisAlignment,
         Material,
         Padding,
-        Row,
         StatelessWidget,
         Text,
         TextStyle,
@@ -58,20 +57,19 @@ class TaskDescription extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(1),
-                    child:Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         CustomBox('Contact $mentorName ', () {}, 150, 50, 20,
                             theme.blackColor, 0, 0, 0),
-                        if(mentorContact.length<=15)  
-                        CustomBox('$mentorContact', () {
-                          launch("tel://$mentorContact");
-                        }, 110, 50, 12, theme.blackColor, 0, 0, 0),
-                       if(mentorContact.length>10)    
-                                    
-                       CustomBox("$mentorContact", () {
-                          launch("${mentorContact}");
-                        }, 200, 50, 12, theme.blackColor, 10, 10, 0),
+                        if (mentorContact.length <= 15)
+                          CustomBox('$mentorContact', () {
+                            launch("tel://$mentorContact");
+                          }, 110, 50, 12, theme.blackColor, 0, 0, 0),
+                        if (mentorContact.length > 10)
+                          CustomBox("$mentorContact", () {
+                            launch("$mentorContact");
+                          }, 200, 50, 12, theme.blackColor, 10, 10, 0),
                       ],
                     ),
                   )
@@ -99,21 +97,19 @@ class TaskDescription extends StatelessWidget {
                         color: theme.tertiaryColor,
                       )),
                   Padding(
-                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: 
-                      Linkify(
-                      onOpen: (link) async {
-                       if (await canLaunch(link.url)) {
-                       await launch(link.url);
-                       } else {
-                          throw 'Could not launch $link';
-                            }
-                           },
-                      text: taskDescription,
-                     style: TextStyle(fontSize: 17, color: theme.fontColor),
-                     linkStyle: TextStyle(color: theme.tertiaryColor),
-                   )
-                  ),
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunch(link.url)) {
+                            await launch(link.url);
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                        text: taskDescription,
+                        style: TextStyle(fontSize: 17, color: theme.fontColor),
+                        linkStyle: TextStyle(color: theme.tertiaryColor),
+                      )),
                 ],
               ),
             ),

@@ -4,30 +4,28 @@ import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/widgets/Announcementbox.dart';
 import 'package:inductions_20/screens/mentee/data/announcement.dart';
 import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
-import 'package:inductions_20/screens/mentee/firebase_messaging/firebase_notification.dart';
 import 'package:inductions_20/screens/mentee/data/model/firebaseMessage.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Announcement extends StatefulWidget {
-  Announcement();
+class MenteeAnnouncement extends StatefulWidget {
   @override
   AnnouncementState createState() => AnnouncementState();
 }
 
-class AnnouncementState extends State<Announcement>
+class AnnouncementState extends State<MenteeAnnouncement>
     with SingleTickerProviderStateMixin {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final List<Message> messages = [];
 
-  final FirebaseMessaging _firebaseMessaging =FirebaseMessaging();
-  final List<Message> messages=[];
-  
   var username;
   var name;
   var url;
+  var gitacc;
+  var menteeName;
   var user;
   List _messages = [];
   List date = [];
@@ -47,48 +45,40 @@ class AnnouncementState extends State<Announcement>
     };
     get_announcement();
 
-_firebaseMessaging.configure(
+    _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         final notification = message['notification'];
         setState(() {
-          messages.add(Message(title: notification['title'], body: notification['body']));
+          messages.add(Message(
+              title: notification['title'], body: notification['body']));
         });
-            showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                        content: ListTile(
-                        title: Text(message['notification']['title']),
-                        subtitle: Text(message['notification']['body']),
-                        ),
-                        actions: <Widget>[
-                        FlatButton(
-                            child: Text('Ok'),
-                            onPressed: () => Navigator.of(context).pop(),
-                        ),
-                    ],
-                ),
-            );
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
       },
-      
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        
-        
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-       
       },
     );
 
-  _firebaseMessaging.requestNotificationPermissions(
-     const IosNotificationSettings(sound: true, badge: true, alert: true)
-  );
-
-
-
-
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
   }
 
   Future<String> get_announcement() async {
@@ -104,7 +94,6 @@ _firebaseMessaging.configure(
 
       int hr = int.parse("$k".substring(11, 13));
       int min = int.parse("$k".substring(14, 16));
-      int sec = int.parse("$k".substring(17, 19));
 
       _date.add(date1);
       _time.add("$hr:$min");
@@ -144,8 +133,14 @@ _firebaseMessaging.configure(
 
     return Scaffold(
       backgroundColor: theme.primaryColor,
-      drawer: MenteeCustomDrawer('${this.user["name"]}', username,
-          '${this.user["avatar_url"]}', false),
+      drawer: MenteeCustomDrawer(
+        '${this.user["name"]}',
+        username,
+        '${this.user["avatar_url"]}',
+        false,
+        true,
+        false,
+      ),
       appBar: AppBar(
         title: Text('''Announcements'''),
         backgroundColor: theme.blackColor,

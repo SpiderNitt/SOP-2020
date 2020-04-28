@@ -69,7 +69,6 @@ class Profile_task {
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();
     String jwt = provideJwt.jwt;
-    var res = tryParseJwt(jwt);
     String url = "https://spider.nitt.edu/inductions20test/api/profile/$profno";
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -116,7 +115,7 @@ class Mentor_details {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${jwt}',
+      'Authorization': 'Bearer $jwt',
     };
     Response response = await get(url, headers: headers);
     int statusCode = response.statusCode;

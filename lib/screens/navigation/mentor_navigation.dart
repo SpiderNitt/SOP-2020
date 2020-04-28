@@ -13,10 +13,11 @@ class MentorCustomDrawer extends StatelessWidget {
   final bool _isTask;
   final bool _isReview;
   final bool _isGithub;
+  final bool _isAnnouncement;
   final storage = new FlutterSecureStorage();
 
   MentorCustomDrawer(this._name, this._username, this._isDash, this._isTask,
-      this._isReview, this._isGithub);
+      this._isReview, this._isGithub, this._isAnnouncement);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,9 @@ class MentorCustomDrawer extends StatelessWidget {
               }
             }),
             CustomListTile(Icons.announcement, "Announcements", () {
-              Navigator.of(context).pushNamed('/mentee/announcement/');
+              if (_isAnnouncement == false) {
+                Navigator.of(context).pushNamed('/mentor/announcement');
+              }
             }),
             CustomListTile(Icons.pages, "Tasks", () async {
               if (_isTask == false) {

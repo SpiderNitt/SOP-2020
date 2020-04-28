@@ -87,7 +87,6 @@ class TaskCommentState extends State<TaskComment>
           'Accept': 'application/json',
           'Authorization': 'Bearer $jwt',
         };
-        Map<String, String> list1 = {};
 
         var Json1 = jsonEncode({
           "rollno": "$rollno",
@@ -118,7 +117,6 @@ class TaskCommentState extends State<TaskComment>
             String date = datetime.substring(0, 10);
             var hr = int.parse(datetime.substring(11, 13));
             var min = int.parse(datetime.substring(14, 16));
-            var sec = int.parse(datetime.substring(17, 19));
 
             var times = "$hr:$min";
             _date.add("$date");

@@ -1,6 +1,5 @@
 import 'package:inductions_20/screens/mentee/config/extractjwt.dart'
     show ProvideJwt;
-import 'package:inductions_20/screens/mentee/config/jwtparse.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
@@ -13,12 +12,11 @@ class AnnouncementList {
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();
     String jwt = provideJwt.jwt;
-    var res = tryParseJwt(jwt);
     String url = "https://spider.nitt.edu/inductions20test/api/announcements";
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${jwt}',
+      'Authorization': 'Bearer $jwt',
     };
 
     Response response = await get(url, headers: headers);

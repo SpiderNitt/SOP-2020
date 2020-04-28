@@ -29,6 +29,7 @@ class _RequestState extends State<Request> {
         false,
         true,
         false,
+        false,
       ),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,

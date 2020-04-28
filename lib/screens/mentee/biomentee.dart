@@ -64,7 +64,13 @@ class _BioState extends State<Biomentee> {
 
     return Scaffold(
       drawer: MenteeCustomDrawer(
-          '$name', gitacc, '${this.user["avatar_url"]}', false),
+        '$name',
+        gitacc,
+        '${this.user["avatar_url"]}',
+        false,
+        false,
+        true,
+      ),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

@@ -36,7 +36,6 @@ class TASKfeedbackState extends State<TASKfeedback>
 
       int hr = int.parse("$k".substring(11, 13));
       int min = int.parse("$k".substring(14, 16));
-      int sec = int.parse("$k".substring(17, 19));
 
       date.add(date1);
       time.add("$hr:$min");
@@ -66,7 +65,7 @@ class TASKfeedbackState extends State<TASKfeedback>
       home: Scaffold(
         backgroundColor: theme.primaryColor,
         appBar: AppBar(
-          title: Text('${taskname}'),
+          title: Text('$taskname'),
           backgroundColor: theme.blackColor,
         ),
         body: Column(

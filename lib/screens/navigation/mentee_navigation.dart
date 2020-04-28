@@ -9,14 +9,12 @@ class MenteeCustomDrawer extends StatelessWidget {
   final String _username;
   final String _url;
   final bool _isDash;
+  final bool _isAnnouncement;
+  final bool _isBio;
   final storage = new FlutterSecureStorage();
 
-  MenteeCustomDrawer(
-    this._name,
-    this._username,
-    this._url,
-    this._isDash,
-  );
+  MenteeCustomDrawer(this._name, this._username, this._url, this._isDash,
+      this._isAnnouncement, this._isBio);
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +60,16 @@ class MenteeCustomDrawer extends StatelessWidget {
               }
             }),
             CustomListTile(Icons.announcement, "Announcements", () {
-              Navigator.of(context).pushNamed('/mentee/announcement/');
+              if (_isAnnouncement == false) {
+                Navigator.of(context).pushNamed('/mentee/announcement');
+              }
             }),
             CustomListTile(Icons.person_outline, "Change GitHub", () async {
-              print("Change_github");
-              String token = await storage.read(key: "jwt");
-              Navigator.pushNamed(context, '/biomentee',
-                  arguments: {'jwt': token});
+              if (_isBio == false) {
+                String token = await storage.read(key: "jwt");
+                Navigator.pushNamed(context, '/biomentee',
+                    arguments: {'jwt': token});
+              }
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();
