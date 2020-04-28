@@ -8,9 +8,69 @@ import 'package:inductions_20/screens/navigation/widgets/custom_button.dart';
 import 'package:inductions_20/screens/navigation/widgets/custom_input.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // Files imported
 import '../../theme/navigation.dart';
+
+class Dialogs {
+  static Future<void> showLoadingDialog(
+      BuildContext context, GlobalKey key) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new WillPopScope(
+              onWillPop: () async => false,
+              child: SimpleDialog(
+                  key: key,
+                  backgroundColor: Colors.black54,
+                  children: <Widget>[
+                    Center(
+                      child: Column(children: [
+                        CircularProgressIndicator(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Please Wait....",
+                          style: TextStyle(color: Colors.blueAccent),
+                        )
+                      ]),
+                    )
+                  ]));
+        });
+  }
+}
+
+Future<Credentials> getResponse(String rollno, String password) async {
+  final Response response = await post(
+    'https://spider.nitt.edu/inductions20test/login/',
+    headers: <String, String>{
+      'Content-type': 'application/json',
+    },
+    body: jsonEncode(<String, String>{
+      'rollno': rollno,
+      'password': password,
+    }),
+  );
+
+  return Credentials.fromJson(json.decode(response.body));
+}
+
+class Credentials {
+  final String rollno;
+  final String password;
+
+  Credentials({this.rollno, this.password});
+
+  factory Credentials.fromJson(Map<String, dynamic> json) {
+    return Credentials(
+      rollno: json['rollno'],
+      password: json['password'],
+    );
+  }
+}
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,6 +78,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginScreen> {
+  bool _loading = false;
+  Future<Credentials> _loginresponse;
   final _loginFormKey = GlobalKey<FormState>();
   final _rollnocontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
@@ -185,6 +247,44 @@ class LoginViewState extends State<LoginScreen> {
                               'Sign In',
                               () async {
                                 if (_loginFormKey.currentState.validate()) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                        body: Container(
+                                          decoration: BoxDecoration(
+                                            gradient: RadialGradient(
+                                              colors: <Color>[
+                                                theme.secondaryColor,
+                                                theme.primaryColor,
+                                              ],
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              Image(
+                                                image: AssetImage(
+                                                  'assets/images/spiderIcon.png',
+                                                ),
+                                                height: imagesize * 0.7,
+                                                width: imagesize * 0.7,
+                                              ),
+                                              Center(
+                                                child: SpinKitPouringHourglass(
+                                                  color: Colors.white,
+                                                  size: 70.0,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                   String url =
                                       "https://spider.nitt.edu/inductions20test/login/";
                                   Map<String, String> headers = {
@@ -215,6 +315,7 @@ class LoginViewState extends State<LoginScreen> {
                                     var resp = utf8
                                         .decode(base64Url.decode(normalized));
                                     final payloadMap = json.decode(resp);
+                                    Navigator.pop(context);
                                     if (parsedJson["is_first_time"] == true) {
                                       Navigator.push(
                                           context,
@@ -247,6 +348,7 @@ class LoginViewState extends State<LoginScreen> {
                                         FlatButton(
                                           child: Text("OK"),
                                           onPressed: () {
+                                            Navigator.pop(context);
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pop('dialog');
