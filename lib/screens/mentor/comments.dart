@@ -25,6 +25,7 @@ class TaskCommentState extends State<TaskComment>
   List _date;
   List _time;
   List _messages;
+  List _pos;
   Color color;
   var username;
   var user = "";
@@ -39,6 +40,7 @@ class TaskCommentState extends State<TaskComment>
     _date = [];
     _time = [];
     _messages = [];
+    _pos = [];
 
     textEditingController = TextEditingController();
     scrollController = ScrollController();
@@ -57,6 +59,7 @@ class TaskCommentState extends State<TaskComment>
       this._time = comments_list1.time;
       this._date = comments_list1.dates;
       this.username = comments_list1.username;
+      this._pos = comments_list1.pos;
     });
   }
 
@@ -117,6 +120,7 @@ class TaskCommentState extends State<TaskComment>
             var times = "$hr:$min";
             _date.add("$date");
             _time.add("$times");
+            _pos.add(true);
 
             enableButton = false;
           });
@@ -233,6 +237,11 @@ class TaskCommentState extends State<TaskComment>
 
                   if (_users[index] == username) {
                     reverse = true;
+                    color = Colors.amber;
+                    user = '''${_users[index]} * ''';
+                  }
+
+                  if (_pos[index] == true) {
                     color = Colors.amber;
                     user = '''${_users[index]} * ''';
                   } else {

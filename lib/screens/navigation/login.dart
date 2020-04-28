@@ -325,12 +325,12 @@ class LoginViewState extends State<LoginScreen> {
                                     } else {
                                       if (payloadMap["is_mentor"]) {
                                         print("Login as mentor");
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Mentor("$token")),
-                                        );
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Mentor("$token")),
+                                                ModalRoute.withName('/mentor'));
                                       } else {
                                         Navigator.of(context)
                                             .pushNamedAndRemoveUntil(
