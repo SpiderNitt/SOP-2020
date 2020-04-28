@@ -250,7 +250,7 @@ class TaskCommentState extends State<TaskComment>
 
                   if (_users[index] == username) {
                     reverse = true;
-                  }
+                  }       
                   if(_pos[index] == true)
                   {
                     color=Colors.amber;
