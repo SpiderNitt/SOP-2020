@@ -61,6 +61,9 @@ class MentorCustomDrawer extends StatelessWidget {
                     ModalRoute.withName('/mentor'));
               }
             }),
+            CustomListTile(Icons.announcement, "Announcements", () {
+              Navigator.of(context).pushNamed('/mentee/announcement/');
+            }),
             CustomListTile(Icons.pages, "Tasks", () async {
               if (_isTask == false) {
                 String token = await storage.read(key: "jwt");

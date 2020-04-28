@@ -62,8 +62,7 @@ class MenteeCustomDrawer extends StatelessWidget {
               }
             }),
             CustomListTile(Icons.announcement, "Announcements", () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/mentee/announcement/', (Route<dynamic> route) => false);
+              Navigator.of(context).pushNamed('/mentee/announcement/');
             }),
             CustomListTile(Icons.person_outline, "Change GitHub", () async {
               print("Change_github");
