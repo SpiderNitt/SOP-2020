@@ -1,6 +1,8 @@
-import 'dart:convert' show jsonEncode;
+import 'dart:convert' show jsonDecode, jsonEncode;
+import 'dart:io';
 import 'package:inductions_20/screens/mentee/data/task_description.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
+import 'package:inductions_20/screens/mentee/data/comments.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_graph.dart';
@@ -13,7 +15,7 @@ import 'package:inductions_20/screens/mentee/widgets/custom_comment.dart';
 import 'package:inductions_20/screens/mentee/task_description.dart';
 import 'package:inductions_20/screens/mentee/comments.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_progress.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
@@ -47,11 +49,13 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var recentDate;
   Map feedbacks = {};
   List taskSubmitted = [];
+  var commentsLength=0;
   var mentorname = " ";
   var mentorcontact = "loading..";
   int hr = 0, min = 0, sec = 0;
   TextEditingController textEditingController, textEditingController1;
 
+  final storage = FlutterSecureStorage();
   TaskState(this.task);
 
   List<Tab> myTabs = <Tab>[
@@ -88,6 +92,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     decbasicPer = this.basic_per * 100;
     decadvancePer = this.advancePer * 100;
     subCount = 0;
+    commentsLength=0;
     taskSubmitted = [];
     feedbacks = {};
     feedTime = "5:30";
@@ -141,8 +146,37 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       this.mentorname = mentorDetails.mentor_name;
       this.mentorcontact = mentorDetails.mentor_contact;
     });
+
+     Comments_list comments_list1 = Comments_list(task[1]);
+     await comments_list1.extractComment();
+     setState(() {
+       commentsLength= comments_list1.comments.length;
+     });
   }
 
+ Future<int> notify() async{
+
+    ProvideJwt provideJwt = ProvideJwt();
+    await provideJwt.extractjwt();
+    String jwt = provideJwt.jwt;
+     Response res = await get(
+                      'https://spider.nitt.edu/inductions20test/api/task/${task[1]}',
+                      headers: {
+                        HttpHeaders.authorizationHeader:
+                            'Bearer $jwt'
+                      });
+    dynamic resmap = jsonDecode(res.body);
+    dynamic rescomm =  await storage.read(key: '${task[1]}_comments');
+
+
+    if(rescomm == null) {
+      return resmap['comments'].length;
+    }
+    else {
+       return resmap['comments'].length - int.tryParse(rescomm);
+    }
+
+  }
   @override
   void dispose() {
     _tabController.dispose();
@@ -272,8 +306,17 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                       color: theme.tertiaryColor,
                                     ))),
                           ])),
-                  CustomBox('Discussion', () {
+                   FutureBuilder(
+                    future: notify(),
+                    builder: (context, snapshot){
+
+                        if(snapshot.hasData){
+                          return  
+                          Stack(
+                            children: <Widget>[
+                               CustomBox('Discussion', () {
                     List a = task;
+                 storage.write(key: '${task[1]}_comments', value: '${commentsLength}');
                     Navigator.push(
                         context,
                         PageRouteBuilder(
@@ -297,6 +340,43 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                               );
                             }));
                   }, bottombarwidth, 50, 15, theme.blackColor, 15, 0, 0),
+                                    if(snapshot.data!=0)              
+                                                   Positioned(
+                                    right: 9,
+                                    top: 9,
+                                    child: Container(
+                                      padding: EdgeInsets.all(2),
+                                      decoration:  BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      constraints: BoxConstraints(
+                                        minWidth: 14,
+                                        minHeight: 14,
+                                      ),
+                                      child: Text(
+                                        '${snapshot.data}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 8,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ) 
+                            ],
+                          );
+                        }
+
+                       else if (snapshot.hasError){
+                         return Text('${snapshot.error}', style: TextStyle(
+                           color: Colors.white
+                         ),
+                         );
+                       } 
+
+                       else return CircularProgressIndicator();
+                    }),
                 ]),
           ),
         ),
