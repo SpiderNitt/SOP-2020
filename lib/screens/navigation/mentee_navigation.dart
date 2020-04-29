@@ -74,6 +74,7 @@ class MenteeCustomDrawer extends StatelessWidget {
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();
               await storage.delete(key: "jwt");
+              await storage.delete(key: "password");
               Navigator.of(context).pushNamedAndRemoveUntil(
                   '/login', (Route<dynamic> route) => false);
             }),

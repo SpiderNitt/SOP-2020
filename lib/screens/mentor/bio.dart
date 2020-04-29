@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../others/jwtparse.dart';
 import '../../theme/mentor.dart';
 import 'package:http/http.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Bio extends StatefulWidget {
   @override
@@ -14,16 +16,34 @@ class Bio extends StatefulWidget {
 
 class _BioState extends State<Bio> {
   final _formkey = GlobalKey<FormState>();
-  String name, githubacc, year = '', dept, jwt, mentorroll;
+  String name, gitacc, password, githubacc, year = '', dept, jwt, mentorroll;
+
+  @override
+  void initState() {
+    update();
+    super.initState();
+  }
+
+  Future<void> update() async {
+    final storage = new FlutterSecureStorage();
+    String jwttoken = await storage.read(key: 'jwt');
+    dynamic result = tryParseJwt(jwttoken);
+    setState(() {
+      this.name = result['username'];
+      this.gitacc = result['github_username'];
+      this.jwt = jwttoken;
+      this.mentorroll = result["roll"];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    Map data = ModalRoute.of(context).settings.arguments;
-    this.jwt = data['jwt'];
-    dynamic res = tryParseJwt(this.jwt);
-    String name = res['username'];
-    String gitacc = res['github_username'];
-    this.mentorroll = res["roll"];
+//    Map data = ModalRoute.of(context).settings.arguments;
+//    this.jwt = data['jwt'];
+//    dynamic res = tryParseJwt(this.jwt);
+//    name = res['username'];
+//    gitacc = res['github_username'];
+//    this.mentorroll = res["roll"];
 
     return Scaffold(
       drawer:
@@ -53,7 +73,7 @@ class _BioState extends State<Bio> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Text(
+                      child: new Text(
                         "$gitacc",
                         style: TextStyle(
                           fontSize: 20,
@@ -187,6 +207,24 @@ class _BioState extends State<Bio> {
                             Response apiResponse = await get(
                                 "https://api.github.com/users/$githubUsername");
                             if (apiResponse.statusCode == 200) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Scaffold(
+                                    body: Container(
+                                      color: config.bgColor,
+                                      child: Center(
+                                        child: SpinKitPouringHourglass(
+                                          color: Colors.white,
+                                          size: 70.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                              final storage = new FlutterSecureStorage();
+                              password = await storage.read(key: "password");
                               post(
                                   'https://spider.nitt.edu/inductions20test/api/update_github_username',
                                   headers: {
@@ -197,6 +235,24 @@ class _BioState extends State<Bio> {
                                     "rollno": '${this.mentorroll}',
                                     "github_username": this.name
                                   })).then((Response value) async {
+                                post(
+                                    'https://spider.nitt.edu/inductions20test/login/',
+                                    headers: {
+                                      HttpHeaders.authorizationHeader:
+                                          'Bearer ${this.jwt}'
+                                    },
+                                    body: jsonEncode({
+                                      "rollno": '${this.mentorroll}',
+                                      "password": password
+                                    })).then((Response response) async {
+                                  var parsedJson =
+                                      await json.decode(response.body);
+                                  final String token = parsedJson["jwt"];
+                                  await storage.write(
+                                      key: "jwt", value: "$token");
+                                  await update();
+                                });
+                                Navigator.pop(context);
                                 print(value.statusCode);
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor: config.success,
@@ -206,10 +262,6 @@ class _BioState extends State<Bio> {
                                           fontFamily: config.fontFamily,
                                           color: config.fontColor)),
                                 ));
-                                final storage = new FlutterSecureStorage();
-                                await storage.delete(key: "jwt");
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/login', (Route<dynamic> route) => false);
                               }).catchError((Response error) {
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor: config.danger,

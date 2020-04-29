@@ -84,13 +84,13 @@ class MentorCustomDrawer extends StatelessWidget {
             CustomListTile(Icons.person_outline, "Change Github", () async {
               if (_isGithub == false) {
                 String token = await storage.read(key: "jwt");
-                Navigator.of(context)
-                    .pushNamed('/bio', arguments: {'jwt': token});
+                Navigator.pushNamed(context, '/bio', arguments: {'jwt': token});
               }
             }),
             CustomListTile(Icons.exit_to_app, "Logout", () async {
               final storage = new FlutterSecureStorage();
               await storage.delete(key: "jwt");
+              await storage.delete(key: "password");
               Navigator.of(context).pushNamedAndRemoveUntil(
                   '/login', (Route<dynamic> route) => false);
             }),

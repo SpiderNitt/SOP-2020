@@ -13,73 +13,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 // Files imported
 import '../../theme/navigation.dart';
 
-class Dialogs {
-  static Future<void> showLoadingDialog(
-      BuildContext context, GlobalKey key) async {
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new WillPopScope(
-              onWillPop: () async => false,
-              child: SimpleDialog(
-                  key: key,
-                  backgroundColor: Colors.black54,
-                  children: <Widget>[
-                    Center(
-                      child: Column(children: [
-                        CircularProgressIndicator(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Please Wait....",
-                          style: TextStyle(color: Colors.blueAccent),
-                        )
-                      ]),
-                    )
-                  ]));
-        });
-  }
-}
-
-Future<Credentials> getResponse(String rollno, String password) async {
-  final Response response = await post(
-    'https://spider.nitt.edu/inductions20test/login/',
-    headers: <String, String>{
-      'Content-type': 'application/json',
-    },
-    body: jsonEncode(<String, String>{
-      'rollno': rollno,
-      'password': password,
-    }),
-  );
-
-  return Credentials.fromJson(json.decode(response.body));
-}
-
-class Credentials {
-  final String rollno;
-  final String password;
-
-  Credentials({this.rollno, this.password});
-
-  factory Credentials.fromJson(Map<String, dynamic> json) {
-    return Credentials(
-      rollno: json['rollno'],
-      password: json['password'],
-    );
-  }
-}
-
 class LoginScreen extends StatefulWidget {
   @override
   LoginViewState createState() => LoginViewState();
 }
 
 class LoginViewState extends State<LoginScreen> {
-  bool _loading = false;
-  Future<Credentials> _loginresponse;
   final _loginFormKey = GlobalKey<FormState>();
   final _rollnocontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
@@ -306,6 +245,8 @@ class LoginViewState extends State<LoginScreen> {
                                     final storage = new FlutterSecureStorage();
                                     await storage.write(
                                         key: "jwt", value: "$jwt");
+                                    await storage.write(
+                                        key: "password", value: "$password");
                                     String token =
                                         await storage.read(key: "jwt");
                                     final parts = token.split('.');
