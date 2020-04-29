@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:inductions_20/others/jwtparse.dart';
 import 'package:inductions_20/screens/mentor/mentor_home.dart';
@@ -20,16 +21,16 @@ class _SplashScreenState extends State<SplashScreen> {
   // todo: implement initState
   void initState() {
     super.initState();
+    dynamic storage = new FlutterSecureStorage();
+
     Timer(
       Duration(seconds: 5),
       () async {
-        dynamic storage = new FlutterSecureStorage();
         var jwtToken = await storage.read(key: "jwt");
-        print(jwtToken);
-        if (jwtToken == null)
+        if (jwtToken == null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/login', (Route<dynamic> route) => false);
-        else {
+        } else {
           var res = tryParseJwt(jwtToken);
           if (res["is_mentor"]) {
             Navigator.pushAndRemoveUntil(
@@ -46,9 +47,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    precacheImage(Image.asset("assets/images/SpiderLogo.webp").image, context);
     final height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -81,9 +87,6 @@ class _SplashScreenState extends State<SplashScreen> {
                     SizedBox(
                       width: 300,
                       child: TypewriterAnimatedTextKit(
-                          onTap: () {
-                            print("Tap Event");
-                          },
                           text: [
                             "ALGOS",
                             "APP DEV",
@@ -91,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             "WEB DEV",
                           ],
                           textStyle: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20.0,
                             fontFamily: "Agne",
                             color: theme.fontColor,
                             fontWeight: FontWeight.bold,

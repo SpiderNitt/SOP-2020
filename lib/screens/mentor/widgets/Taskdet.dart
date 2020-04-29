@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -25,27 +24,25 @@ class _TaskDetState extends State<TaskDet> {
 
   _TaskDetState(this.jwttoken, this.profiles);
 
-  Future<int> notify(dynamic taskid) async{
+  Future<int> notify(dynamic taskid) async {
     print(taskid);
-     Response res = await get(
-                      'https://spider.nitt.edu/inductions20test/api/task/$taskid',
-                      headers: {
-                        HttpHeaders.authorizationHeader:
-                            'Bearer ${this.jwttoken}'
-                      });
+    Response res = await get(
+        'https://spider.nitt.edu/inductions20test/api/task/$taskid',
+        headers: {HttpHeaders.authorizationHeader: 'Bearer ${this.jwttoken}'});
     dynamic resmap = jsonDecode(res.body);
 
-    dynamic rescomm =  await storage.read(key: '${taskid}_comments');
-    await storage.write(key: '${taskid}_comments', value: '${resmap['comments'].length}');
-    if(rescomm == null) {
+    dynamic rescomm = await storage.read(key: '${taskid}_comments');
+    await storage.write(
+        key: '${taskid}_comments', value: '${resmap['comments'].length}');
+    if (rescomm == null) {
+      print(resmap['comments'].length);
       return resmap['comments'].length;
+    } else {
+      print(resmap['comments'].length - int.tryParse(rescomm));
+      return resmap['comments'].length - int.tryParse(rescomm);
     }
-    else {
-       return resmap['comments'].length - int.tryParse(rescomm);
-    }
-
   }
-   
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,120 +94,165 @@ class _TaskDetState extends State<TaskDet> {
                                       }),
                                   builder: (context, snapst) {
                                     if (snapst.hasData) {
+                                      List<Widget> listlink = [];
+                                      dynamic tempdes =
+                                          jsonDecode(snapst.data.body);
 
-                                     
-                                 List<Widget> listlink = [];
-                                 dynamic tempdes = jsonDecode(snapst.data.body);
-                                 
-                                 listlink.add(Text(tempdes['task_description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
-                                 
-                                 listlink.add(SizedBox(
-                                   height: 10
-                                 ));
-                                 
-                                 if(tempdes['resources'].length != 0)
-                                 listlink.add(Text('Resources',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.head)));
-                                  
-                                 for(int k = 0; k < tempdes['resources'].length; ++k){
-                                   listlink.add( InkWell(
-                                       child: Text(tempdes['resources']['$k']['link'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.links)),
-                                       onTap: () async{
-                                         if(await canLaunch('${tempdes['resources']['$k']['link']}'))
-                                         launch('${tempdes['resources']['$k']['link']}');
-                                       },
-                                     ));
-
-                                   listlink.add(Text(tempdes['resources']['$k']['description'],  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor)));
-                                   listlink.add(SizedBox(
-                                   height: 5
-                                 ));
-                                 } 
-                                // added button here
-                                listlink.add(
-                                  FutureBuilder(
-                                    future: notify(temp['tasks']['$j']['task_id']),
-                                    builder: (context, snapshot){
-
-                                      if(snapshot.hasData){
-
-                                          return Stack(
-                                  children: <Widget>[
-                                    FlatButton(
-                                  onPressed: () {
-                                   
-                                  List a = [temp['tasks']['$j']['task_title'],temp['tasks']['$j']['task_id'],this.profiles[index]];
-
-                                   Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                    pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    TaskComment(task: a),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(0.0, 1.0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: SlideTransition(
-                                  position: Tween<Offset>(
-                                    end: const Offset(0.0, 1.0),
-                                    begin: Offset.zero,
-                                  ).animate(secondaryAnimation),
-                                  child: child,
-                                ),
-                              );
-                            }));
-                                  },
-                                  child: Text('Discussions Forum',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: config.fontFamily,
-                                          color: config.fontColor)),
-                                ),
-                                Positioned(
-                                    right: 9,
-                                    top: 9,
-                                    child: Container(
-                                      padding: EdgeInsets.all(2),
-                                      decoration:  BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      constraints: BoxConstraints(
-                                        minWidth: 14,
-                                        minHeight: 14,
-                                      ),
-                                      child: Text(
-                                        '${snapshot.data}',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 8,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ) 
-                                  ],
-                                );
-                                      }
-
-                                      else if(snapshot.hasError)
-                                      return Text('${snapshot.error}',
+                                      listlink.add(Text(
+                                          tempdes['task_description'],
                                           style: TextStyle(
                                               fontSize: 18,
                                               fontFamily: config.fontFamily,
-                                              color: config.fontColor));
+                                              color: config.fontColor)));
 
-                                      else return CircularProgressIndicator();
-                                    })
-                                );
+                                      listlink.add(SizedBox(height: 10));
 
-                                  return Column(
-                                    children: listlink
-                                  );
-                                  }
+                                      if (tempdes['resources'].length != 0)
+                                        listlink.add(Text('Resources',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: config.fontFamily,
+                                                color: config.head)));
+
+                                      for (int k = 0;
+                                          k < tempdes['resources'].length;
+                                          ++k) {
+                                        listlink.add(InkWell(
+                                          child: Text(
+                                              tempdes['resources']['$k']
+                                                  ['link'],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: config.fontFamily,
+                                                  color: config.links)),
+                                          onTap: () async {
+                                            if (await canLaunch(
+                                                '${tempdes['resources']['$k']['link']}'))
+                                              launch(
+                                                  '${tempdes['resources']['$k']['link']}');
+                                          },
+                                        ));
+
+                                        listlink.add(Text(
+                                            tempdes['resources']['$k']
+                                                ['description'],
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: config.fontFamily,
+                                                color: config.fontColor)));
+                                        listlink.add(SizedBox(height: 5));
+                                      }
+                                      // added button here
+                                      listlink.add(FutureBuilder(
+                                          future: notify(
+                                              temp['tasks']['$j']['task_id']),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasData) {
+                                              return Stack(
+                                                children: <Widget>[
+                                                  FlatButton(
+                                                    onPressed: () {
+                                                      List a = [
+                                                        temp['tasks']['$j']
+                                                            ['task_title'],
+                                                        temp['tasks']['$j']
+                                                            ['task_id'],
+                                                        this.profiles[index]
+                                                      ];
+
+                                                      Navigator.push(
+                                                          context,
+                                                          PageRouteBuilder(
+                                                              pageBuilder: (context,
+                                                                      animation,
+                                                                      secondaryAnimation) =>
+                                                                  TaskComment(
+                                                                      task: a),
+                                                              transitionsBuilder:
+                                                                  (context,
+                                                                      animation,
+                                                                      secondaryAnimation,
+                                                                      child) {
+                                                                return SlideTransition(
+                                                                  position: Tween<
+                                                                      Offset>(
+                                                                    begin:
+                                                                        const Offset(
+                                                                            0.0,
+                                                                            1.0),
+                                                                    end: Offset
+                                                                        .zero,
+                                                                  ).animate(
+                                                                      animation),
+                                                                  child:
+                                                                      SlideTransition(
+                                                                    position: Tween<
+                                                                        Offset>(
+                                                                      end: const Offset(
+                                                                          0.0,
+                                                                          1.0),
+                                                                      begin: Offset
+                                                                          .zero,
+                                                                    ).animate(
+                                                                        secondaryAnimation),
+                                                                    child:
+                                                                        child,
+                                                                  ),
+                                                                );
+                                                              }));
+                                                    },
+                                                    child: Text(
+                                                        'Discussions Forum',
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontFamily: config
+                                                                .fontFamily,
+                                                            color: config
+                                                                .fontColor)),
+                                                  ),
+                                                  Positioned(
+                                                    right: 9,
+                                                    top: 9,
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(2),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.red,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6),
+                                                      ),
+                                                      constraints:
+                                                          BoxConstraints(
+                                                        minWidth: 14,
+                                                        minHeight: 14,
+                                                      ),
+                                                      child: Text(
+                                                        '${snapshot.data}',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 8,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                            } else if (snapshot.hasError)
+                                              return Text('${snapshot.error}',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontFamily:
+                                                          config.fontFamily,
+                                                      color: config.fontColor));
+                                            else
+                                              return CircularProgressIndicator();
+                                          }));
+
+                                      return Column(children: listlink);
+                                    }
 
                                     if (snapst.hasError) {
                                       return Text('${snapst.error}',
@@ -227,8 +269,8 @@ class _TaskDetState extends State<TaskDet> {
                         }
 
                         return Column(children: tempwid);
-                      } 
-                      else return Text('');
+                      } else
+                        return Text('');
                       // else
                       //   return Center(
                       //     child: Text('No data found ',
@@ -251,54 +293,53 @@ class _TaskDetState extends State<TaskDet> {
   }
 }
 
+// listlink.add(
+//                                   FutureBuilder(
+//                                     future:
+//                                     builder: (context, snapshot){
 
-  // listlink.add(
-  //                                   FutureBuilder(
-  //                                     future: 
-  //                                     builder: (context, snapshot){
-                                              
-  //                                       if(snapshot.hasData){
-  //                                         return  Stack(
-  //                                       children: [
-  //                                       FlatButton(
-  //                                       onPressed: (){
-  //                                       Navigator.pushNamed(context, '/forum', arguments: {
-  //                                       'jwt': this.jwttoken,
-  //                                       'id': temp['tasks']['$j']['task_id'],
-  //                                       'profile_id': this.profiles[index]
-  //                                        });
-  //                               }, 
-  //                             child: Text('Discussions Forum', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-  //                             ),
-  //                            Positioned(
-  //                                   right: 9,
-  //                                   top: 9,
-  //                                   child: Container(
-  //                                     padding: EdgeInsets.all(2),
-  //                                     decoration:  BoxDecoration(
-  //                                       color: Colors.red,
-  //                                       borderRadius: BorderRadius.circular(6),
-  //                                     ),
-  //                                     constraints: BoxConstraints(
-  //                                       minWidth: 14,
-  //                                       minHeight: 14,
-  //                                     ),
-  //                                     child: Text(
-  //                                       '${tempdes['comments'].length}',
-  //                                       style: TextStyle(
-  //                                         color: Colors.white,
-  //                                         fontSize: 8,
-  //                                       ),
-  //                                       textAlign: TextAlign.center,
-  //                                     ),
-  //                                   ),
-  //                                 ) 
-  //                                  ]
-  //                                );
-  //                                 }
-  //                                 else if (snapshot.hasError)
-  //                                 return Text('${snapst.error}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor));
+//                                       if(snapshot.hasData){
+//                                         return  Stack(
+//                                       children: [
+//                                       FlatButton(
+//                                       onPressed: (){
+//                                       Navigator.pushNamed(context, '/forum', arguments: {
+//                                       'jwt': this.jwttoken,
+//                                       'id': temp['tasks']['$j']['task_id'],
+//                                       'profile_id': this.profiles[index]
+//                                        });
+//                               },
+//                             child: Text('Discussions Forum', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+//                             ),
+//                            Positioned(
+//                                   right: 9,
+//                                   top: 9,
+//                                   child: Container(
+//                                     padding: EdgeInsets.all(2),
+//                                     decoration:  BoxDecoration(
+//                                       color: Colors.red,
+//                                       borderRadius: BorderRadius.circular(6),
+//                                     ),
+//                                     constraints: BoxConstraints(
+//                                       minWidth: 14,
+//                                       minHeight: 14,
+//                                     ),
+//                                     child: Text(
+//                                       '${tempdes['comments'].length}',
+//                                       style: TextStyle(
+//                                         color: Colors.white,
+//                                         fontSize: 8,
+//                                       ),
+//                                       textAlign: TextAlign.center,
+//                                     ),
+//                                   ),
+//                                 )
+//                                  ]
+//                                );
+//                                 }
+//                                 else if (snapshot.hasError)
+//                                 return Text('${snapst.error}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor));
 
-  //                                 else return CircularProgressIndicator();
-  //                                 })
-  //                                );
+//                                 else return CircularProgressIndicator();
+//                                 })
+//                                );
