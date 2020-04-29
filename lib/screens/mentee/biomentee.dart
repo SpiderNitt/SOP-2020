@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../theme/mentor.dart';
 import 'package:http/http.dart';
@@ -224,39 +225,56 @@ class _BioState extends State<Biomentee> {
                     // ),
                     SizedBox(height: 25),
                     FlatButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formkey.currentState.validate()) {
-                            post(
-                                'https://spider.nitt.edu/inductions20test/api/update_github_username',
-                                headers: {
-                                  HttpHeaders.authorizationHeader:
-                                      'Bearer ${this.jwt}'
-                                },
-                                body: jsonEncode({
-                                  "rollno": '${this.mentorroll}',
-                                  "github_username": this.name
-                                })).then((Response value) {
-                              print(value.statusCode);
+                            String githubUsername = this.name;
+                            Response apiResponse = await get(
+                                "https://api.github.com/users/$githubUsername");
+                            if (apiResponse.statusCode == 200) {
+                              post(
+                                  'https://spider.nitt.edu/inductions20test/api/update_github_username',
+                                  headers: {
+                                    HttpHeaders.authorizationHeader:
+                                        'Bearer ${this.jwt}'
+                                  },
+                                  body: jsonEncode({
+                                    "rollno": '${this.mentorroll}',
+                                    "github_username": this.name
+                                  })).then((Response value) async {
+                                print(value.statusCode);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: config.success,
+                                  content: Text('Submitted',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: config.fontFamily,
+                                          color: config.fontColor)),
+                                ));
+                                final storage = new FlutterSecureStorage();
+                                await storage.delete(key: "jwt");
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/login', (Route<dynamic> route) => false);
+                              }).catchError((Response error) {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  backgroundColor: config.danger,
+                                  content: Text('Server Error',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontFamily: config.fontFamily,
+                                          color: config.fontColor)),
+                                ));
+                              });
+                            } else {
                               Scaffold.of(context).showSnackBar(SnackBar(
                                 backgroundColor: config.success,
-                                content: Text('Submitted',
+                                content: Text('Invalid github username',
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontFamily: config.fontFamily,
                                         color: config.fontColor)),
                               ));
-                            }).catchError((Response error) {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                backgroundColor: config.danger,
-                                content: Text('Server Error',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontFamily: config.fontFamily,
-                                        color: config.fontColor)),
-                              ));
-                            });
-                          } else
-                            print('failure');
+                            }
+                          }
                         },
                         child: Text('Submit',
                             style: TextStyle(
