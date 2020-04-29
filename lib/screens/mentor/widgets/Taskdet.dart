@@ -32,9 +32,9 @@ class _TaskDetState extends State<TaskDet> {
     dynamic resmap = jsonDecode(res.body);
 
     dynamic rescomm = await storage.read(key: '${taskid}_comments');
-    await storage.write(
-        key: '${taskid}_comments', value: '${resmap['comments'].length}');
-    if (rescomm == null) {
+
+
+ if (rescomm == null) {
       print(resmap['comments'].length);
       return resmap['comments'].length;
     } else {
@@ -152,6 +152,8 @@ class _TaskDetState extends State<TaskDet> {
                                                 children: <Widget>[
                                                   FlatButton(
                                                     onPressed: () {
+                                                      storage.write(key: '${temp['tasks']['$j']['task_id']}_comments', value: '${tempdes['comments'].length}');
+
                                                       List a = [
                                                         temp['tasks']['$j']
                                                             ['task_title'],
@@ -271,13 +273,6 @@ class _TaskDetState extends State<TaskDet> {
                         return Column(children: tempwid);
                       } else
                         return Text('');
-                      // else
-                      //   return Center(
-                      //     child: Text('No data found ',
-                      //       style: TextStyle(
-                      //           fontSize: 18,
-                      //           fontFamily: config.fontFamily,
-                      //           color: config.fontColor)));
                     }
 
                     if (snapshot.hasError)
@@ -293,53 +288,4 @@ class _TaskDetState extends State<TaskDet> {
   }
 }
 
-// listlink.add(
-//                                   FutureBuilder(
-//                                     future:
-//                                     builder: (context, snapshot){
 
-//                                       if(snapshot.hasData){
-//                                         return  Stack(
-//                                       children: [
-//                                       FlatButton(
-//                                       onPressed: (){
-//                                       Navigator.pushNamed(context, '/forum', arguments: {
-//                                       'jwt': this.jwttoken,
-//                                       'id': temp['tasks']['$j']['task_id'],
-//                                       'profile_id': this.profiles[index]
-//                                        });
-//                               },
-//                             child: Text('Discussions Forum', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
-//                             ),
-//                            Positioned(
-//                                   right: 9,
-//                                   top: 9,
-//                                   child: Container(
-//                                     padding: EdgeInsets.all(2),
-//                                     decoration:  BoxDecoration(
-//                                       color: Colors.red,
-//                                       borderRadius: BorderRadius.circular(6),
-//                                     ),
-//                                     constraints: BoxConstraints(
-//                                       minWidth: 14,
-//                                       minHeight: 14,
-//                                     ),
-//                                     child: Text(
-//                                       '${tempdes['comments'].length}',
-//                                       style: TextStyle(
-//                                         color: Colors.white,
-//                                         fontSize: 8,
-//                                       ),
-//                                       textAlign: TextAlign.center,
-//                                     ),
-//                                   ),
-//                                 )
-//                                  ]
-//                                );
-//                                 }
-//                                 else if (snapshot.hasError)
-//                                 return Text('${snapst.error}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor));
-
-//                                 else return CircularProgressIndicator();
-//                                 })
-//                                );
