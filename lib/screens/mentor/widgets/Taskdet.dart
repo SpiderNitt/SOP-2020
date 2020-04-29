@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../theme/mentor.dart';
 import 'package:inductions_20/screens/mentor/comments.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TaskDet extends StatefulWidget {
   final String _jwttoken;
@@ -20,9 +21,31 @@ class _TaskDetState extends State<TaskDet> {
   String jwttoken;
   dynamic res;
   List<dynamic> profiles;
+  final storage = FlutterSecureStorage();
 
   _TaskDetState(this.jwttoken, this.profiles);
 
+  Future<int> notify(dynamic taskid) async{
+    print(taskid);
+     Response res = await get(
+                      'https://spider.nitt.edu/inductions20test/api/task/$taskid',
+                      headers: {
+                        HttpHeaders.authorizationHeader:
+                            'Bearer ${this.jwttoken}'
+                      });
+    dynamic resmap = jsonDecode(res.body);
+
+    dynamic rescomm =  await storage.read(key: '${taskid}_comments');
+    await storage.write(key: '${taskid}_comments', value: '${resmap['comments'].length}');
+    if(rescomm == null) {
+      return resmap['comments'].length;
+    }
+    else {
+       return resmap['comments'].length - int.tryParse(rescomm);
+    }
+
+  }
+   
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -103,16 +126,24 @@ class _TaskDetState extends State<TaskDet> {
                                  ));
                                  } 
                                 // added button here
-                                listlink.add(FlatButton(
+                                listlink.add(
+                                  FutureBuilder(
+                                    future: notify(temp['tasks']['$j']['task_id']),
+                                    builder: (context, snapshot){
+
+                                      if(snapshot.hasData){
+
+                                          return Stack(
+                                  children: <Widget>[
+                                    FlatButton(
                                   onPressed: () {
                                    
-                                  List a=[temp['tasks']['$j']['task_title'],temp['tasks']['$j']['task_id'],this.profiles[index]];
-
+                                  List a = [temp['tasks']['$j']['task_title'],temp['tasks']['$j']['task_id'],this.profiles[index]];
 
                                    Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                            pageBuilder:
+                                context,
+                                PageRouteBuilder(
+                                    pageBuilder:
                                 (context, animation, secondaryAnimation) =>
                                     TaskComment(task: a),
                             transitionsBuilder: (context, animation,
@@ -137,7 +168,44 @@ class _TaskDetState extends State<TaskDet> {
                                           fontSize: 20,
                                           fontFamily: config.fontFamily,
                                           color: config.fontColor)),
-                                ));
+                                ),
+                                Positioned(
+                                    right: 9,
+                                    top: 9,
+                                    child: Container(
+                                      padding: EdgeInsets.all(2),
+                                      decoration:  BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      constraints: BoxConstraints(
+                                        minWidth: 14,
+                                        minHeight: 14,
+                                      ),
+                                      child: Text(
+                                        '${snapshot.data}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 8,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ) 
+                                  ],
+                                );
+                                      }
+
+                                      else if(snapshot.hasError)
+                                      return Text('${snapshot.error}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontFamily: config.fontFamily,
+                                              color: config.fontColor));
+
+                                      else return CircularProgressIndicator();
+                                    })
+                                );
 
                                   return Column(
                                     children: listlink
@@ -182,3 +250,55 @@ class _TaskDetState extends State<TaskDet> {
             }));
   }
 }
+
+
+  // listlink.add(
+  //                                   FutureBuilder(
+  //                                     future: 
+  //                                     builder: (context, snapshot){
+                                              
+  //                                       if(snapshot.hasData){
+  //                                         return  Stack(
+  //                                       children: [
+  //                                       FlatButton(
+  //                                       onPressed: (){
+  //                                       Navigator.pushNamed(context, '/forum', arguments: {
+  //                                       'jwt': this.jwttoken,
+  //                                       'id': temp['tasks']['$j']['task_id'],
+  //                                       'profile_id': this.profiles[index]
+  //                                        });
+  //                               }, 
+  //                             child: Text('Discussions Forum', style: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor)),
+  //                             ),
+  //                            Positioned(
+  //                                   right: 9,
+  //                                   top: 9,
+  //                                   child: Container(
+  //                                     padding: EdgeInsets.all(2),
+  //                                     decoration:  BoxDecoration(
+  //                                       color: Colors.red,
+  //                                       borderRadius: BorderRadius.circular(6),
+  //                                     ),
+  //                                     constraints: BoxConstraints(
+  //                                       minWidth: 14,
+  //                                       minHeight: 14,
+  //                                     ),
+  //                                     child: Text(
+  //                                       '${tempdes['comments'].length}',
+  //                                       style: TextStyle(
+  //                                         color: Colors.white,
+  //                                         fontSize: 8,
+  //                                       ),
+  //                                       textAlign: TextAlign.center,
+  //                                     ),
+  //                                   ),
+  //                                 ) 
+  //                                  ]
+  //                                );
+  //                                 }
+  //                                 else if (snapshot.hasError)
+  //                                 return Text('${snapst.error}',  style: TextStyle( fontSize: 18, fontFamily: config.fontFamily, color: config.fontColor));
+
+  //                                 else return CircularProgressIndicator();
+  //                                 })
+  //                                );
