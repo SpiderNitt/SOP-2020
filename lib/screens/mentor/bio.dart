@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../others/jwtparse.dart';
 import '../../theme/mentor.dart';
 import 'package:http/http.dart';
@@ -195,7 +196,7 @@ class _BioState extends State<Bio> {
                                   body: jsonEncode({
                                     "rollno": '${this.mentorroll}',
                                     "github_username": this.name
-                                  })).then((Response value) {
+                                  })).then((Response value) async {
                                 print(value.statusCode);
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                   backgroundColor: config.success,
@@ -205,6 +206,8 @@ class _BioState extends State<Bio> {
                                           fontFamily: config.fontFamily,
                                           color: config.fontColor)),
                                 ));
+                                final storage = new FlutterSecureStorage();
+                                await storage.delete(key: "jwt");
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     '/login', (Route<dynamic> route) => false);
                               }).catchError((Response error) {
