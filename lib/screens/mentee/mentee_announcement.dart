@@ -1,5 +1,7 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/widgets/Announcementbox.dart';
 import 'package:inductions_20/screens/mentee/data/announcement.dart';
@@ -30,12 +32,40 @@ class AnnouncementState extends State<MenteeAnnouncement>
   List _messages = [];
   List date = [];
   List time = [];
-
+  var subscription;
   ScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
+
     scrollController = ScrollController();
     this.user = {
       "name": "loading..",
@@ -43,7 +73,7 @@ class AnnouncementState extends State<MenteeAnnouncement>
           "https://media-exp1.licdn.com/dms/image/C510BAQG9qrZT4zZUUA/company-logo_200_200/0?e=2159024400&v=beta&t=nv5kv0k1DSSLrKxY2fLQ4YEsfZGvQ-XJ8Ypiu66RqaA",
       "login": "loading.."
     };
-    get_announcement();
+    getAnnouncement();
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -81,14 +111,19 @@ class AnnouncementState extends State<MenteeAnnouncement>
         const IosNotificationSettings(sound: true, badge: true, alert: true));
   }
 
-  Future<String> get_announcement() async {
-    AnnouncementList announcement_list = AnnouncementList();
-    await announcement_list.extractProgressDetails();
+  dispose() {
+    super.dispose();
+    subscription.cancel();
+  }
+
+  Future<void> getAnnouncement() async {
+    AnnouncementList announcementList = AnnouncementList();
+    await announcementList.extractProgressDetails();
 
     var msg = [];
     var _date = [];
     var _time = [];
-    announcement_list.announcements.forEach((k, v) {
+    announcementList.announcements.forEach((k, v) {
       msg.add("$v");
       String date1 = "$k".substring(0, 10);
 

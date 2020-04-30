@@ -1,4 +1,6 @@
 import 'dart:convert' show json;
+import 'package:connectivity/connectivity.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:inductions_20/theme/mentee.dart';
 import 'package:inductions_20/screens/mentee/task.dart';
@@ -13,9 +15,6 @@ import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
 import 'package:inductions_20/screens/mentee/data/mentee_profile.dart';
 
 class HomePage extends StatefulWidget {
-  var name, usernamee, jwt;
-  dynamic res;
-
   @override
   _MyHomePage createState() => _MyHomePage();
 }
@@ -37,13 +36,43 @@ class _MyHomePage extends State<HomePage> {
   List task_list = [];
   List profile_no_list = [0, 1, 2, 3];
   List taskno_list = [];
-  var current_profile_no;
+  var currentProfileNo;
 
   var task = "WEB";
   var user;
+  var subscription;
 
   void initState() {
     super.initState();
+
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
+
     this.user = {
       "name": "loading..",
       "avatar_url":
@@ -51,6 +80,11 @@ class _MyHomePage extends State<HomePage> {
       "login": "loading.."
     };
     makeRequest();
+  }
+
+  dispose() {
+    super.dispose();
+    subscription.cancel();
   }
 
   Future<void> makeRequest() async {
@@ -76,13 +110,13 @@ class _MyHomePage extends State<HomePage> {
     }
 
     try {
-      Mentee_profile mentee_profile = Mentee_profile();
-      await mentee_profile.ExtractResponse();
+      MenteeProfile menteeProfile = MenteeProfile();
+      await menteeProfile.ExtractResponse();
       setState(() {
-        this.list = mentee_profile.profilelist;
-        this.profile_no_list = mentee_profile.profnolist;
+        this.list = menteeProfile.profilelist;
+        this.profile_no_list = menteeProfile.profnolist;
         this.task = list[0];
-        this.current_profile_no = profile_no_list[0];
+        this.currentProfileNo = profile_no_list[0];
       });
     } catch (e) {
       print("exception error: $e");
@@ -258,7 +292,7 @@ class _MyHomePage extends State<HomePage> {
                                               theme.primaryLightColor;
                                       }
                                       task = list[i];
-                                      current_profile_no = profile_no_list[i];
+                                      currentProfileNo = profile_no_list[i];
                                     },
                                   );
 
@@ -288,7 +322,7 @@ class _MyHomePage extends State<HomePage> {
                               task,
                               taskno_list[i],
                               this.user,
-                              current_profile_no
+                              currentProfileNo
                             ];
                             Navigator.push(
                               context,

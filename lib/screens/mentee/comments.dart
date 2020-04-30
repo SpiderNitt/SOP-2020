@@ -51,25 +51,25 @@ class TaskCommentState extends State<TaskComment>
   }
 
   Future<void> _getcomments() async {
-    Comments_list comments_list1 = Comments_list(task[1]);
-    await comments_list1.extractComment();
+    CommentsList commentsList1 = CommentsList(task[1]);
+    await commentsList1.extractComment();
 
     setState(() {
-      this._users = comments_list1.user;
-      this._messages = comments_list1.comments;
-      this._time = comments_list1.time;
-      this._date = comments_list1.dates;
-      this.username = comments_list1.username;
-      this._pos = comments_list1.pos;
+      this._users = commentsList1.user;
+      this._messages = commentsList1.comments;
+      this._time = commentsList1.time;
+      this._date = commentsList1.dates;
+      this.username = commentsList1.username;
+      this._pos = commentsList1.pos;
     });
   }
 
   void handleSendMessage() async {
     var text = textEditingController.value.text;
 
-    final RegExp REGEX_EMOJI = RegExp(
+    final RegExp regex = RegExp(
         r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
-    if (text.contains(REGEX_EMOJI)) {
+    if (text.contains(regex)) {
       showAlertDialog(
           context, "message containing emojis or photos is restricted");
     } else {
@@ -88,7 +88,7 @@ class TaskCommentState extends State<TaskComment>
           'Authorization': 'Bearer $jwt',
         };
 
-        var Json1 = jsonEncode({
+        var json1 = jsonEncode({
           "rollno": "$rollno",
           "task_id": task[1],
           "profile_id": task[3],
@@ -98,7 +98,7 @@ class TaskCommentState extends State<TaskComment>
           "reply_id": 0
         });
 
-        Response response = await post(url, headers: headers, body: Json1);
+        Response response = await post(url, headers: headers, body: json1);
         int statusCode = response.statusCode;
 
         if (statusCode == 200) {
@@ -272,7 +272,7 @@ class TaskCommentState extends State<TaskComment>
                       color,
                       theme.blackColor,
                       commentwidth,
-                      '''${user}''',
+                      '''$user''',
                       '''${_date[index]}''',
                       '''${_time[index]}''');
 

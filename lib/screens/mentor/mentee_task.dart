@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
 import 'widgets/stats.dart';
 import 'widgets/mentor_details.dart';
 import 'widgets/repodet.dart';
 import '../../theme/mentor.dart';
-import '../../others/jwtparse.dart';
 
 class MenteeTask extends StatefulWidget {
   @override

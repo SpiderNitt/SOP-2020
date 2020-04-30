@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../others/jwtparse.dart';
@@ -17,11 +19,43 @@ class Bio extends StatefulWidget {
 class _BioState extends State<Bio> {
   final _formkey = GlobalKey<FormState>();
   String name, gitacc, password, githubacc, year = '', dept, jwt, mentorroll;
-
+  var subscription;
   @override
   void initState() {
-    update();
     super.initState();
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
+    update();
+  }
+
+  dispose() {
+    super.dispose();
+    subscription.cancel();
   }
 
   Future<void> update() async {
@@ -110,95 +144,6 @@ class _BioState extends State<Bio> {
                         }
                       },
                     ),
-                    // SizedBox(height: 15),
-                    // TextFormField(
-                    //   style: TextStyle(
-                    //     color: config.fontColor,
-                    //   ),
-                    //   cursorColor: config.fontColor,
-                    //   decoration: InputDecoration(
-                    //     focusedBorder: OutlineInputBorder(
-                    //        borderSide: BorderSide(
-                    //          width: config.bordWid,
-                    //          color: config.fontColor,
-                    //        ),
-                    //      ),
-                    //     labelText: 'Dept',
-                    //     labelStyle: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
-                    //     ),
-                    //   maxLines: null,
-                    //   validator: (String value){
-                    //     if(value.isEmpty)
-                    //     return 'Enter your Dept';
-                    //     else{
-                    //      this.setState((){
-                    //         this.dept = value;
-                    //     });
-                    //     return null;
-                    //     }
-                    //   },
-                    // ),
-                    // SizedBox(height: 15),
-                    // TextFormField(
-                    //    style: TextStyle(
-                    //     color: config.fontColor,
-                    //   ),
-                    //   cursorColor: config.fontColor,
-                    //   decoration: InputDecoration(
-                    //     focusedBorder: OutlineInputBorder(
-                    //        borderSide: BorderSide(
-                    //          width: config.bordWid,
-                    //          color: config.fontColor,
-                    //        ),
-                    //      ),
-                    //     labelText: 'Github account',
-                    //     labelStyle: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
-                    //     ),
-                    //   maxLines: null,
-                    //   validator: (String value){
-                    //     if(value.isEmpty)
-                    //     return 'Enter your Github account';
-                    //      else{
-                    //       this.setState((){
-                    //         this.githubacc = value;
-                    //       });
-                    //       return null;
-                    //     }
-                    //   },
-                    // ),
-                    //  SizedBox(height: 15),
-                    //  TextFormField(
-                    //     style: TextStyle(
-                    //     color: config.fontColor,
-                    //   ),
-                    //   cursorColor: config.fontColor,
-                    //   keyboardType: TextInputType.number,
-                    //   decoration: InputDecoration(
-                    //     focusedBorder: OutlineInputBorder(
-                    //        borderSide: BorderSide(
-                    //          width: config.bordWid,
-                    //          color: config.fontColor,
-                    //        ),
-                    //      ),
-                    //     labelText: 'Year',
-                    //     labelStyle: TextStyle( fontSize: 20, fontFamily: config.fontFamily, color: config.fontColor),
-                    //     hintText: '',
-                    //     ),
-                    //   maxLines: null,
-                    //   validator: (String value){
-                    //     int data = int.tryParse(value);
-                    //      if (value.isEmpty)
-                    //         return 'Please enter year';
-                    //      else if (data <= 0 || data > 4)
-                    //         return 'Please enter a correct year';
-                    //       else{
-                    //       this.setState((){
-                    //         this.year = value;
-                    //       });
-                    //       return null;
-                    //     }
-                    //   },
-                    // ),
                     SizedBox(height: 25),
                     FlatButton(
                         onPressed: () async {

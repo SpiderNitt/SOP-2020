@@ -1,14 +1,14 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:inductions_20/others/jwtparse.dart';
 import 'package:inductions_20/screens/mentor/mentor_home.dart';
 import 'dart:async';
-
-// Files imported
 import '../../theme/navigation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,16 +16,27 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+Future<int> checkConnectivity() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile ||
+      connectivityResult == ConnectivityResult.wifi) {
+    return 1;
+  }
+  return 0;
+}
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  // todo: implement initState
   void initState() {
     super.initState();
+
     dynamic storage = new FlutterSecureStorage();
 
-    Timer(
-      Duration(seconds: 5),
-      () async {
+    Timer(Duration(seconds: 5), () async {
+      int connect = await checkConnectivity();
+      print(connect);
+      if (connect == 1) {
         var jwtToken = await storage.read(key: "jwt");
         if (jwtToken == null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
@@ -42,13 +53,30 @@ class _SplashScreenState extends State<SplashScreen> {
                 '/mentee/', (Route<dynamic> route) => false);
           }
         }
-      },
-    );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+      } else {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
   }
 
   @override

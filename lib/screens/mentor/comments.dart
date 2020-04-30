@@ -50,7 +50,7 @@ class TaskCommentState extends State<TaskComment>
   }
 
   Future<void> _getcomments() async {
-    Comments_list comments_list1 = Comments_list(task[1]);
+    CommentsList comments_list1 = CommentsList(task[1]);
     await comments_list1.extractComment();
 
     setState(() {

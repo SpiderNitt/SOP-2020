@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:inductions_20/screens/mentor/mentor_home.dart';
 import 'package:inductions_20/screens/navigation/get_details.dart';
@@ -19,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginScreen> {
+  var subscription;
+
   final _loginFormKey = GlobalKey<FormState>();
   final _rollnocontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
@@ -30,7 +35,44 @@ class LoginViewState extends State<LoginScreen> {
   double fontsize;
   double imagesize;
   double containerwidth;
+
   @override
+  StreamSubscription<ConnectivityResult> initState() {
+    super.initState();
+    return subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
+  }
+
+  dispose() {
+    super.dispose();
+    subscription.cancel();
+  }
+
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 

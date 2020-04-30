@@ -1,4 +1,7 @@
+import 'dart:async';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inductions_20/screens/navigation/mentor_navigation.dart';
 import '../../theme/mentor.dart';
 import 'widgets/mentees_details.dart';
@@ -6,14 +9,15 @@ import 'widgets/mentor_details.dart';
 import '../../others/jwtparse.dart';
 
 class Mentor extends StatelessWidget {
-  String name, gitacc;
+  var name, gitacc;
   final jwt;
-  dynamic res;
+  var res;
   Mentor(this.jwt) {
     this.res = tryParseJwt(this.jwt);
     this.name = this.res['username'];
     this.gitacc = this.res['github_username'];
   }
+  var subscription;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +55,43 @@ class _MentorHomeState extends State<MentorHome> {
   String name, gitacc, jwt;
 
   _MentorHomeState(this.name, this.gitacc, this.jwt);
+
+  var subscription;
+  StreamSubscription<ConnectivityResult> initState() {
+    super.initState();
+    return subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
+  }
+
+  dispose() {
+    super.dispose();
+    subscription.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inductions_20/screens/navigation/mentee_navigation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,8 +22,38 @@ class _BioState extends State<Biomentee> {
   final _formkey = GlobalKey<FormState>();
   String name, gitacc, year = '', dept, jwt, mentorroll, password;
   var user;
+  var subscription;
+
   String username = " ";
   void initState() {
+    super.initState();
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        AlertDialog alert = AlertDialog(
+          title: Text("Spider Orientation"),
+          content:
+              Text("No internet connection. Reconnect and reopen the app."),
+          actions: [
+            FlatButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    });
     this.user = {
       "name": "loading..",
       "avatar_url":
@@ -30,6 +62,11 @@ class _BioState extends State<Biomentee> {
     };
     update();
     makeRequest();
+  }
+
+  dispose() {
+    super.dispose();
+    subscription.cancel();
   }
 
   Future<void> update() async {

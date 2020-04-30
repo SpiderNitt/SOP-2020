@@ -3,10 +3,10 @@ import 'package:inductions_20/screens/mentee/config/jwtparse.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
-class Mentee_profile {
+class MenteeProfile {
   List profilelist;
   List profnolist;
-  Mentee_profile();
+  MenteeProfile();
 
   Future<void> ExtractResponse() async {
     List _profiles = [

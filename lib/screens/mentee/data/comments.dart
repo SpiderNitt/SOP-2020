@@ -3,7 +3,7 @@ import 'package:inductions_20/screens/mentee/config/jwtparse.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
-class Comments_list {
+class CommentsList {
   List comments;
   List user;
   List dates;
@@ -11,7 +11,7 @@ class Comments_list {
   var username;
   List pos;
   int taskid;
-  Comments_list(this.taskid);
+  CommentsList(this.taskid);
 
   Future<void> extractComment() async {
     ProvideJwt provideJwt = ProvideJwt();
@@ -21,12 +21,11 @@ class Comments_list {
 
     this.username = res["username"];
     try {
-      String url =
-          "https://spider.nitt.edu/inductions20test/api/task/${taskid}";
+      String url = "https://spider.nitt.edu/inductions20test/api/task/$taskid";
       Map<String, String> headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${jwt}',
+        'Authorization': 'Bearer $jwt',
       };
       Response response = await get(url, headers: headers);
 

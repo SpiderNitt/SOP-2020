@@ -53,7 +53,7 @@ class Comment_box extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 5),
                   child: Text(
-                    '${_date} ${_time}',
+                    '$_date $_time',
                     style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,

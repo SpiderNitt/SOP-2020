@@ -19,11 +19,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
-import 'package:http/http.dart' as http;
- 
 
 class Task extends StatefulWidget {
-  List task;
+  final List task;
   Task({this.task});
 
   TaskState createState() => TaskState(task);
@@ -36,7 +34,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
 
   var submitbarcolor = theme.fontColor;
   var user;
-  var basic_per = 0.0;
+  var basicPer = 0.0;
   var advancePer = 0.0;
   var overallPer;
   var decoverallPer;
@@ -51,7 +49,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   var recentDate;
   Map feedbacks = {};
   List taskSubmitted = [];
-  var commentsLength=0;
+  var commentsLength = 0;
   var mentorname = " ";
   var mentorcontact = "loading..";
   int hr = 0, min = 0, sec = 0;
@@ -89,12 +87,12 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     ];
     textEditingController = TextEditingController();
     textEditingController1 = TextEditingController();
-    this.overallPer = (this.basic_per * 0.3) + (this.advancePer * 0.7);
+    this.overallPer = (this.basicPer * 0.3) + (this.advancePer * 0.7);
     this.decoverallPer = this.overallPer * 100;
-    decbasicPer = this.basic_per * 100;
+    decbasicPer = this.basicPer * 100;
     decadvancePer = this.advancePer * 100;
     subCount = 0;
-    commentsLength=0;
+    commentsLength = 0;
     taskSubmitted = [];
     feedbacks = {};
     feedTime = "5:30";
@@ -116,7 +114,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     await menteeProgress.extractProgressDetails();
 
     setState(() {
-      basic_per = menteeProgress.basic_per / 100;
+      basicPer = menteeProgress.basic_per / 100;
       advancePer = menteeProgress.advance_per / 100;
 
       feedTime = menteeProgress.recent_feedback;
@@ -134,9 +132,9 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
         this.recentTime = "$hr:$min";
       } else {}
       this.taskSubmitted = menteeProgress.submitted_links;
-      this.overallPer = (this.basic_per * 0.7) + (this.advancePer * 0.3);
+      this.overallPer = (this.basicPer * 0.7) + (this.advancePer * 0.3);
       this.decoverallPer = this.overallPer * 100;
-      decbasicPer = this.basic_per * 100;
+      decbasicPer = this.basicPer * 100;
       decadvancePer = this.advancePer * 100;
     });
 
@@ -149,36 +147,30 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       this.mentorcontact = mentorDetails.mentor_contact;
     });
 
-     Comments_list comments_list1 = Comments_list(task[1]);
-     await comments_list1.extractComment();
-     setState(() {
-       commentsLength= comments_list1.comments.length;
-     });
+    CommentsList comments_list1 = CommentsList(task[1]);
+    await comments_list1.extractComment();
+    setState(() {
+      commentsLength = comments_list1.comments.length;
+    });
   }
 
- Future<int> notify() async{
-
+  Future<int> notify() async {
     ProvideJwt provideJwt = ProvideJwt();
     await provideJwt.extractjwt();
     String jwt = provideJwt.jwt;
-     Response res = await get(
-                      'https://spider.nitt.edu/inductions20test/api/task/${task[1]}',
-                      headers: {
-                        HttpHeaders.authorizationHeader:
-                            'Bearer $jwt'
-                      });
+    Response res = await get(
+        'https://spider.nitt.edu/inductions20test/api/task/${task[1]}',
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $jwt'});
     dynamic resmap = jsonDecode(res.body);
-    dynamic rescomm =  await storage.read(key: '${task[1]}_comments');
+    dynamic rescomm = await storage.read(key: '${task[1]}_comments');
 
-
-    if(rescomm == null) {
+    if (rescomm == null) {
       return resmap['comments'].length;
+    } else {
+      return resmap['comments'].length - int.tryParse(rescomm);
     }
-    else {
-       return resmap['comments'].length - int.tryParse(rescomm);
-    }
-
   }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -207,7 +199,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       percentbarwidth = 120;
       leftpaddingwidth = 5;
       previousfeedbackwidth = 320;
-      decbasicBarper = this.basic_per * percentbarwidth;
+      decbasicBarper = this.basicPer * percentbarwidth;
       decadvanceBarper = this.advancePer * percentbarwidth;
     } else if (width <= 600) {
       submitedlinkswidth = 4 * (width / 5);
@@ -219,7 +211,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       previousfeedbackwidth = 320;
       bottombarwidth = width / 3;
       percentbarwidth = 130;
-      decbasicBarper = this.basic_per * percentbarwidth;
+      decbasicBarper = this.basicPer * percentbarwidth;
       decadvanceBarper = this.advancePer * percentbarwidth;
     } else if (width <= 900) {
       submitedlinkswidth = 4 * (width / 5);
@@ -231,7 +223,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       reviewpadding = 10;
       previousfeedbackwidth = 320;
       percentbarwidth = 130;
-      decbasicBarper = this.basic_per * percentbarwidth;
+      decbasicBarper = this.basicPer * percentbarwidth;
       decadvanceBarper = this.advancePer * percentbarwidth;
     } else {
       submitedlinkswidth = 4 * (width / 5);
@@ -243,7 +235,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       linkinputwidth = 500;
       reviewpadding = 340;
       previousfeedbackwidth = 400;
-      decbasicBarper = this.basic_per * percentbarwidth;
+      decbasicBarper = this.basicPer * percentbarwidth;
       decadvanceBarper = this.advancePer * percentbarwidth;
     }
     task = widget.task;
@@ -308,77 +300,75 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                       color: theme.tertiaryColor,
                                     ))),
                           ])),
-                   FutureBuilder(
-                    future: notify(),
-                    builder: (context, snapshot){
-
-                        if(snapshot.hasData){
-                          return  
-                          Stack(
+                  FutureBuilder(
+                      future: notify(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Stack(
                             children: <Widget>[
-                               CustomBox('Discussion', () {
-                    List a = task;
-                 storage.write(key: '${task[1]}_comments', value: '${commentsLength}');
-                    Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    TaskComment(task: a),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              return SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(0.0, 1.0),
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: SlideTransition(
-                                  position: Tween<Offset>(
-                                    end: const Offset(0.0, 1.0),
-                                    begin: Offset.zero,
-                                  ).animate(secondaryAnimation),
-                                  child: child,
-                                ),
-                              );
-                            }));
-                  }, bottombarwidth, 50, 15, theme.blackColor, 15, 0, 0),
-                                    if(snapshot.data!=0)              
-                                                   Positioned(
-                                    right: 9,
-                                    top: 9,
-                                    child: Container(
-                                      padding: EdgeInsets.all(2),
-                                      decoration:  BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      constraints: BoxConstraints(
-                                        minWidth: 14,
-                                        minHeight: 14,
-                                      ),
-                                      child: Text(
-                                        '${snapshot.data}',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 8,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
+                              CustomBox('Discussion', () {
+                                List a = task;
+                                storage.write(
+                                    key: '${task[1]}_comments',
+                                    value: '${commentsLength}');
+                                Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                        pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            TaskComment(task: a),
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          return SlideTransition(
+                                            position: Tween<Offset>(
+                                              begin: const Offset(0.0, 1.0),
+                                              end: Offset.zero,
+                                            ).animate(animation),
+                                            child: SlideTransition(
+                                              position: Tween<Offset>(
+                                                end: const Offset(0.0, 1.0),
+                                                begin: Offset.zero,
+                                              ).animate(secondaryAnimation),
+                                              child: child,
+                                            ),
+                                          );
+                                        }));
+                              }, bottombarwidth, 50, 15, theme.blackColor, 15,
+                                  0, 0),
+                              if (snapshot.data != 0)
+                                Positioned(
+                                  right: 9,
+                                  top: 9,
+                                  child: Container(
+                                    padding: EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(6),
                                     ),
-                                  ) 
+                                    constraints: BoxConstraints(
+                                      minWidth: 14,
+                                      minHeight: 14,
+                                    ),
+                                    child: Text(
+                                      '${snapshot.data}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 8,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                )
                             ],
                           );
-                        }
-
-                       else if (snapshot.hasError){
-                         return Text('${snapshot.error}', style: TextStyle(
-                           color: Colors.white
-                         ),
-                         );
-                       } 
-
-                       else return CircularProgressIndicator();
-                    }),
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            '${snapshot.error}',
+                            style: TextStyle(color: Colors.white),
+                          );
+                        } else
+                          return CircularProgressIndicator();
+                      }),
                 ]),
           ),
         ),
@@ -438,14 +428,13 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         CustomBox('Add link', () async {
-                        print(taskSubmitted.length);
+                          print(taskSubmitted.length);
                           var text = textEditingController.value.text;
                           if (taskSubmitted.length >= 5) {
                             showAlertDialog(
                                 context, "submitted links limited upto 5");
                           } else {
                             try {
-                              var response = await http.head(text);
                               textEditingController.clear();
 
                               setState(() {
@@ -633,7 +622,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                     CircularPercentage(
                         130.0,
                         15.0,
-                        this.basic_per,
+                        this.basicPer,
                         Text(
                           "${decoverallPer.toStringAsFixed(0)} %",
                           style: TextStyle(color: theme.fontColor),
