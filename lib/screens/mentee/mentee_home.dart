@@ -243,7 +243,7 @@ class _MyHomePage extends State<HomePage> {
                 maxChildSize: 0.8,
                 builder: (BuildContext c, s) {
                   var boxDecoration = BoxDecoration(
-                    color: Colors.grey,
+                    color: Color.fromRGBO(220, 220, 220, 0.4),
                     borderRadius: BorderRadius.circular(5),
                   );
                   var container = Container(
@@ -257,7 +257,7 @@ class _MyHomePage extends State<HomePage> {
                           topLeft: Radius.circular(20.0),
                           topRight: Radius.circular(20.0)),
                       boxShadow: [
-                        BoxShadow(color: theme.fontColor, blurRadius: 2.0)
+                        BoxShadow(color: Colors.blueGrey, blurRadius: 5.0)
                       ],
                     ),
                     child: ListView(
@@ -266,7 +266,7 @@ class _MyHomePage extends State<HomePage> {
                         Center(
                           child: Container(
                             height: 8,
-                            width: 50,
+                            width: 40,
                             decoration: boxDecoration,
                           ),
                         ),
