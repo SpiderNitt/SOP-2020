@@ -66,9 +66,9 @@ class TaskCommentState extends State<TaskComment>
   void handleSendMessage() async {
     var text = textEditingController.value.text;
 
-    final RegExp REGEX_EMOJI = RegExp(
+    final RegExp regexEmoji = RegExp(
         r'(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])');
-    if (text.contains(REGEX_EMOJI)) {
+    if (text.contains(regexEmoji)) {
       showAlertDialog(
           context, "message containing emojis or photos is restricted");
     } else {

@@ -2,25 +2,25 @@ import 'package:inductions_20/theme/mentee.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_comment.dart';
 
-class TASKfeedback extends StatefulWidget {
-  Map feedback;
-  var taskname;
-  var mentorname;
+class TaskFeedback extends StatefulWidget {
+  final Map feedback;
+  final taskname;
+  final mentorname;
 
-  TASKfeedback(this.feedback, this.taskname, this.mentorname);
+  TaskFeedback(this.feedback, this.taskname, this.mentorname);
 
-  TASKfeedbackState createState() =>
-      TASKfeedbackState(feedback, taskname, mentorname);
+  TaskFeedbackState createState() =>
+      TaskFeedbackState(feedback, taskname, mentorname);
 }
 
-class TASKfeedbackState extends State<TASKfeedback>
+class TaskFeedbackState extends State<TaskFeedback>
     with SingleTickerProviderStateMixin {
   var taskdes;
 
   var taskname;
   Map feedback;
   var mentorname;
-  TASKfeedbackState(this.feedback, this.taskname, this.mentorname);
+  TaskFeedbackState(this.feedback, this.taskname, this.mentorname);
   List _messages = [];
   List date = [];
   List time = [];

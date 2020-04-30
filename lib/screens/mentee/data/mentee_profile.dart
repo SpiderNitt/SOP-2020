@@ -96,12 +96,12 @@ class ProfileTask {
   }
 }
 
-class Mentor_details {
+class MentorDetails {
   int profno;
   String mentor_name;
   String mentor_contact;
 
-  Mentor_details(this.profno);
+  MentorDetails(this.profno);
 
   Future<void> mentor_extract() async {
     ProvideJwt provideJwt = ProvideJwt();

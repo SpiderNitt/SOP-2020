@@ -79,6 +79,10 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     precacheImage(Image.asset("assets/images/SpiderLogo.webp").image, context);
@@ -115,6 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     SizedBox(
                       width: 300,
                       child: TypewriterAnimatedTextKit(
+                          onFinished: () => dispose(),
                           text: [
                             "ALGOS",
                             "APP DEV",

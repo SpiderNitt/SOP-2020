@@ -4,25 +4,24 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Statsdis extends StatelessWidget {
   final String taskname, profile;
-  double advPercent, begPercent;
-
-  Statsdis(this.taskname, double beg, double adv, this.profile) {
-    this.advPercent = adv / 100;
-    this.begPercent = beg / 100;
-  }
+  final double beg, adv;
+  Statsdis(this.taskname, this.beg, this.adv, this.profile);
 
   @override
   Widget build(BuildContext context) {
+    var begPercent = beg / 100;
+    var advPercent = adv / 100;
+
     return Column(
       children: <Widget>[
-         Text('${this.profile}',
+        Text('${this.profile}',
             style: TextStyle(
                 fontSize: 25,
                 fontFamily: config.fontFamily,
                 color: config.head)),
         SizedBox(
           height: 10,
-        ),     
+        ),
         Text('${this.taskname}',
             style: TextStyle(
                 fontSize: 22,
@@ -38,13 +37,13 @@ class Statsdis extends StatelessWidget {
                 color: config.fontColor)),
         CircularPercentIndicator(
             radius: 100.0,
-            center: Text('${this.advPercent * 100}%',
+            center: Text('${advPercent * 100}%',
                 style: TextStyle(
                     fontSize: 10,
                     fontFamily: config.fontFamily,
                     color: config.fontColor)),
             lineWidth: 10.0,
-            percent: (this.advPercent),
+            percent: (advPercent),
             progressColor: Colors.red,
             animation: true),
         SizedBox(
@@ -58,12 +57,12 @@ class Statsdis extends StatelessWidget {
         CircularPercentIndicator(
             radius: 100.0,
             lineWidth: 10.0,
-            center: Text('${this.begPercent * 100}%',
+            center: Text('${begPercent * 100}%',
                 style: TextStyle(
                     fontSize: 10,
                     fontFamily: config.fontFamily,
                     color: config.fontColor)),
-            percent: (this.begPercent),
+            percent: (begPercent),
             progressColor: Colors.green,
             animation: true),
         SizedBox(

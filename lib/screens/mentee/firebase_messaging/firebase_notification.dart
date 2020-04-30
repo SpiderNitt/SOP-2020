@@ -7,10 +7,10 @@ class FirebaseNotifications {
 
   void setUpFirebase() {
     _firebaseMessaging = FirebaseMessaging();
-    firebaseCloudMessaging_Listeners();
+    firebaseCloudMessagingListeners();
   }
 
-  void firebaseCloudMessaging_Listeners() {
+  void firebaseCloudMessagingListeners() {
     if (Platform.isIOS) iOSPermission();
 
     _firebaseMessaging.getToken().then((token) {

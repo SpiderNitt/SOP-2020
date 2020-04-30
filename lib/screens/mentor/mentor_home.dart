@@ -9,20 +9,17 @@ import 'widgets/mentor_details.dart';
 import '../../others/jwtparse.dart';
 
 class Mentor extends StatelessWidget {
-  var name, gitacc;
   final jwt;
-  var res;
-  Mentor(this.jwt) {
-    this.res = tryParseJwt(this.jwt);
-    this.name = this.res['username'];
-    this.gitacc = this.res['github_username'];
-  }
-  var subscription;
+  Mentor(this.jwt);
+
   @override
   Widget build(BuildContext context) {
+    var res = tryParseJwt(jwt);
+    var name = res['username'];
+    var gitacc = res['github_username'];
     return Scaffold(
-      drawer: MentorCustomDrawer(
-          this.name, this.gitacc, true, false, false, false, false),
+      drawer:
+          MentorCustomDrawer(name, gitacc, true, false, false, false, false),
       backgroundColor: config.bgColor,
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(

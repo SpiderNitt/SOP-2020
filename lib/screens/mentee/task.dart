@@ -6,7 +6,6 @@ import 'package:inductions_20/screens/mentee/data/comments.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_box.dart';
 import 'package:flutter/material.dart';
 import 'package:inductions_20/screens/mentee/widgets/custom_graph.dart';
-import 'package:inductions_20/screens/mentee/mentee_home.dart';
 import 'package:inductions_20/screens/mentee/feedbacks.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/rendering.dart';
@@ -139,7 +138,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       decadvancePer = this.advancePer * 100;
     });
 
-    Mentor_details mentorDetails = Mentor_details(task[3]);
+    MentorDetails mentorDetails = MentorDetails(task[3]);
     await mentorDetails.mentor_extract();
 
     setState(() {
@@ -521,7 +520,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                       PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  TASKfeedback(feedbacks, task[0], mentorname),
+                                  TaskFeedback(feedbacks, task[0], mentorname),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             return SlideTransition(
@@ -580,7 +579,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                               var sublinks = (jsonEncode(list1));
                               print(sublinks);
 
-                              var Json1 = jsonEncode({
+                              var json1 = jsonEncode({
                                 "rollno": "$rollno",
                                 "task_id": task[1],
                                 "profile_id": task[3],
@@ -590,7 +589,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                               });
 
                               Response response = await post(url,
-                                  headers: headers, body: Json1);
+                                  headers: headers, body: json1);
                               int statusCode = response.statusCode;
 
                               if (statusCode == 200) {
