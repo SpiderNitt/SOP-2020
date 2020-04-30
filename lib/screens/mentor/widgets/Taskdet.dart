@@ -33,8 +33,7 @@ class _TaskDetState extends State<TaskDet> {
 
     dynamic rescomm = await storage.read(key: '${taskid}_comments');
 
-
- if (rescomm == null) {
+    if (rescomm == null) {
       print(resmap['comments'].length);
       return resmap['comments'].length;
     } else {
@@ -152,7 +151,11 @@ class _TaskDetState extends State<TaskDet> {
                                                 children: <Widget>[
                                                   FlatButton(
                                                     onPressed: () {
-                                                      storage.write(key: '${temp['tasks']['$j']['task_id']}_comments', value: '${tempdes['comments'].length}');
+                                                      storage.write(
+                                                          key:
+                                                              '${temp['tasks']['$j']['task_id']}_comments',
+                                                          value:
+                                                              '${tempdes['comments'].length}');
 
                                                       List a = [
                                                         temp['tasks']['$j']
@@ -206,6 +209,8 @@ class _TaskDetState extends State<TaskDet> {
                                                     child: Text(
                                                         'Discussions Forum',
                                                         style: TextStyle(
+                                                            backgroundColor:
+                                                                Colors.black,
                                                             fontSize: 20,
                                                             fontFamily: config
                                                                 .fontFamily,
@@ -287,5 +292,3 @@ class _TaskDetState extends State<TaskDet> {
             }));
   }
 }
-
-

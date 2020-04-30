@@ -247,10 +247,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
+              Navigator.of(context).pop();
             },
           ),
           title: Text('${task[0]}'),

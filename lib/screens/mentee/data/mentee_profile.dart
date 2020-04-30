@@ -55,7 +55,7 @@ class MenteeProfile {
   }
 }
 
-class Profile_task {
+class ProfileTask {
   int profno;
   String mentor_name;
   String mentor_contact;
@@ -63,7 +63,7 @@ class Profile_task {
   List prof_task_title;
   List taskno_list;
 
-  Profile_task(this.profno);
+  ProfileTask(this.profno);
 
   Future<void> tasks() async {
     ProvideJwt provideJwt = ProvideJwt();

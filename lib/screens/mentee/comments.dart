@@ -203,10 +203,7 @@ class TaskCommentState extends State<TaskComment>
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Task(task: task)),
-              );
+              Navigator.of(context).pop();
             },
           ),
           title: Text('${task[0]}'),
@@ -226,13 +223,14 @@ class TaskCommentState extends State<TaskComment>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text(
-                          ''' This will be an interactive field between you and your friends, regarding the task''',
-                          style: TextStyle(
-                              color: theme.tertiaryColor,
-                              fontWeight: FontWeight.bold),
-                        )),
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        ''' This will be an interactive field between you and your friends, regarding the task''',
+                        style: TextStyle(
+                            color: theme.tertiaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
                 ),
               ),

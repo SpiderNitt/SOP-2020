@@ -123,7 +123,7 @@ class _MyHomePage extends State<HomePage> {
     }
 
     try {
-      Profile_task profileTask = Profile_task(profile_no_list[0]);
+      ProfileTask profileTask = ProfileTask(profile_no_list[0]);
       await profileTask.tasks();
       setState(() {
         task_list = profileTask.prof_task_title;
@@ -296,8 +296,8 @@ class _MyHomePage extends State<HomePage> {
                                     },
                                   );
 
-                                  Profile_task profileTask =
-                                      Profile_task(profile_no_list[i]);
+                                  ProfileTask profileTask =
+                                      ProfileTask(profile_no_list[i]);
                                   await profileTask.tasks();
                                   setState(
                                     () {
