@@ -68,6 +68,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    print(task);
 
     _tabController = TabController(
       length: 2,
@@ -138,7 +139,6 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       decadvancePer = this.advancePer * 100;
     });
 
-    print("mentor");
     Mentor_details mentorDetails = Mentor_details(task[3]);
     await mentorDetails.mentor_extract();
 
@@ -147,10 +147,10 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
       this.mentorcontact = mentorDetails.mentor_contact;
     });
 
-    CommentsList comments_list1 = CommentsList(task[1]);
-    await comments_list1.extractComment();
+    CommentsList commentsList1 = CommentsList(task[1]);
+    await commentsList1.extractComment();
     setState(() {
-      commentsLength = comments_list1.comments.length;
+      commentsLength = commentsList1.comments.length;
     });
   }
 
@@ -310,7 +310,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                                 List a = task;
                                 storage.write(
                                     key: '${task[1]}_comments',
-                                    value: '${commentsLength}');
+                                    value: '$commentsLength');
                                 Navigator.push(
                                     context,
                                     PageRouteBuilder(

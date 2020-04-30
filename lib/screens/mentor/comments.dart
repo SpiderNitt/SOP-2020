@@ -50,16 +50,16 @@ class TaskCommentState extends State<TaskComment>
   }
 
   Future<void> _getcomments() async {
-    CommentsList comments_list1 = CommentsList(task[1]);
-    await comments_list1.extractComment();
+    CommentsList commentsList1 = CommentsList(task[1]);
+    await commentsList1.extractComment();
 
     setState(() {
-      this._users = comments_list1.user;
-      this._messages = comments_list1.comments;
-      this._time = comments_list1.time;
-      this._date = comments_list1.dates;
-      this.username = comments_list1.username;
-      this._pos = comments_list1.pos;
+      this._users = commentsList1.user;
+      this._messages = commentsList1.comments;
+      this._time = commentsList1.time;
+      this._date = commentsList1.dates;
+      this.username = commentsList1.username;
+      this._pos = commentsList1.pos;
     });
   }
 
@@ -266,7 +266,7 @@ class TaskCommentState extends State<TaskComment>
                       color,
                       theme.blackColor,
                       commentwidth,
-                      '''${user}''',
+                      '''$user''',
                       '''${_date[index]}''',
                       '''${_time[index]}''');
 

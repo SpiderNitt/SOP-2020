@@ -111,7 +111,7 @@ class _MyHomePage extends State<HomePage> {
 
     try {
       MenteeProfile menteeProfile = MenteeProfile();
-      await menteeProfile.ExtractResponse();
+      await menteeProfile.extractResponse();
       setState(() {
         this.list = menteeProfile.profilelist;
         this.profile_no_list = menteeProfile.profnolist;
@@ -123,11 +123,11 @@ class _MyHomePage extends State<HomePage> {
     }
 
     try {
-      Profile_task profile_task = Profile_task(profile_no_list[0]);
-      await profile_task.tasks();
+      Profile_task profileTask = Profile_task(profile_no_list[0]);
+      await profileTask.tasks();
       setState(() {
-        task_list = profile_task.prof_task_title;
-        taskno_list = profile_task.taskno_list;
+        task_list = profileTask.prof_task_title;
+        taskno_list = profileTask.taskno_list;
       });
     } catch (e) {
       print("exception error : $e");
@@ -296,13 +296,13 @@ class _MyHomePage extends State<HomePage> {
                                     },
                                   );
 
-                                  Profile_task profile_task =
+                                  Profile_task profileTask =
                                       Profile_task(profile_no_list[i]);
-                                  await profile_task.tasks();
+                                  await profileTask.tasks();
                                   setState(
                                     () {
-                                      task_list = profile_task.prof_task_title;
-                                      taskno_list = profile_task.taskno_list;
+                                      task_list = profileTask.prof_task_title;
+                                      taskno_list = profileTask.taskno_list;
                                     },
                                   );
                                 }, profilewidth, 100, 12, clickcolor[i], 20, 3,

@@ -8,7 +8,7 @@ class MenteeProfile {
   List profnolist;
   MenteeProfile();
 
-  Future<void> ExtractResponse() async {
+  Future<void> extractResponse() async {
     List _profiles = [
       'Algos',
       'App Development - Android Native',
@@ -43,8 +43,8 @@ class MenteeProfile {
 
       var profids = parsedJson["profile_ids"];
       List proflist = [];
-      int prof_id_no = parsedJson["profiles_ids_no"];
-      for (int i = 0; i < prof_id_no; i++) {
+      int profIdNo = parsedJson["profiles_ids_no"];
+      for (int i = 0; i < profIdNo; i++) {
         proflist.add(_profiles[profids["$i"] - 1]);
         this.profnolist.add(profids["$i"]);
       }
@@ -73,7 +73,7 @@ class Profile_task {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${jwt}',
+      'Authorization': 'Bearer $jwt',
     };
     Response response = await get(url, headers: headers);
     int statusCode = response.statusCode;
