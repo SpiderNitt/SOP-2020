@@ -19,6 +19,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'config/jwtparse.dart';
 import 'config/extractjwt.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+ 
 
 class Task extends StatefulWidget {
   List task;
@@ -436,13 +438,14 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         CustomBox('Add link', () async {
-                          print(taskSubmitted.length);
+                        print(taskSubmitted.length);
                           var text = textEditingController.value.text;
                           if (taskSubmitted.length >= 5) {
                             showAlertDialog(
                                 context, "submitted links limited upto 5");
                           } else {
                             try {
+                              var response = await http.head(text);
                               textEditingController.clear();
 
                               setState(() {
