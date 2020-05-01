@@ -1,6 +1,6 @@
-<h1 style="text-align:center;">Inductions Site/App Frontend</h1>
+<h1 style="text-align:center;"> Spider Orientation Program </h1>
 
-Basic flutter application for Inductions 2020!!
+Basic flutter application for Spider Orientation Program 2020!!
 
 ## Getting Started
 
