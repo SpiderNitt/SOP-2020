@@ -100,25 +100,25 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
   }
 
   Future<void> taskDesc() async {
-    Task_details taskDetails = Task_details(task[1]);
+    TaskDetails taskDetails = TaskDetails(task[1]);
     await taskDetails.extractTaskDetails();
     setState(() {
-      this.taskdes = taskDetails.task_description;
-      this.resDesc = taskDetails.task_resources_desc;
-      this.resLink = taskDetails.task_resources_link;
-      this.subCount = taskDetails.no_submissions;
+      this.taskdes = taskDetails.taskDescription;
+      this.resDesc = taskDetails.taskResourcesDesc;
+      this.resLink = taskDetails.taskResourcesLink;
+      this.subCount = taskDetails.noSubmissions;
     });
 
-    Mentee_progress menteeProgress = Mentee_progress(task[1]);
+    MenteeProgress menteeProgress = MenteeProgress(task[1]);
 
     await menteeProgress.extractProgressDetails();
 
     setState(() {
-      basicPer = menteeProgress.basic_per / 100;
-      advancePer = menteeProgress.advance_per / 100;
+      basicPer = menteeProgress.basicPer / 100;
+      advancePer = menteeProgress.advancePer / 100;
 
-      feedTime = menteeProgress.recent_feedback;
-      feedbacks = menteeProgress.previous_feedbacks;
+      feedTime = menteeProgress.recentFeedback;
+      feedbacks = menteeProgress.previousFeedbacks;
 
       print("check");
       if (feedTime != "5:30") {
@@ -131,7 +131,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
 
         this.recentTime = "$hr:$min";
       } else {}
-      this.taskSubmitted = menteeProgress.submitted_links;
+      this.taskSubmitted = menteeProgress.submittedLinks;
       this.overallPer = (this.basicPer * 0.7) + (this.advancePer * 0.3);
       this.decoverallPer = this.overallPer * 100;
       decbasicPer = this.basicPer * 100;
@@ -139,11 +139,11 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
     });
 
     MentorDetails mentorDetails = MentorDetails(task[3]);
-    await mentorDetails.mentor_extract();
+    await mentorDetails.mentorExtract();
 
     setState(() {
-      this.mentorname = mentorDetails.mentor_name;
-      this.mentorcontact = mentorDetails.mentor_contact;
+      this.mentorname = mentorDetails.mentorName;
+      this.mentorcontact = mentorDetails.mentorContact;
     });
 
     CommentsList commentsList1 = CommentsList(task[1]);
@@ -505,7 +505,7 @@ class TaskState extends State<Task> with SingleTickerProviderStateMixin {
                         child: CustomPaint(
                           painter: Triangle(theme.tertiaryColor),
                         )),
-                    Comment_box(
+                    CommentBox(
                         '''${feedbacks[feedTime]}''',
                         theme.tertiaryColor,
                         theme.fontColor,

@@ -87,7 +87,7 @@ class TaskCommentState extends State<TaskComment>
           'Authorization': 'Bearer $jwt',
         };
 
-        var Json1 = jsonEncode({
+        var json1 = jsonEncode({
           "rollno": "$rollno",
           "task_id": task[1],
           "profile_id": task[2],
@@ -97,7 +97,7 @@ class TaskCommentState extends State<TaskComment>
           "reply_id": 0
         });
 
-        Response response = await post(url, headers: headers, body: Json1);
+        Response response = await post(url, headers: headers, body: json1);
         int statusCode = response.statusCode;
 
         if (statusCode == 200) {
@@ -261,7 +261,7 @@ class TaskCommentState extends State<TaskComment>
                     painter: Triangle(color),
                   );
 
-                  var messagebody = Comment_box(
+                  var messagebody = CommentBox(
                       '''${_messages[index]}''',
                       color,
                       theme.blackColor,

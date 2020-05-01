@@ -57,11 +57,11 @@ class MenteeProfile {
 
 class ProfileTask {
   int profno;
-  String mentor_name;
-  String mentor_contact;
+  String mentorName;
+  String mentorContact;
 
-  List prof_task_title;
-  List taskno_list;
+  List profTaskTitle;
+  List tasknoList;
 
   ProfileTask(this.profno);
 
@@ -81,15 +81,15 @@ class ProfileTask {
       var parsedJson = json.decode(response.body);
       var _tasks = parsedJson["tasks"];
 
-      List return_task = [];
-      List task_no_list = [];
-      int task_no = parsedJson["tasks_no"];
-      for (int i = 0; i < task_no; i++) {
-        return_task.add(_tasks["$i"]["task_title"]);
-        task_no_list.add(_tasks["$i"]["task_id"]);
+      List returnTask = [];
+      List taskNoList = [];
+      int taskNo = parsedJson["tasks_no"];
+      for (int i = 0; i < taskNo; i++) {
+        returnTask.add(_tasks["$i"]["task_title"]);
+        taskNoList.add(_tasks["$i"]["task_id"]);
       }
-      this.prof_task_title = return_task;
-      this.taskno_list = task_no_list;
+      this.profTaskTitle = returnTask;
+      this.tasknoList = taskNoList;
     } else {
       print("failed to load");
     }
@@ -98,12 +98,12 @@ class ProfileTask {
 
 class MentorDetails {
   int profno;
-  String mentor_name;
-  String mentor_contact;
+  String mentorName;
+  String mentorContact;
 
   MentorDetails(this.profno);
 
-  Future<void> mentor_extract() async {
+  Future<void> mentorExtract() async {
     ProvideJwt provideJwt = ProvideJwt();
 
     await provideJwt.extractjwt();
@@ -121,8 +121,8 @@ class MentorDetails {
     int statusCode = response.statusCode;
     if (statusCode == 200) {
       var parsedJson = json.decode(response.body);
-      this.mentor_contact = parsedJson["mentor_contact"];
-      this.mentor_name = parsedJson["mentor_name"];
+      this.mentorContact = parsedJson["mentor_contact"];
+      this.mentorName = parsedJson["mentor_name"];
     } else {
       print("failed to load");
     }

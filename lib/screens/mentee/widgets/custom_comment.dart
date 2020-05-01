@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Comment_box extends StatelessWidget {
+class CommentBox extends StatelessWidget {
   final String _text;
   final _backgroundColor;
   final _textcolor;
@@ -11,7 +11,7 @@ class Comment_box extends StatelessWidget {
   final double _width;
   final _username;
 
-  Comment_box(this._text, this._backgroundColor, this._textcolor, this._width,
+  CommentBox(this._text, this._backgroundColor, this._textcolor, this._width,
       this._username, this._date, this._time);
 
   Widget build(BuildContext context) {

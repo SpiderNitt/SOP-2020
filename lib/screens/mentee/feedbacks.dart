@@ -87,7 +87,7 @@ class TaskFeedbackState extends State<TaskFeedback>
                     painter: Triangle(theme.tertiaryColor),
                   );
 
-                  var messagebody = Comment_box(
+                  var messagebody = CommentBox(
                       _messages[index],
                       theme.tertiaryColor,
                       theme.blackColor,

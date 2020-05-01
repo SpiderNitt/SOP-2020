@@ -264,7 +264,7 @@ class TaskCommentState extends State<TaskComment>
                     painter: Triangle(color),
                   );
 
-                  var messagebody = Comment_box(
+                  var messagebody = CommentBox(
                       '''${_messages[index]}''',
                       color,
                       theme.blackColor,

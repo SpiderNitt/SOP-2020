@@ -3,15 +3,15 @@ import 'package:inductions_20/screens/mentee/config/jwtparse.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
-class Mentee_progress {
-  int task_no;
-  int basic_per;
-  int advance_per;
-  List submitted_links;
-  Map previous_feedbacks;
-  var recent_feedback;
+class MenteeProgress {
+  int taskNo;
+  int basicPer;
+  int advancePer;
+  List submittedLinks;
+  Map previousFeedbacks;
+  var recentFeedback;
 
-  Mentee_progress(this.task_no);
+  MenteeProgress(this.taskNo);
 
   Future<void> extractProgressDetails() async {
     ProvideJwt provideJwt = ProvideJwt();
@@ -21,54 +21,52 @@ class Mentee_progress {
     var rollno = res["roll"];
     try {
       String url =
-          "https://spider.nitt.edu/inductions20test/api/mentee/$rollno/task/${this.task_no}/progress";
+          "https://spider.nitt.edu/inductions20test/api/mentee/$rollno/task/${this.taskNo}/progress";
       Map<String, String> headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $jwt',
       };
       Response response = await get(url, headers: headers);
-      recent_feedback = "5:30";
+      recentFeedback = "5:30";
       int statusCode = response.statusCode;
       if (statusCode == 200) {
         var parsedJson = json.decode(response.body);
-        int sub_no = parsedJson["submissions_no"];
-        sub_no = sub_no - 1;
+        int subNo = parsedJson["submissions_no"];
+        subNo = subNo - 1;
         var submissions = parsedJson["submissions"];
-        this.basic_per = submissions["$sub_no"]["basic_task_percent"];
-        this.advance_per = submissions["$sub_no"]["advanced_task_percent"];
-        int no_links = submissions["$sub_no"]["submission_links_no"];
-        Map submission_links = {};
-        previous_feedbacks = {};
-        var submlinks = submissions["$sub_no"]["submission_links"];
-        submission_links = jsonDecode(submlinks);
+        this.basicPer = submissions["$subNo"]["basic_task_percent"];
+        this.advancePer = submissions["$subNo"]["advanced_task_percent"];
+        int noLinks = submissions["$subNo"]["submission_links_no"];
+        previousFeedbacks = {};
+        var submlinks = submissions["$subNo"]["submission_links"];
+        var submissionLinks = jsonDecode(submlinks);
 
-        submitted_links = [];
-        for (int i = 0; i < no_links; i++) {
-          submitted_links.add(submission_links["$i"]);
+        submittedLinks = [];
+        for (int i = 0; i < noLinks; i++) {
+          submittedLinks.add(submissionLinks["$i"]);
         }
 
-        var feed_time = "5:30";
-        for (int i = 0; i <= sub_no; i++) {
+        var feedTime = "5:30";
+        for (int i = 0; i <= subNo; i++) {
           if (submissions["$i"]["is_reviewed"] == true) {
-            feed_time = submissions["$i"]["feedback_date_time"];
-            this.previous_feedbacks["${feed_time}"] =
-                submissions["$i"]["feedback"];
-            this.basic_per = submissions["$i"]["basic_task_percent"];
-            this.advance_per = submissions["$i"]["advanced_task_percent"];
+            feedTime = submissions["$i"]["feedback_date_time"];
+            this.previousFeedbacks["$feedTime"] = submissions["$i"]["feedback"];
+            this.basicPer = submissions["$i"]["basic_task_percent"];
+            this.advancePer = submissions["$i"]["advanced_task_percent"];
           }
         }
 
-        this.recent_feedback = feed_time;
+        this.recentFeedback = feedTime;
       } else {
         print("failed to load");
       }
     } catch (e) {
-      basic_per = 0;
-      advance_per = 0;
-      submitted_links = [];
-      previous_feedbacks = {};
-      recent_feedback = "5:30";
+      basicPer = 0;
+      advancePer = 0;
+      submittedLinks = [];
+      previousFeedbacks = {};
+      recentFeedback = "5:30";
     }
   }
 }

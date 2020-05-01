@@ -33,9 +33,9 @@ class _MyHomePage extends State<HomePage> {
     theme.primaryLightColor,
   ];
   List list = [];
-  List task_list = [];
-  List profile_no_list = [0, 1, 2, 3];
-  List taskno_list = [];
+  List taskList = [];
+  List profileNoList = [0, 1, 2, 3];
+  List tasknoList = [];
   var currentProfileNo;
 
   var task = "WEB";
@@ -114,20 +114,20 @@ class _MyHomePage extends State<HomePage> {
       await menteeProfile.extractResponse();
       setState(() {
         this.list = menteeProfile.profilelist;
-        this.profile_no_list = menteeProfile.profnolist;
+        this.profileNoList = menteeProfile.profnolist;
         this.task = list[0];
-        this.currentProfileNo = profile_no_list[0];
+        this.currentProfileNo = profileNoList[0];
       });
     } catch (e) {
       print("exception error: $e");
     }
 
     try {
-      ProfileTask profileTask = ProfileTask(profile_no_list[0]);
+      ProfileTask profileTask = ProfileTask(profileNoList[0]);
       await profileTask.tasks();
       setState(() {
-        task_list = profileTask.prof_task_title;
-        taskno_list = profileTask.taskno_list;
+        taskList = profileTask.profTaskTitle;
+        tasknoList = profileTask.tasknoList;
       });
     } catch (e) {
       print("exception error : $e");
@@ -292,17 +292,17 @@ class _MyHomePage extends State<HomePage> {
                                               theme.primaryLightColor;
                                       }
                                       task = list[i];
-                                      currentProfileNo = profile_no_list[i];
+                                      currentProfileNo = profileNoList[i];
                                     },
                                   );
 
                                   ProfileTask profileTask =
-                                      ProfileTask(profile_no_list[i]);
+                                      ProfileTask(profileNoList[i]);
                                   await profileTask.tasks();
                                   setState(
                                     () {
-                                      task_list = profileTask.prof_task_title;
-                                      taskno_list = profileTask.taskno_list;
+                                      taskList = profileTask.profTaskTitle;
+                                      tasknoList = profileTask.tasknoList;
                                     },
                                   );
                                 }, profilewidth, 100, 12, clickcolor[i], 20, 3,
@@ -315,12 +315,12 @@ class _MyHomePage extends State<HomePage> {
                           height: 50,
                           thickness: 3,
                         ),
-                        for (int i = 0; i < task_list.length; i++)
-                          CustomBox(task_list[i], () {
-                            print(taskno_list[i]);
+                        for (int i = 0; i < taskList.length; i++)
+                          CustomBox(taskList[i], () {
+                            print(tasknoList[i]);
                             List a = [
                               task,
-                              taskno_list[i],
+                              tasknoList[i],
                               this.user,
                               currentProfileNo
                             ];
